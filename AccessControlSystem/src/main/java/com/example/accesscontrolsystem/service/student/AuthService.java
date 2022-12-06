@@ -5,7 +5,7 @@ import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("StudentDailyReportService")
+@Service("StudentAuthService")
 public class AuthService {
     private final StudentManager studentManager;
 
