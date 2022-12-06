@@ -5,6 +5,7 @@ import com.example.accesscontrolsystem.service.superUser.UserService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +22,9 @@ public class CounsellorController {
     @GetMapping("/counsellors")
     public Response<List<Counsellor>> getCounsellors() {
         return userservice.getCounsellors();
+    }
+    @PostMapping("/")
+    public Response<Counsellor> addCounsellor(Counsellor counsellor) {
+        return userservice.addCounsellor(counsellor);
     }
 }
