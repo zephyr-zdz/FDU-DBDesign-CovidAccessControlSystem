@@ -21,6 +21,8 @@ public class Student {
     private String name;
     @Column(name = "email", nullable = false)
     private String email;
+    @Column(name = "phone-number", nullable = false)
+    private String phoneNumber;
     @Column(name = "dorm-address", nullable = false)
     private String dormAddress; // 东南北本江张枫-xx-x0xx
     @Column(name = "home-address", nullable = false)
