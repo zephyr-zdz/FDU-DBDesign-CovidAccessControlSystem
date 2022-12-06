@@ -5,6 +5,7 @@ import com.example.accesscontrolsystem.model.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component("StudentManager")
@@ -27,5 +28,9 @@ public class StudentManager {
     public String getNameById(Integer studentId) {
         Optional<Student> student = studentMapper.findStudentById(studentId);
         return student.map(Student::getName).orElse(null);
+    }
+
+    public List<Student> getStudents() {
+        return studentMapper.findAll();
     }
 }
