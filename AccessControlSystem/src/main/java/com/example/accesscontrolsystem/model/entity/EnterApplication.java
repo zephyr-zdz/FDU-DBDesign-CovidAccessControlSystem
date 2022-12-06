@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "enter_appliance")
-public class EnterAppliance {
+@Table(name = "enter_application")
+public class EnterApplication {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;

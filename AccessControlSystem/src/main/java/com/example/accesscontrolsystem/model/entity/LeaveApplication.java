@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "leave_appliance")
-public class LeaveAppliance {
+@Table(name = "leave_application")
+public class LeaveApplication {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
