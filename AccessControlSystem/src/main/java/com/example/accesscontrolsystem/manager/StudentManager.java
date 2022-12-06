@@ -33,4 +33,16 @@ public class StudentManager {
     public List<Student> getStudents() {
         return studentMapper.findAll();
     }
+
+    public Student addStudent(Student student) {
+        return studentMapper.save(student);
+    }
+
+    public Optional<Student> findStudentByEmail(String email) {
+        return studentMapper.findStudentByEmail(email);
+    }
+
+    public Optional<Student> findStudentByIdNumberAndIdType(String idNumber, String idType) {
+        return studentMapper.findStudentByIdNumberAndIdType(idNumber, idType);
+    }
 }
