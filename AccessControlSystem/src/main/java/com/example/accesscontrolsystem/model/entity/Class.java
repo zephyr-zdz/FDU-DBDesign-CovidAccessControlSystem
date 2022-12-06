@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.model;
+package com.example.accesscontrolsystem.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,13 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "major")
-public class Major {
+@Table(name = "class")
+public class Class {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "name", nullable = false, length = 45)
     private String name;
-    @Column(name = "campus-id", nullable = false)
-    private Integer campusId;
+    @Column(name = "major-id", nullable = false)
+    private Integer majorId;
 }

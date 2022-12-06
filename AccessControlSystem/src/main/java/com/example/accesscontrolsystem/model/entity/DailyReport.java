@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.model;
+package com.example.accesscontrolsystem.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,17 +12,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "gate_log")
-public class GateLog {
+@Table(name = "daily_report")
+public class DailyReport {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
-    @Column(name = "time", nullable = false)
-    private String  time; // utf-8编码的时间字符串，例如：2020-12-12 12:12:12
-    @Column(name = "direction", nullable = false)
-    private String  direction; // in/out
+    @Column(name = "location", nullable = false, length = 45)
+    private String location;
+    @Column(name = "temperature", nullable = false)
+    public Integer temperature; // 是真实温度*10的结果，例如：36.5度，就是365
+    @Column(name = "other", nullable = false, length = 45)
+    private String other;
     @Column(name = "student-id", nullable = false)
     private Integer studentId;
-    @Column(name = "campus-id", nullable = false)
-    private Integer campusId;
 }

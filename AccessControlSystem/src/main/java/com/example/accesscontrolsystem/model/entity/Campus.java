@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.model;
+package com.example.accesscontrolsystem.model.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
