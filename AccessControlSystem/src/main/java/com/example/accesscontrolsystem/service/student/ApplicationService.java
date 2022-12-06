@@ -37,4 +37,22 @@ public class ApplicationService {
         }
         return new Response<>(Response.SUCCESS, "成功", leaveApplicationManager.findAllByStudentId(studentId));
     }
+
+    public Response<List<EnterApplication>> getEnterApplicationsByStudentIdAndStatus(Integer studentId, String status) {
+        if ((status == null) || (!status.equals("pending") && !status.equals("accepted") && !status.equals("rejected")))
+            return new Response<>(Response.FAIL, "status不合法", null);
+        if (studentManager.findStudentById(studentId).isEmpty()) {
+            return new Response<>(Response.FAIL, "studentId为空", null);
+        }
+        return new Response<>(Response.SUCCESS, "成功", enterApplicationManager.findAllByStudentIdAndStatus(studentId, status));
+    }
+
+    public Response<List<LeaveApplication>> getLeaveApplicationsByStudentIdAndStatus(Integer studentId, String status) {
+        if ((status == null) || (!status.equals("pending") && !status.equals("accepted") && !status.equals("rejected")))
+            return new Response<>(Response.FAIL, "status不合法", null);
+        if (studentManager.findStudentById(studentId).isEmpty()) {
+            return new Response<>(Response.FAIL, "studentId为空", null);
+        }
+        return new Response<>(Response.SUCCESS, "成功", leaveApplicationManager.findAllByStudentIdAndStatus(studentId, status));
+    }
 }

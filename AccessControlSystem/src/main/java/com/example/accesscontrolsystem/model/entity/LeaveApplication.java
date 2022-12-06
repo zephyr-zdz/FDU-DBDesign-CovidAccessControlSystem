@@ -26,7 +26,7 @@ public class LeaveApplication {
     @Column(name = "return-time", nullable = false)
     private String returnTime; // utf-8编码的时间字符串，例如：2020-12-12 12:12:12
     @Column(name = "status", nullable = false)
-    private String status; // 申请状态：pending/accepted/rejected\
+    private String status; // 申请状态：pending/accepted/rejected
     @Column(name = "student-id", nullable = false)
     private Integer studentId;
 }
