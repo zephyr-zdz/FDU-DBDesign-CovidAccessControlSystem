@@ -54,7 +54,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        prop="timeOut"
+        prop="timeIn"
         label="预计入校时间"
         width="150">
         <template v-slot="scope">
@@ -67,6 +67,14 @@
         width="300">
         <template v-slot="scope">
           <span>{{ scope.row.getStudentOutAppTable.reason}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="appTime"
+        label="提交时间"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.getStudentOutAppTable.appTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -119,7 +127,7 @@ export default {
         param.append('studentId', this.getStudentOutAppForm.studentId)
       }
       this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getStudentEnterAppTable = res.data.data
+        this.getStudentOutAppTable = res.data.data
       })
     }
   }

@@ -91,6 +91,11 @@
               label="getUnapprovedEnter"
               v-show="showRecord === 'getUnapprovedEnter'"
               ref="getUnapprovedEnter"></get-unapproved-enter>
+            <get-unapproved-out
+              id="getUnapprovedOut"
+              lable="getUnapprovedOut"
+              v-show="showRecord === 'getUnapprovedOut'"
+              ref="getUnapprovedOut"></get-unapproved-out>
           </el-main>
         </el-container>
       </el-container>
@@ -110,6 +115,7 @@ import GetStudentEnterApp from '../query/getStudentEnterApp'
 import GetStudentOutApp from '../query/getStudentOutApp'
 import GetStudentTotalOutTime from '../query/getStudentTotalOutTime'
 import GetUnapprovedEnter from '../advancedQuery/getUnapprovedEnter'
+import GetUnapprovedOut from '../advancedQuery/getUnapprovedOut'
 export default {
   data () {
     return {
@@ -201,7 +207,8 @@ export default {
     'get-student-enter-app': GetStudentEnterApp,
     'get-student-out-app': GetStudentOutApp,
     'get-student-total-out-time': GetStudentTotalOutTime,
-    'get-unapproved-enter': GetUnapprovedEnter
+    'get-unapproved-enter': GetUnapprovedEnter,
+    'get-unapproved-out': GetUnapprovedOut
   }
 }
 

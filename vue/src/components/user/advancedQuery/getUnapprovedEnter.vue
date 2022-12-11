@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <el-form label-position="left" :model="getUnapprovedEnterForm" ref="getUnapprovedEnterForm" label-width="0">
       <el-form-item prop="day">
-        <el-input style="width: 20%" placeholder="请输入查询天数" v-model="getUnapprovedEnterForm.day"></el-input>
+        <el-input style="width: 20%" placeholder="请输入天数，为空则查询全部" v-model="getUnapprovedEnterForm.day"></el-input>
       </el-form-item>
       <el-form-item style="width: 20%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getUnapprovedEnter()">查询</el-button>
@@ -44,6 +44,13 @@
           <span>{{ scope.row.getUnapprovedEnterTable.time}}</span>
         </template>
       </el-table-column>
+      <el-table-column
+      prop="appTime"
+      label="提交时间">
+      <template v-slot="scope">
+        <span>{{ scope.row.getUnapprovedEnterTable.appTime}}</span>
+      </template>
+    </el-table-column>
     </el-table>
   </el-card>
 </template>
@@ -57,18 +64,24 @@ export default {
       totalNum: '0',
       getUnapprovedEnterForm: {
         day: '',
-        school: '',
-        className: '',
-        status: 'waiting'
+        schoolId: '',
+        classId: ''
       }
     }
   },
-  mounted () {
-    this.getUnapprovedEnter(this.getUnapprovedEnterForm.school, this.getUnapprovedEnterForm.className, 7)
-  },
   methods: {
-    getUnapprovedEnter (school, className, day) {
-      ;
+    getUnapprovedEnter () {
+      var param = new FormData()
+      param.append('schoolId', this.getUnapprovedEnterForm.schoolId)
+      param.append('classId', this.getUnapprovedEnterForm.classId)
+      if (this.getUnapprovedEnterForm.day === '') {
+        param.append('day', -1)
+      } else {
+        param.append('day', this.getUnapprovedEnterForm.day)
+      }
+      this.$axios.get('/api/student/student', {params: param}).then(res => {
+        this.getUnapprovedEnterTable = res.data.data
+      })
     }
   }
 }

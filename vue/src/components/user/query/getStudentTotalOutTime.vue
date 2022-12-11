@@ -62,7 +62,7 @@ export default {
         param.append('studentId', this.getStudentTotalOutTimeForm.studentId)
       }
       this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getStudentEnterAppTable = res.data.data
+        this.getStudentTotalOutTimeTable = res.data.data
       })
     }
   }

@@ -88,7 +88,7 @@ export default {
         param.append('studentId', this.getDailyInfoForm.studentId)
       }
       this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getStudentEnterAppTable = res.data.data
+        this.getDailyInfoTable = res.data.data
       })
     }
   }

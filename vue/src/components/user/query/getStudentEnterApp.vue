@@ -47,9 +47,25 @@
       </el-table-column>
       <el-table-column
         prop="time"
-        label="预计进校时间">
+        label="预计进校时间"
+        width="150">
         <template v-slot="scope">
           <span>{{ scope.row.getStudentEnterAppTable.time}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="appTime"
+        label="提交时间"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.getStudentEnterAppTable.appTime}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="status"
+        label="申请状态">
+        <template v-slot="scope">
+          <span>{{ scope.row.getStudentOutAppTable.status}}</span>
         </template>
       </el-table-column>
     </el-table>
