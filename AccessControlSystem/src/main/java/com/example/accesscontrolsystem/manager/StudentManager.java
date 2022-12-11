@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component("StudentManager")
 public class StudentManager {
@@ -16,18 +15,18 @@ public class StudentManager {
         this.studentMapper = studentMapper;
     }
 
-    public Optional<Student> findStudentById(Integer studentId) {
+    public Student findStudentById(Integer studentId) {
         return studentMapper.findStudentById(studentId);
     }
 
     public String getAuthById(Integer studentId) {
-        Optional<Student> student = studentMapper.findStudentById(studentId);
-        return student.map(Student::getAuth).orElse(null);
+        Student student = studentMapper.findStudentById(studentId);
+        return student.getAuth();
     }
 
     public String getNameById(Integer studentId) {
-        Optional<Student> student = studentMapper.findStudentById(studentId);
-        return student.map(Student::getName).orElse(null);
+        Student student = studentMapper.findStudentById(studentId);
+        return student.getName();
     }
 
     public List<Student> getStudents() {
@@ -38,11 +37,15 @@ public class StudentManager {
         return studentMapper.save(student);
     }
 
-    public Optional<Student> findStudentByEmail(String email) {
+    public Student findStudentByEmail(String email) {
         return studentMapper.findStudentByEmail(email);
     }
 
-    public Optional<Student> findStudentByIdNumberAndIdType(String idNumber, String idType) {
+    public Student findStudentByIdNumberAndIdType(String idNumber, String idType) {
         return studentMapper.findStudentByIdNumberAndIdType(idNumber, idType);
+    }
+
+    public void update(Student student) {
+        studentMapper.save(student);
     }
 }

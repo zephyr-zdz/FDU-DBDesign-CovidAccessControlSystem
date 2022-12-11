@@ -28,10 +28,10 @@ public class UserService {
     }
 
     public Response<Student> addStudent(Student student) {
-        if (studentManager.findStudentById(student.getId()).isPresent()) {
+        if (studentManager.findStudentById(student.getId()) != null) {
             return new Response<>(Response.FAIL, "学生id已存在", null);
         }
-        if (studentManager.findStudentByIdNumberAndIdType(student.getIdNumber(),student.getIdType()).isPresent()) {
+        if (studentManager.findStudentByIdNumberAndIdType(student.getIdNumber(),student.getIdType()) != null) {
             return new Response<>(Response.FAIL, "学生身份证件号码已存在", null);
         }
         if (classManager.findClassById(student.getClassId()).isEmpty()) {
