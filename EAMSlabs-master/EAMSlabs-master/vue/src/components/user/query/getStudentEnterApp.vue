@@ -1,23 +1,22 @@
 <template>
   <el-card class="box-card">
-    <el-form label-position="left" :model="getUnapprovedEnterForm" ref="getDailyInfoForm" label-width="0">
+    <el-form label-position="left" :model="getStudentEnterAppForm" ref="getDailyInfoForm" label-width="0">
       <el-form-item prop="day">
-        <el-input style="width: 20%" placeholder="请输入查询天数" v-model="getUnapprovedEnterForm.day"></el-input>
+        <el-input style="width: 20%" placeholder="请输入查询天数" v-model="getStudentEnterAppForm.day"></el-input>
       </el-form-item>
       <el-form-item style="width: 20%">
-        <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getUnapprovedEnter()">查询</el-button>
+        <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getStudentEnterApp()">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="getUnapprovedEnterTable"
+    <el-table :data="getStudentEnterAppTable"
               style="width: 100%"
               pager="page">
-      <h2>共计<span>{{ getUnapprovedEnterTable.totalNum}}</span>条记录</h2>
       <el-table-column
         prop="number"
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.number}}</span>
+          <span>{{ scope.row.getStudentEnterAppTable.number}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +24,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.name}}</span>
+          <span>{{ scope.row.getStudentEnterAppTable.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,14 +32,14 @@
         label="七日内所到地区"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.area}}</span>
+          <span>{{ scope.row.getStudentEnterAppTable.area}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="time"
         label="预计进校时间">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.time}}</span>
+          <span>{{ scope.row.getStudentEnterAppTable.time}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -49,7 +48,7 @@
 
 <script>
 export default {
-  name: 'getUnapprovedEnter',
+  name: 'getStudentEnterApp',
   data () {
     return {
       appOption: [{
@@ -65,8 +64,8 @@ export default {
         value: 'all',
         label: '全部'
       }],
-      getUnapprovedEnterTable: [],
-      getUnapprovedEnterForm: {
+      getStudentEnterAppTable: [],
+      getStudentEnterAppForm: {
         school: '',
         className: '',
         status: ''
@@ -74,10 +73,10 @@ export default {
     }
   },
   mounted () {
-    this.getUnapprovedEnter(this.getUnapprovedEnterForm.school, this.getUnapprovedEnterForm.className)
+    this.getStudentEnterApp(this.getStudentEnterAppForm.school, this.getStudentEnterAppForm.className)
   },
   methods: {
-    getUnapprovedEnter (school, className) {
+    getStudentEnterApp (school, className) {
       ;
     }
   }

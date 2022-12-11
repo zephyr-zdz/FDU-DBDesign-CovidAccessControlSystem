@@ -86,6 +86,11 @@
               label="getStudentTotalOutTime"
               v-show="showRecord === 'getStudentTotalOutTime'"
               ref="getStudentTotalOutTime"></get-student-total-out-time>
+            <get-unapproved-enter
+              id="getUnapprovedEnter"
+              label="getUnapprovedEnter"
+              v-show="showRecord === 'getUnapprovedEnter'"
+              ref="getUnapprovedEnter"></get-unapproved-enter>
           </el-main>
         </el-container>
       </el-container>
@@ -104,6 +109,7 @@ import GetStudentEnterAuth from '../query/getStudentEnterAuth'
 import GetStudentEnterApp from '../query/getStudentEnterApp'
 import GetStudentOutApp from '../query/getStudentOutApp'
 import GetStudentTotalOutTime from '../query/getStudentTotalOutTime'
+import GetUnapprovedEnter from '../advancedQuery/getUnapprovedEnter'
 export default {
   data () {
     return {
@@ -148,6 +154,8 @@ export default {
           this.showRecord = value
           break
         case 'getUnapprovedEnter' :
+          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.school = 'all'
+          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.className = 'all'
           this.showRecord = value
           break
         case 'getUnapprovedOut' :
@@ -192,7 +200,8 @@ export default {
     'get-student-enter-auth': GetStudentEnterAuth,
     'get-student-enter-app': GetStudentEnterApp,
     'get-student-out-app': GetStudentOutApp,
-    'get-student-total-out-time': GetStudentTotalOutTime
+    'get-student-total-out-time': GetStudentTotalOutTime,
+    'get-unapproved-enter': GetUnapprovedEnter
   }
 }
 
