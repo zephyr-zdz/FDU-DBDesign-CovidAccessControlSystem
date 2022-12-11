@@ -13,6 +13,7 @@ public class AuthService {
     public AuthService(StudentManager studentManager) {
         this.studentManager = studentManager;
     }
+
     public Response<String> getAuth(Integer studentId) {
         String auth = studentManager.getAuthById(studentId);
         if (auth == null) {
@@ -20,7 +21,6 @@ public class AuthService {
         }
         return new Response<>(Response.SUCCESS, "成功", auth);
     }
-
     public Response<String> getName(Integer studentId) {
         String name = studentManager.getNameById(studentId);
         if (name == null) {
@@ -28,6 +28,4 @@ public class AuthService {
         }
         return new Response<>(Response.SUCCESS, "成功", name);
     }
-
-
 }
