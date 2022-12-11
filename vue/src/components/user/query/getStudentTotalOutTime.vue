@@ -1,5 +1,13 @@
 <template>
   <el-card class="box-card">
+    <el-form label-position="left" :model="getStudentTotalOutTimeForm" ref="getStudentTotalOutTimeForm" label-width="0">
+      <el-form-item prop="studentId">
+        <el-input style="width: 20%" placeholder="请输入学号，为空则查询全部" v-model="getStudentTotalOutTimeForm.studentId"></el-input>
+      </el-form-item>
+      <el-form-item style="width: 20%">
+        <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getStudentTotalOutTime()">查询</el-button>
+      </el-form-item>
+    </el-form>
     <el-table :data="getStudentTotalOutTimeTable"
               style="width: 100%"
               pager="page">
@@ -37,17 +45,25 @@ export default {
     return {
       getStudentTotalOutTimeTable: [],
       getStudentTotalOutTimeForm: {
-        school: '',
-        className: ''
+        schoolId: '',
+        classId: '',
+        studentId: ''
       }
     }
   },
-  mounted () {
-    this.getStudentTotalOutTime(this.getStudentTotalOutTimeForm.school, this.getStudentTotalOutTimeForm.className)
-  },
   methods: {
-    getStudentTotalOutTime (school, className) {
-      ;
+    getStudentTotalOutTime () {
+      var param = new FormData()
+      param.append('schoolId', this.getStudentTotalOutTimeForm.schoolId)
+      param.append('className', this.getStudentTotalOutTimeForm.className)
+      if (this.getStudentTotalOutTimeForm.studentId === '') {
+        param.append('studentId', -1)
+      } else {
+        param.append('studentId', this.getStudentTotalOutTimeForm.studentId)
+      }
+      this.$axios.get('/api/student/student', {params: param}).then(res => {
+        this.getStudentEnterAppTable = res.data.data
+      })
     }
   }
 }

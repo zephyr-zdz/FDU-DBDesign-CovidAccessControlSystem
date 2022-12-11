@@ -2,10 +2,13 @@
   <el-card class="box-card">
     <el-form label-position="left" :model="getDailyInfoForm" ref="getDailyInfoForm" label-width="0">
       <el-form-item prop="day">
-        <el-input style="width: 20%" placeholder="请输入查询天数" v-model="getDailyInfoForm.day"></el-input>
+        <el-input style="width: 20%" placeholder="请输入天数，为空则查询全部" v-model="getDailyInfoForm.day"></el-input>
+      </el-form-item>
+      <el-form-item prop="studentId">
+        <el-input style="width: 20%" placeholder="请输入学号，为空则查询全部" v-model="getDailyInfoForm.studentId"></el-input>
       </el-form-item>
       <el-form-item style="width: 20%">
-        <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="submit">查询</el-button>
+        <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getDailyInfo()">查询</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="getDailyInfoTable"
@@ -61,21 +64,32 @@ export default {
     return {
       getDailyInfoTable: [],
       getDailyInfoForm: {
-        school: '',
-        className: '',
-        day: ''
+        schoolId: '',
+        classId: '',
+        day: '',
+        studentId: ''
       }
     }
   },
-  mounted () {
-    this.getDailyInfo(this.getDailyInfoForm.school, this.getDailyInfoForm.className, -1)
-  },
   methods: {
-    submit () {
-      ;
-    },
-    getDailyInfo (school, className, day) {
-      ;
+    getDailyInfo () {
+      var param = new FormData()
+      param.append('schoolId', this.getDailyInfoForm.schoolId)
+      param.append('classId', this.getDailyInfoForm.classId)
+      param.append('status', this.getDailyInfoForm.status)
+      if (this.getDailyInfoForm.day === '') {
+        param.append('day', -1)
+      } else {
+        param.append('day', this.getDailyInfoForm.day)
+      }
+      if (this.getDailyInfoForm.studentId === '') {
+        param.append('studentId', -1)
+      } else {
+        param.append('studentId', this.getDailyInfoForm.studentId)
+      }
+      this.$axios.get('/api/student/student', {params: param}).then(res => {
+        this.getStudentEnterAppTable = res.data.data
+      })
     }
   }
 }

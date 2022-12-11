@@ -12,7 +12,7 @@
         </el-select>
       </el-form-item>
       <el-form-item prop="studentId">
-        <el-input style="width: 20%" placeholder="请输入学号,为空则查询全部" v-model="getStudentEnterAppForm.studentId"></el-input>
+        <el-input style="width: 20%" placeholder="请输入学号，为空则查询全部" v-model="getStudentEnterAppForm.studentId"></el-input>
       </el-form-item>
       <el-form-item style="width: 20%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getStudentEnterApp()">查询</el-button>
