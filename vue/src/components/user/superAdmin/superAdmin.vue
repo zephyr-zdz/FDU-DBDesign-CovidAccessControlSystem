@@ -96,6 +96,11 @@
               lable="getUnapprovedOut"
               v-show="showRecord === 'getUnapprovedOut'"
               ref="getUnapprovedOut"></get-unapproved-out>
+            <get-most-submit
+              id="getMostSubmit"
+              label="getMostSubmit"
+              v-show="showRecord === 'getMostSubmit'"
+              ref="getMostSubmit"></get-most-submit>
           </el-main>
         </el-container>
       </el-container>
@@ -116,6 +121,7 @@ import GetStudentOutApp from '../query/getStudentOutApp'
 import GetStudentTotalOutTime from '../query/getStudentTotalOutTime'
 import GetUnapprovedEnter from '../advancedQuery/getUnapprovedEnter'
 import GetUnapprovedOut from '../advancedQuery/getUnapprovedOut'
+import GetMostSubmit from '../advancedQuery/getMostSubmit'
 export default {
   data () {
     return {
@@ -135,39 +141,43 @@ export default {
           this.showRecord = value
           break
         case 'getDailyInfo' :
-          this.$refs.getDailyInfo.getDailyInfoForm.school = 'all'
-          this.$refs.getDailyInfo.getDailyInfoForm.className = 'all'
+          this.$refs.getDailyInfo.getDailyInfoForm.schoolId = 'all'
+          this.$refs.getDailyInfo.getDailyInfoForm.classId = 'all'
           this.showRecord = value
           break
         case 'getStudentEnterAuth' :
-          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.school = 'all'
-          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.className = 'all'
+          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.schoolId = 'all'
+          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.classId = 'all'
           this.showRecord = value
           break
         case 'getStudentEnterApp' :
-          this.$refs.getStudentEnterApp.getStudentEnterAppForm.school = 'all'
-          this.$refs.getStudentEnterApp.getStudentEnterAppForm.className = 'all'
+          this.$refs.getStudentEnterApp.getStudentEnterAppForm.schoolId = 'all'
+          this.$refs.getStudentEnterApp.getStudentEnterAppForm.classId = 'all'
           this.showRecord = value
           break
         case 'getStudentOutApp' :
-          this.$refs.getStudentOutApp.getStudentOutAppForm.school = 'all'
-          this.$refs.getStudentOutApp.getStudentOutAppForm.className = 'all'
+          this.$refs.getStudentOutApp.getStudentOutAppForm.schoolId = 'all'
+          this.$refs.getStudentOutApp.getStudentOutAppForm.classId = 'all'
           this.showRecord = value
           break
         case 'getStudentTotalOutTime' :
-          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.school = 'all'
-          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.className = 'all'
+          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.schoolId = 'all'
+          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.classId = 'all'
           this.showRecord = value
           break
         case 'getUnapprovedEnter' :
-          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.school = 'all'
-          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.className = 'all'
+          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.schoolId = 'all'
+          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.classId = 'all'
           this.showRecord = value
           break
         case 'getUnapprovedOut' :
+          this.$refs.getUnapprovedOut.getUnapprovedOutForm.schoolId = 'all'
+          this.$refs.getUnapprovedOut.getUnapprovedOutForm.classId = 'all'
           this.showRecord = value
           break
         case 'getMostSubmit' :
+          this.$refs.getMostSubmit.getMostSubmitForm.schoolId = 'all'
+          this.$refs.getMostSubmit.getMostSubmitForm.classId = 'all'
           this.showRecord = value
           break
         case 'getLongest' :
@@ -208,7 +218,8 @@ export default {
     'get-student-out-app': GetStudentOutApp,
     'get-student-total-out-time': GetStudentTotalOutTime,
     'get-unapproved-enter': GetUnapprovedEnter,
-    'get-unapproved-out': GetUnapprovedOut
+    'get-unapproved-out': GetUnapprovedOut,
+    'get-most-submit': GetMostSubmit
   }
 }
 
