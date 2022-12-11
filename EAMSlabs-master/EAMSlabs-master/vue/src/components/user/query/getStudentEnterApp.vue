@@ -1,8 +1,18 @@
 <template>
   <el-card class="box-card">
     <el-form label-position="left" :model="getStudentEnterAppForm" ref="getDailyInfoForm" label-width="0">
-      <el-form-item prop="day">
-        <el-input style="width: 20%" placeholder="请输入查询天数" v-model="getStudentEnterAppForm.day"></el-input>
+      <el-form-item prop="status">
+        <el-select style="width: 20%" placeholder="请选择申请状态" v-model="getStudentEnterAppForm.status">
+          <el-option
+            v-for="item in appOption"
+            :key="item.name"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item prop="studentId">
+        <el-input style="width: 20%" placeholder="请输入学号,为空则查询全部" v-model="getStudentEnterAppForm.studentId"></el-input>
       </el-form-item>
       <el-form-item style="width: 20%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getStudentEnterApp()">查询</el-button>
@@ -12,11 +22,11 @@
               style="width: 100%"
               pager="page">
       <el-table-column
-        prop="number"
+        prop="studentId"
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentEnterAppTable.number}}</span>
+          <span>{{ scope.row.getStudentEnterAppTable.studentId}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -52,32 +62,41 @@ export default {
   data () {
     return {
       appOption: [{
-        value: 'waiting',
+        value: 'pending',
         label: '待审核'
       }, {
-        value: 'passed',
+        value: 'accepted',
         label: '已同意'
       }, {
         value: 'rejected',
         label: '已拒绝'
       }, {
-        value: 'all',
+        value: '',
         label: '全部'
       }],
       getStudentEnterAppTable: [],
       getStudentEnterAppForm: {
-        school: '',
-        className: '',
-        status: ''
+        schoolId: '',
+        classId: '',
+        status: '',
+        studentId: ''
       }
     }
   },
-  mounted () {
-    this.getStudentEnterApp(this.getStudentEnterAppForm.school, this.getStudentEnterAppForm.className)
-  },
   methods: {
-    getStudentEnterApp (school, className) {
-      ;
+    getStudentEnterApp () {
+      var param = new FormData()
+      param.append('schoolId', this.getStudentEnterAppForm.schoolId)
+      param.append('classId', this.getStudentEnterAppForm.classId)
+      param.append('status', this.getStudentEnterAppForm.status)
+      if (this.getStudentEnterAppForm.studentId === '') {
+        param.append('studentId', -1)
+      } else {
+        param.append('studentId', this.getStudentEnterAppForm.studentId)
+      }
+      this.$axios.get('/api/student/student', {params: param}).then(res => {
+        this.getStudentEnterAppTable = res.data.data
+      })
     }
   }
 }

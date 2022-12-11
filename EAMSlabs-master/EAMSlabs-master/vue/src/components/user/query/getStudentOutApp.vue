@@ -11,6 +11,9 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item prop="studentId">
+        <el-input style="width: 20%" placeholder="请输入学号,为空则查询全部" v-model="getStudentOutAppForm.studentId"></el-input>
+      </el-form-item>
       <el-form-item style="width: 20%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getStudentOutApp()">查询</el-button>
       </el-form-item>
@@ -19,11 +22,11 @@
               style="width: 100%"
               pager="page">
       <el-table-column
-        prop="number"
+        prop="studentId"
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.number}}</span>
+          <span>{{ scope.row.getStudentOutAppTable.studentId}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -92,23 +95,32 @@ export default {
         value: 'rejected',
         label: '已拒绝'
       }, {
-        value: 'all',
+        value: '',
         label: '全部'
       }],
       getStudentOutAppTable: [],
       getStudentOutAppForm: {
-        school: '',
+        schoolId: '',
         className: '',
-        status: ''
+        status: '',
+        studentId: ''
       }
     }
   },
-  mounted () {
-    this.getStudentOutApp(this.getStudentOutAppForm.school, this.getStudentOutAppForm.className)
-  },
   methods: {
-    getStudentOutApp (school, className) {
-      ;
+    getStudentOutApp () {
+      var param = new FormData()
+      param.append('schoolId', this.getStudentOutAppForm.schoolId)
+      param.append('className', this.getStudentOutAppForm.className)
+      param.append('status', this.getStudentOutAppForm.status)
+      if (this.getStudentOutAppForm.studentId === '') {
+        param.append('studentId', -1)
+      } else {
+        param.append('studentId', this.getStudentOutAppForm.studentId)
+      }
+      this.$axios.get('/api/student/student', {params: param}).then(res => {
+        this.getStudentEnterAppTable = res.data.data
+      })
     }
   }
 }
