@@ -20,4 +20,7 @@ public class Response<T> {
     private Integer code;   // 为各种状态进行编码
     private String  msg;    // 详细信息
     private T data;         // 返回的数据
+    public static Response<String> error(String msg) {
+        return new Response<>(FAIL, msg, null);
+    }
 }
