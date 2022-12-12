@@ -111,16 +111,26 @@
               label="getNotBack"
               v-show="showRecord === 'getNotBack'"
               ref="getNotBack"></get-not-back>
-            <get-more-than-24
+            <get-more-than24
               id="getMoreThan24"
               label="getMoreThan24"
               v-show="showRecord === 'getMoreThan24'"
-              ref="getMoreThan24"></get-more-than-24>
+              ref="getMoreThan24"></get-more-than24>
             <get-not-out
               id="getNotOut"
               label="getNotOut"
               v-show="showRecord === 'getNotOut'"
               ref="getNotOut"></get-not-out>
+            <get-always-in
+              id="getAlwaysIn"
+              label="getAlwaysIn"
+              v-show="showRecord === 'getAlwaysIn'"
+              ref="getAlwaysIn"></get-always-in>
+            <get-same-time
+              id="getSameTime"
+              label="getSameTime"
+              v-show="showRecord === 'getSameTime'"
+              ref="getSameTime"></get-same-time>
           </el-main>
         </el-container>
       </el-container>
@@ -146,6 +156,8 @@ import GetLongest from '../advancedQuery/getLongest'
 import GetNotBack from '../advancedQuery/getNotBack'
 import GetMoreThan24 from '../advancedQuery/getMoreThan24'
 import GetNotOut from '../advancedQuery/getNotOut'
+import GetAlwaysIn from '../advancedQuery/getAlwaysIn'
+import GetSameTime from '../advancedQuery/getSameTime'
 export default {
   data () {
     return {
@@ -225,9 +237,13 @@ export default {
           this.showRecord = value
           break
         case 'getAlwaysIn' :
+          this.$refs.getAlwaysIn.getAlwaysInForm.schoolId = 'all'
+          this.$refs.getAlwaysIn.getAlwaysInForm.classId = 'all'
           this.showRecord = value
           break
         case 'getSameTime' :
+          this.$refs.getSameTime.getSameTimeForm.schoolId = 'all'
+          this.$refs.getSameTime.getSameTimeForm.classId = 'all'
           this.showRecord = value
           break
         case 'getMostCampus' :
@@ -254,8 +270,10 @@ export default {
     'get-most-submit': GetMostSubmit,
     'get-longest': GetLongest,
     'get-not-back': GetNotBack,
-    'get-more-than-24': GetMoreThan24,
-    'get-not-out': GetNotOut
+    'get-more-than24': GetMoreThan24,
+    'get-not-out': GetNotOut,
+    'get-always-in': GetAlwaysIn,
+    'get-same-time': GetSameTime
   }
 }
 
