@@ -1,7 +1,7 @@
 package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.DailyReportMapper;
-import com.example.accesscontrolsystem.model.entity.DailyReport;
+import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

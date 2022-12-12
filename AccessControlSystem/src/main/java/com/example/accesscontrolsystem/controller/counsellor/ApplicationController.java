@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.controller.superUser;
+package com.example.accesscontrolsystem.controller.counsellor;
 
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController("SuperUserApplicationController")
-@RequestMapping("/su")
+@RequestMapping("/counsellor/")
 public class ApplicationController {
     private final ApplicationService applicationService;
     @Autowired
@@ -20,9 +20,9 @@ public class ApplicationController {
 
     @GetMapping("/enter-applications/")
     public Response<List<EnterApplication>> getEnterApplicationsByStudentId(@RequestParam Integer classId,
-                                                                                          Integer schoolId,
-                                                                                          Integer studentId,
-                                                                                          String status) {
+                                                                            Integer schoolId,
+                                                                            Integer studentId,
+                                                                            String status) {
         return applicationService.getEnterApplications(classId, schoolId, studentId, status);
     }
 
@@ -34,3 +34,4 @@ public class ApplicationController {
         return applicationService.getLeaveApplications(classId, schoolId, studentId, status);
     }
 }
+

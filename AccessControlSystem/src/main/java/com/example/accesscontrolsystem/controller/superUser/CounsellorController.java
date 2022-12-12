@@ -1,6 +1,6 @@
 package com.example.accesscontrolsystem.controller.superUser;
 
-import com.example.accesscontrolsystem.model.entity.Counsellor;
+import com.example.accesscontrolsystem.model.entity.user.Counsellor;
 import com.example.accesscontrolsystem.service.superUser.UserService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.GateLogMapper;
-import com.example.accesscontrolsystem.model.entity.GateLog;
+import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import org.springframework.stereotype.Component;
 
 @Component("GateLogManager")

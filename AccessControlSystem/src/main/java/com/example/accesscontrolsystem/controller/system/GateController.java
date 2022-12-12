@@ -1,6 +1,6 @@
 package com.example.accesscontrolsystem.controller.system;
 
-import com.example.accesscontrolsystem.model.entity.GateLog;
+import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import com.example.accesscontrolsystem.service.system.GateService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.web.bind.annotation.*;

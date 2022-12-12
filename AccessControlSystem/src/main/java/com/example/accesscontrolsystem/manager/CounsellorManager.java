@@ -1,7 +1,7 @@
 package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.CounsellorMapper;
-import com.example.accesscontrolsystem.model.entity.Counsellor;
+import com.example.accesscontrolsystem.model.entity.user.Counsellor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

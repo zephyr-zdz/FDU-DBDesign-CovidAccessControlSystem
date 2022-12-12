@@ -2,8 +2,8 @@ package com.example.accesscontrolsystem.service.superUser;
 
 import com.example.accesscontrolsystem.manager.CounsellorManager;
 import com.example.accesscontrolsystem.manager.StudentManager;
-import com.example.accesscontrolsystem.model.entity.Counsellor;
-import com.example.accesscontrolsystem.model.entity.Student;
+import com.example.accesscontrolsystem.model.entity.user.Counsellor;
+import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.manager.ClassManager;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;

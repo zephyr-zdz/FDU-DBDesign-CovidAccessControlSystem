@@ -6,6 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MajorMapper extends JpaRepository<Major, Integer> {
-
     Major findMajorById(Integer id);
 }

@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.model.entity;
+package com.example.accesscontrolsystem.model.entity.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

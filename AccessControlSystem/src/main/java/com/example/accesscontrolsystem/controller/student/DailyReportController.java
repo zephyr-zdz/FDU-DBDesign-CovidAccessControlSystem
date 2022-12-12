@@ -1,6 +1,6 @@
 package com.example.accesscontrolsystem.controller.student;
 
-import com.example.accesscontrolsystem.model.entity.DailyReport;
+import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.service.student.DailyReportService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;

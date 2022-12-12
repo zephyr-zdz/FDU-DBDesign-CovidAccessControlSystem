@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.model.entity;
+package com.example.accesscontrolsystem.model.entity.reportNlog;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,6 +27,10 @@ public class LeaveApplication {
     private String status; // 申请状态：pending/accepted/rejected
     @Column(name = "student-id", nullable = false)
     private Integer studentId;
+    @Column(name = "class-id", nullable = false) // 辅助索引
+    private Integer classId;
+    @Column(name = "major-id", nullable = false) // 辅助索引
+    private Integer majorId;
     @Column(name = "date", nullable = false)
     private String date;
 }

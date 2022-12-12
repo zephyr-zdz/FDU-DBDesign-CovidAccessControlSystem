@@ -1,8 +1,8 @@
 package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.LeaveApplicationMapper;
-import com.example.accesscontrolsystem.model.entity.LeaveApplication;
-import com.example.accesscontrolsystem.model.entity.Student;
+import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
+import com.example.accesscontrolsystem.model.entity.user.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

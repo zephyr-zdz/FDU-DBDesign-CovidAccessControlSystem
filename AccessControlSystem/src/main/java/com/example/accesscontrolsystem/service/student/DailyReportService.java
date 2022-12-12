@@ -2,7 +2,7 @@ package com.example.accesscontrolsystem.service.student;
 
 import com.example.accesscontrolsystem.manager.DailyReportManager;
 import com.example.accesscontrolsystem.manager.StudentManager;
-import com.example.accesscontrolsystem.model.entity.DailyReport;
+import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.example.accesscontrolsystem.mapper;
 
-import com.example.accesscontrolsystem.model.entity.LeaveApplication;
+import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

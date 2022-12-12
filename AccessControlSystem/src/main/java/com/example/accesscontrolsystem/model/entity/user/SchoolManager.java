@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.model.entity;
+package com.example.accesscontrolsystem.model.entity.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "counsellor")
-public class Counsellor {
+@Table(name = "school_manager")
+public class SchoolManager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "name", nullable = false, length = 45)
     private String name;
-    @Column(name = "class-id", nullable = false)
-    private Integer classId;
+    @Column(name = "major-id", nullable = false)
+    private Integer majorId;
 }

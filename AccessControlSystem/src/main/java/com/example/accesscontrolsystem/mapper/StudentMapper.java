@@ -1,6 +1,6 @@
 package com.example.accesscontrolsystem.mapper;
 
-import com.example.accesscontrolsystem.model.entity.Student;
+import com.example.accesscontrolsystem.model.entity.user.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
