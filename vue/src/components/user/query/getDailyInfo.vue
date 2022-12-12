@@ -1,13 +1,14 @@
 <template>
   <el-card class="box-card">
-    <el-form label-position="left" :model="getDailyInfoForm" ref="getDailyInfoForm" label-width="0">
-      <el-form-item prop="day">
-        <el-input style="width: 20%" placeholder="请输入天数，为空则查询全部" v-model="getDailyInfoForm.day"></el-input>
+    <el-form label-position="left" :model="getDailyInfoForm" :rules="rules" ref="getDailyInfoForm" label-width="50">
+      <el-form-item prop="day" label="天数">
+        <el-input-number style="width: 20%" :min="1" v-model="getDailyInfoForm.day"></el-input-number>
       </el-form-item>
       <el-form-item prop="studentId">
+        <div slot="label" style="margin-left: 10px">学号</div>
         <el-input style="width: 20%" placeholder="请输入学号，为空则查询全部" v-model="getDailyInfoForm.studentId"></el-input>
       </el-form-item>
-      <el-form-item style="width: 20%">
+      <el-form-item style="width: 25%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getDailyInfo()">查询</el-button>
       </el-form-item>
     </el-form>
@@ -68,6 +69,11 @@ export default {
         classId: '',
         day: '',
         studentId: ''
+      },
+      rules: {
+        day: [
+          { required: true, message: '请输入天数', trigger: 'change' }
+        ]
       }
     }
   },
@@ -76,14 +82,9 @@ export default {
       var param = new FormData()
       param.append('schoolId', this.getDailyInfoForm.schoolId)
       param.append('classId', this.getDailyInfoForm.classId)
-      param.append('status', this.getDailyInfoForm.status)
-      if (this.getDailyInfoForm.day === '') {
-        param.append('day', -1)
-      } else {
-        param.append('day', this.getDailyInfoForm.day)
-      }
+      param.append('status', this.getDailyInfoForm.day)
       if (this.getDailyInfoForm.studentId === '') {
-        param.append('studentId', -1)
+        param.append('studentId', '*')
       } else {
         param.append('studentId', this.getDailyInfoForm.studentId)
       }
