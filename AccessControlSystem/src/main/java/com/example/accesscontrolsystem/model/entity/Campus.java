@@ -1,9 +1,6 @@
 package com.example.accesscontrolsystem.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "campus")
 public class Campus {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "name", nullable = false, length = 45)

@@ -22,7 +22,7 @@ public class DailyReportService {
         if (studentId == null) {
             return new Response<>(Response.FAIL, "studentId为空", null);
         }
-        if (studentManager.findStudentById(studentId).isEmpty()) {
+        if (studentManager.findStudentById(studentId) == null) {
             return new Response<>(Response.FAIL, "学生不存在", null);
         }
         return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentId(studentId));
