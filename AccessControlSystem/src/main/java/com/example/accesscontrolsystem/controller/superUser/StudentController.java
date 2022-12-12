@@ -19,7 +19,7 @@ public class StudentController {
     public StudentController(UserService userservice) {
         this.userservice = userservice;
     }
-    @GetMapping("/students")
+    @GetMapping("/all")
     public Response<List<Student>> getStudents() {
         return userservice.getStudents();
     }

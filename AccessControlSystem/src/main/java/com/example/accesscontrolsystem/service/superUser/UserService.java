@@ -34,7 +34,7 @@ public class UserService {
         if (studentManager.findStudentByIdNumberAndIdType(student.getIdNumber(),student.getIdType()) != null) {
             return new Response<>(Response.FAIL, "学生身份证件号码已存在", null);
         }
-        if (classManager.findClassById(student.getClassId()).isEmpty()) {
+        if (classManager.findClassById(student.getClassId()) == null) {
             return new Response<>(Response.FAIL, "学生班级不存在", null);
         }
         return new Response<>(Response.SUCCESS, "添加成功", studentManager.addStudent(student));
@@ -47,7 +47,7 @@ public class UserService {
         if (counsellorManager.findCounsellorById(counsellor.getId()).isPresent()) {
             return new Response<>(Response.FAIL, "辅导员id已存在", null);
         }
-        if (classManager.findClassById(counsellor.getClassId()).isEmpty()) {
+        if (classManager.findClassById(counsellor.getClassId()) == null) {
             return new Response<>(Response.FAIL, "辅导员班级不存在", null);
         }
         return new Response<>(Response.SUCCESS, "添加成功", counsellorManager.addCounsellor(counsellor));
