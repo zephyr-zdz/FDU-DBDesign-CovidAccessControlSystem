@@ -101,6 +101,16 @@
               label="getMostSubmit"
               v-show="showRecord === 'getMostSubmit'"
               ref="getMostSubmit"></get-most-submit>
+            <get-longest
+              id="getLongest"
+              label="getLongest"
+              v-show="showRecord === 'getLongest'"
+              ref="getLongest"></get-longest>
+            <get-not-back
+              id="getNotBack"
+              label="getNotBack"
+              v-show="showRecord === 'getNotBack'"
+              ref="getNotBack"></get-not-back>
           </el-main>
         </el-container>
       </el-container>
@@ -122,6 +132,8 @@ import GetStudentTotalOutTime from '../query/getStudentTotalOutTime'
 import GetUnapprovedEnter from '../advancedQuery/getUnapprovedEnter'
 import GetUnapprovedOut from '../advancedQuery/getUnapprovedOut'
 import GetMostSubmit from '../advancedQuery/getMostSubmit'
+import GetLongest from '../advancedQuery/getLongest'
+import GetNotBack from '../advancedQuery/getNotBack'
 export default {
   data () {
     return {
@@ -181,9 +193,13 @@ export default {
           this.showRecord = value
           break
         case 'getLongest' :
+          this.$refs.getLongest.getLongestForm.schoolId = 'all'
+          this.$refs.getLongest.getLongestForm.classId = 'all'
           this.showRecord = value
           break
         case 'getNotBack' :
+          this.$refs.getNotBack.getNotBackForm.schoolId = 'all'
+          this.$refs.getNotBack.getNotBackForm.classId = 'all'
           this.showRecord = value
           break
         case 'getMoreThan24' :
@@ -219,7 +235,9 @@ export default {
     'get-student-total-out-time': GetStudentTotalOutTime,
     'get-unapproved-enter': GetUnapprovedEnter,
     'get-unapproved-out': GetUnapprovedOut,
-    'get-most-submit': GetMostSubmit
+    'get-most-submit': GetMostSubmit,
+    'get-longest': GetLongest,
+    'get-not-back': GetNotBack
   }
 }
 
