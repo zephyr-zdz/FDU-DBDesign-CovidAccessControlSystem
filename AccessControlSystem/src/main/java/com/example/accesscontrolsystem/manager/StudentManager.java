@@ -5,14 +5,19 @@ import com.example.accesscontrolsystem.model.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component("StudentManager")
 public class StudentManager {
     private final StudentMapper studentMapper;
+    private final ClassManager classManager;
+
     @Autowired
-    public StudentManager(StudentMapper studentMapper) {
+    public StudentManager(StudentMapper studentMapper,
+                          ClassManager classManager) {
         this.studentMapper = studentMapper;
+        this.classManager = classManager;
     }
 
     public Student findStudentById(Integer studentId) {
@@ -47,5 +52,14 @@ public class StudentManager {
 
     public void update(Student student) {
         studentMapper.save(student);
+    }
+
+    public List<Student> findAllByMajorId(Integer id) {
+        List<Student> students = new ArrayList<>();
+        classManager.findClassesByMajorId(id).forEach(aClass -> students.addAll(studentMapper.findStudentsByClassId(aClass.getId())));
+        return students;
+    }
+    public List<Student> findAllByClassId(Integer id) {
+        return studentMapper.findStudentsByClassId(id);
     }
 }
