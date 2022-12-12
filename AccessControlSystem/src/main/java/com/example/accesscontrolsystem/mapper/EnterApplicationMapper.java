@@ -10,4 +10,6 @@ import java.util.List;
 public interface EnterApplicationMapper extends JpaRepository<EnterApplication, Integer> {
     List<EnterApplication> findAllByStudentId(Integer studentId);
     List<EnterApplication> findAllByStudentIdAndStatus(Integer studentId, String status);
+
+    List<EnterApplication> findAllByStatus(String status);
 }

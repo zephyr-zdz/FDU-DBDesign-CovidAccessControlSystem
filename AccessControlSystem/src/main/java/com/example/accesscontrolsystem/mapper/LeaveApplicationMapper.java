@@ -10,4 +10,6 @@ import java.util.List;
 public interface LeaveApplicationMapper extends JpaRepository<LeaveApplication, Integer> {
     List<LeaveApplication> findAllByStudentId(Integer studentId);
     List<LeaveApplication> findAllByStudentIdAndStatus(Integer studentId, String status);
+
+    List<LeaveApplication> findAllByStatus(String status);
 }
