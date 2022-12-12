@@ -111,6 +111,16 @@
               label="getNotBack"
               v-show="showRecord === 'getNotBack'"
               ref="getNotBack"></get-not-back>
+            <get-more-than-24
+              id="getMoreThan24"
+              label="getMoreThan24"
+              v-show="showRecord === 'getMoreThan24'"
+              ref="getMoreThan24"></get-more-than-24>
+            <get-not-out
+              id="getNotOut"
+              label="getNotOut"
+              v-show="showRecord === 'getNotOut'"
+              ref="getNotOut"></get-not-out>
           </el-main>
         </el-container>
       </el-container>
@@ -134,6 +144,8 @@ import GetUnapprovedOut from '../advancedQuery/getUnapprovedOut'
 import GetMostSubmit from '../advancedQuery/getMostSubmit'
 import GetLongest from '../advancedQuery/getLongest'
 import GetNotBack from '../advancedQuery/getNotBack'
+import GetMoreThan24 from '../advancedQuery/getMoreThan24'
+import GetNotOut from '../advancedQuery/getNotOut'
 export default {
   data () {
     return {
@@ -203,9 +215,13 @@ export default {
           this.showRecord = value
           break
         case 'getMoreThan24' :
+          this.$refs.getMoreThan24.getMoreThan24Form.schoolId = 'all'
+          this.$refs.getMoreThan24.getMoreThan24Form.classId = 'all'
           this.showRecord = value
           break
         case 'getNotOut' :
+          this.$refs.getNotOut.getNotOutForm.schoolId = 'all'
+          this.$refs.getNotOut.getNotOutForm.classId = 'all'
           this.showRecord = value
           break
         case 'getAlwaysIn' :
@@ -237,7 +253,9 @@ export default {
     'get-unapproved-out': GetUnapprovedOut,
     'get-most-submit': GetMostSubmit,
     'get-longest': GetLongest,
-    'get-not-back': GetNotBack
+    'get-not-back': GetNotBack,
+    'get-more-than-24': GetMoreThan24,
+    'get-not-out': GetNotOut
   }
 }
 
