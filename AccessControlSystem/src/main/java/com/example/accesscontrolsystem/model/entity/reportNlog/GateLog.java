@@ -16,7 +16,7 @@ public class GateLog {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "time", nullable = false)
-    private String  time; // utf-8编码的时间字符串，例如：2020-12-12 12:12:12
+    private long time; // utf-8编码的时间字符串，例如：2020-12-12 12:12:12
     @Column(name = "direction", nullable = false)
     private String  direction; // in/out
     @Column(name = "student-id", nullable = false)

@@ -38,4 +38,8 @@ public class LeaveApplicationManager {
     public List<LeaveApplication> findAllByStatus(String status) {
         return leaveApplicationMapper.findAllByStatus(status);
     }
+
+    public void save(LeaveApplication leaveApplication) {
+        leaveApplicationMapper.save(leaveApplication);
+    }
 }

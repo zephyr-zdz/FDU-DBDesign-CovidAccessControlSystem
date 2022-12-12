@@ -18,4 +18,8 @@ public class DailyReportManager {
     public List<DailyReport> findAllByStudentId(Integer studentId) {
         return dailyReportMapper.findAllByStudentId(studentId);
     }
+
+    public void save(DailyReport dailyReport) {
+        dailyReportMapper.save(dailyReport);
+    }
 }

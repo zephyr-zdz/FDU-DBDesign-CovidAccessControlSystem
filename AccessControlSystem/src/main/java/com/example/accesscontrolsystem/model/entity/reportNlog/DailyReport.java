@@ -15,6 +15,8 @@ public class DailyReport {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
+    @Column(name = "create-time", nullable = false)
+    private Long createTime; // utf-8编码的时间戳，例如：1607766400000
     @Column(name = "location", nullable = false, length = 45)
     private String location;
     @Column(name = "temperature", nullable = false)

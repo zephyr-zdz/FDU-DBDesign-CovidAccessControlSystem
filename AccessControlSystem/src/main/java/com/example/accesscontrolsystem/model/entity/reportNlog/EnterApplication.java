@@ -17,8 +17,12 @@ public class EnterApplication {
     private Integer id;
     @Column(name = "passing-areas", nullable = false, length = 45)
     private String passingAreas;// 虹口区, 杨浦区, 闵行区 注意是英文逗号分隔
+    @Column(name = "create-time", nullable = false)
+    private Long createTime; // utf-8编码的时间戳，例如：1607760000
+    @Column(name = "accept-time", nullable = false)
+    private Long acceptTime; // utf-8编码的时间戳，例如：1607760000
     @Column(name = "enter-time", nullable = false)
-    private String enterTime; // utf-8编码的时间字符串，例如：2020-12-12 12:12:12
+    private Long enterTime; // utf-8编码的时间戳，例如：1607760000
     @Column(name = "status", nullable = false, length = 10)
     private String status; // pending/accepted/rejected
     @Column(name = "student-id", nullable = false)
@@ -27,6 +31,4 @@ public class EnterApplication {
     private Integer classId;
     @Column(name = "major-id", nullable = false) // 辅助索引
     private Integer majorId;
-    @Column(name = "date", nullable = false)
-    private String date;
 }

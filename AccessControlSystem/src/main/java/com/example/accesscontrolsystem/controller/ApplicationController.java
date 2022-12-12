@@ -1,19 +1,16 @@
-package com.example.accesscontrolsystem.controller.student;
+package com.example.accesscontrolsystem.controller;
 
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
 import com.example.accesscontrolsystem.service.superUser.ApplicationService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController("SuperUserApplicationController")
-@RequestMapping("/counsellor/")
+@RequestMapping("/application")
 public class ApplicationController {
     private final ApplicationService applicationService;
     @Autowired
@@ -22,19 +19,18 @@ public class ApplicationController {
     }
 
     @GetMapping("/enter-applications/")
-    public Response<List<EnterApplication>> getEnterApplicationsByStudentId(@RequestParam Integer classId,
-                                                                            Integer schoolId,
-                                                                            Integer studentId,
-                                                                            String status) {
+    public Response<List<EnterApplication>> getEnterApplicationsByStudentId(  Integer classId,
+                                                                              Integer schoolId,
+                                                                              Integer studentId,
+                                                                              String status) {
         return applicationService.getEnterApplications(classId, schoolId, studentId, status);
     }
 
     @GetMapping("/leave-applications/")
-    public Response<List<LeaveApplication>> getLeaveApplicationsByStudentId(@RequestParam Integer classId,
+    public Response<List<LeaveApplication>> getLeaveApplicationsByStudentId(Integer classId,
                                                                             Integer schoolId,
                                                                             Integer studentId,
                                                                             String status) {
         return applicationService.getLeaveApplications(classId, schoolId, studentId, status);
     }
 }
-

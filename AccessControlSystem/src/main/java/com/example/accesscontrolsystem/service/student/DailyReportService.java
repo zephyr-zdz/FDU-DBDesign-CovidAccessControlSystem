@@ -7,6 +7,7 @@ import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service("StudentDailyReportService")
@@ -26,5 +27,14 @@ public class DailyReportService {
             return new Response<>(Response.FAIL, "学生不存在", null);
         }
         return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentId(studentId));
+    }
+
+    public Response<DailyReport> addDailyReport(DailyReport dailyReport) {
+        if (studentManager.findStudentById(dailyReport.getStudentId()) == null) {
+            return new Response<>(Response.FAIL, "学生不存在", null);
+        }
+        dailyReport.setCreateTime(new Date().getTime());
+        dailyReportManager.save(dailyReport);
+        return new Response<>(Response.SUCCESS, "成功", null);
     }
 }

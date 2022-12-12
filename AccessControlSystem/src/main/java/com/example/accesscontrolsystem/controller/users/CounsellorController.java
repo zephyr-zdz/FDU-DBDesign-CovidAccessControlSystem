@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.controller.superUser;
+package com.example.accesscontrolsystem.controller.users;
 
 import com.example.accesscontrolsystem.model.entity.user.Counsellor;
 import com.example.accesscontrolsystem.service.superUser.UserService;

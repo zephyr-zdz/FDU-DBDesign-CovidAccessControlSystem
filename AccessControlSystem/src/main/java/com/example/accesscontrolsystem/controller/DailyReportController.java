@@ -1,13 +1,10 @@
-package com.example.accesscontrolsystem.controller.student;
+package com.example.accesscontrolsystem.controller;
 
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.service.student.DailyReportService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,8 +17,10 @@ public class DailyReportController {
     public DailyReportController(DailyReportService dailyReportService) {
         this.dailyReportService = dailyReportService;
     }
-
-
+    @PostMapping("/")
+    public Response<DailyReport> addDailyReports(@RequestBody DailyReport dailyReport) {
+        return dailyReportService.addDailyReport(dailyReport);
+    }
     @GetMapping("/")
     public Response<List<DailyReport>> getDailyReports(@RequestParam("student-id") Integer studentId) {
         return dailyReportService.getDailyReports(studentId);
