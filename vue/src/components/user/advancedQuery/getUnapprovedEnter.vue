@@ -1,10 +1,10 @@
 <template>
   <el-card class="box-card">
-    <el-form label-position="left" :model="getUnapprovedEnterForm" ref="getUnapprovedEnterForm" label-width="0">
-      <el-form-item prop="day">
-        <el-input style="width: 20%" placeholder="请输入天数，为空则查询全部" v-model="getUnapprovedEnterForm.day"></el-input>
+    <el-form label-position="left" :model="getUnapprovedEnterForm" :rules="rules" ref="getUnapprovedEnterForm" label-width="50">
+      <el-form-item prop="day" label="天数">
+        <el-input-number style="width: 20%" :min="1" v-model="getUnapprovedEnterForm.day"></el-input-number>
       </el-form-item>
-      <el-form-item style="width: 20%">
+      <el-form-item style="width: 25%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getUnapprovedEnter()">查询</el-button>
       </el-form-item>
     </el-form>
@@ -66,6 +66,11 @@ export default {
         day: '',
         schoolId: '',
         classId: ''
+      },
+      rules: {
+        day: [
+          { required: true, message: '请输入天数', trigger: 'change' }
+        ]
       }
     }
   },
