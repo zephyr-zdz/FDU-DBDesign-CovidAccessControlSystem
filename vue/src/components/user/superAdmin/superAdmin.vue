@@ -131,6 +131,11 @@
               label="getSameTime"
               v-show="showRecord === 'getSameTime'"
               ref="getSameTime"></get-same-time>
+            <get-most-campus
+              id="getMostCampus"
+              label="getMostCampus"
+              v-show="showRecord === 'getMostCampus'"
+              ref="getMostCampus"></get-most-campus>
           </el-main>
         </el-container>
       </el-container>
@@ -158,6 +163,7 @@ import GetMoreThan24 from '../advancedQuery/getMoreThan24'
 import GetNotOut from '../advancedQuery/getNotOut'
 import GetAlwaysIn from '../advancedQuery/getAlwaysIn'
 import GetSameTime from '../advancedQuery/getSameTime'
+import GetMostCampus from '../advancedQuery/getMostCampus'
 export default {
   data () {
     return {
@@ -247,6 +253,8 @@ export default {
           this.showRecord = value
           break
         case 'getMostCampus' :
+          this.$refs.getMostCampus.getMostCampusForm.schoolId = 'all'
+          this.$refs.getMostCampus.getMostCampusForm.classId = 'all'
           this.showRecord = value
           break
         default :
@@ -273,7 +281,8 @@ export default {
     'get-more-than24': GetMoreThan24,
     'get-not-out': GetNotOut,
     'get-always-in': GetAlwaysIn,
-    'get-same-time': GetSameTime
+    'get-same-time': GetSameTime,
+    'get-most-campus': GetMostCampus
   }
 }
 
