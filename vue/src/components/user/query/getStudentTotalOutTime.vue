@@ -57,7 +57,7 @@ export default {
       param.append('schoolId', this.getStudentTotalOutTimeForm.schoolId)
       param.append('className', this.getStudentTotalOutTimeForm.className)
       if (this.getStudentTotalOutTimeForm.studentId === '') {
-        param.append('studentId', -1)
+        param.append('studentId', '*')
       } else {
         param.append('studentId', this.getStudentTotalOutTimeForm.studentId)
       }

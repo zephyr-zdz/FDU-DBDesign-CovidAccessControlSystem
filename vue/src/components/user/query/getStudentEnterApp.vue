@@ -87,14 +87,14 @@ export default {
         value: 'rejected',
         label: '已拒绝'
       }, {
-        value: '',
+        value: '*',
         label: '全部'
       }],
       getStudentEnterAppTable: [],
       getStudentEnterAppForm: {
         schoolId: '',
         classId: '',
-        status: '',
+        status: '*',
         studentId: ''
       }
     }
@@ -106,7 +106,7 @@ export default {
       param.append('classId', this.getStudentEnterAppForm.classId)
       param.append('status', this.getStudentEnterAppForm.status)
       if (this.getStudentEnterAppForm.studentId === '') {
-        param.append('studentId', -1)
+        param.append('studentId', '*')
       } else {
         param.append('studentId', this.getStudentEnterAppForm.studentId)
       }
