@@ -14,4 +14,6 @@ public interface EnterApplicationMapper extends JpaRepository<EnterApplication, 
     List<EnterApplication> findAllByStatus(String status);
     @Query(value = "select * from enter_application where class_id = ?1 and school_id = ?2 and student_id = ?3 and status = ?4", nativeQuery = true)
     List<EnterApplication> sqlFind(String classId, String schoolId, String studentId, String status);
+
+    List<EnterApplication> findAllByCreateTimeBetween(long now, long nDaysBefore);
 }

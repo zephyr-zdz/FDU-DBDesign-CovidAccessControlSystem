@@ -3,20 +3,21 @@ package com.example.accesscontrolsystem.manager;
 import com.example.accesscontrolsystem.mapper.EnterApplicationMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.user.Student;
+import com.example.accesscontrolsystem.service.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Component("EnterApplicationManager")
 public class EnterApplicationManager {
     private final EnterApplicationMapper enterApplicationMapper;
+    private final TimeService timeService;
     @Autowired
-    public EnterApplicationManager(EnterApplicationMapper enterApplicationMapper) {
+    public EnterApplicationManager(EnterApplicationMapper enterApplicationMapper, TimeService timeService) {
         this.enterApplicationMapper = enterApplicationMapper;
+        this.timeService = timeService;
     }
     public List<EnterApplication> findAllByStudentId(Integer studentId) {
         return enterApplicationMapper.findAllByStudentId(studentId);
@@ -36,14 +37,12 @@ public class EnterApplicationManager {
         return enterApplications;
     }
     public List<EnterApplication> findLastNDaysEnterApplications(Integer n) {
-        Date today = new Date();
-        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-        List<String> nDays = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            nDays.add(ft.format(new Date(today.getTime() - (long) i * 24 * 60 * 60 * 1000)));
-        }
-        List<EnterApplication> enterApplications = new ArrayList<>();
-        nDays.stream().map(enterApplicationMapper::findAllByDate).forEach(enterApplications::addAll);
-        return enterApplications;
+        long today = timeService.getTime();
+        long nDaysBefore = today - (long) n * 24 * 60 * 60 * 1000;
+        return enterApplicationMapper.findAllByCreateTimeBetween(today, nDaysBefore);
+    }
+
+    public void save(EnterApplication enterApplication) {
+        enterApplicationMapper.save(enterApplication);
     }
 }
