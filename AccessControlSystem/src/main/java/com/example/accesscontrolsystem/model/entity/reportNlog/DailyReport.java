@@ -29,4 +29,8 @@ public class DailyReport {
     private Integer classId;
     @Column(name = "major-id", nullable = false) // 辅助索引
     private Integer majorId;
+    @Column(name = "time", nullable = false)
+    private Long time; // utf-8编码的时间戳，例如：1607766400000
+    @Column(name = "date", nullable = false, length = 45)
+    private String date;
 }

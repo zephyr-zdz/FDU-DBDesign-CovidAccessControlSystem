@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface DailyReportMapper extends JpaRepository<DailyReport, Integer> {
     List<DailyReport> findAllByStudentId(Integer studentId);
+
+    DailyReport findDailyReportByStudentIdAndDate(Integer studentId, String date);
 }
