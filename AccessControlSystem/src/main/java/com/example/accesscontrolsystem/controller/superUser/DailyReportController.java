@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@RestController("StudentDailyReportController")
+@RestController("DailyReportController")
 @RequestMapping("/super-user/daily-report")
 public class DailyReportController {
     private final DailyReportService dailyReportService;

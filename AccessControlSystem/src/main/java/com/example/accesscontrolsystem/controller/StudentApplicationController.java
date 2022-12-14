@@ -7,7 +7,7 @@ import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("ApplicationController")
+@RestController("StudentApplicationController")
 @RequestMapping("/application")
 public class StudentApplicationController {
     private final ApplicationService applicationService;
