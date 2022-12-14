@@ -52,4 +52,11 @@ public class UserService {
         }
         return new Response<>(Response.SUCCESS, "添加成功", counsellorManager.addCounsellor(counsellor));
     }
+
+    public Response<Student> getStudentById(Integer studentId) {
+        if (studentManager.findStudentById(studentId) == null) {
+            return new Response<>(Response.FAIL, "学生不存在", null);
+        }
+        return new Response<>(Response.SUCCESS, "成功", studentManager.findStudentById(studentId));
+    }
 }
