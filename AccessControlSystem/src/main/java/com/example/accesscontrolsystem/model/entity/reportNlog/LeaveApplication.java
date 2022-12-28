@@ -1,5 +1,6 @@
 package com.example.accesscontrolsystem.model.entity.reportNlog;
 
+import com.example.accesscontrolsystem.model.entity.user.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,12 +28,9 @@ public class LeaveApplication {
     private Long returnTime; // utf-8编码的时间字符串，例如：2020-12-12 12:12:12
     @Column(name = "status", nullable = false)
     private String status; // 申请状态：pending/accepted/rejected
-    @Column(name = "student-id", nullable = false)
-    private Integer studentId;
-    @Column(name = "class-id", nullable = false) // 辅助索引
-    private Integer classId;
-    @Column(name = "major-id", nullable = false) // 辅助索引
-    private Integer majorId;
+    @ManyToOne
+    @JoinColumn(name = "student-id", nullable = false)
+    private Student student;
     @Column(name = "date", nullable = false)
     private String date;
 }

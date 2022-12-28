@@ -1,9 +1,12 @@
 package com.example.accesscontrolsystem.model.entity;
 
+import com.example.accesscontrolsystem.model.entity.user.SchoolManager;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,4 +22,8 @@ public class Major {
     private String name;
     @Column(name = "campus-id", nullable = false)
     private Integer campusId;
+    @OneToOne(mappedBy = "major")
+    private SchoolManager schoolManager;
+    @OneToMany(mappedBy = "major")
+    private List<Class> classList;
 }

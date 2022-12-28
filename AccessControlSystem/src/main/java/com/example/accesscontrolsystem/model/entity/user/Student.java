@@ -1,5 +1,8 @@
 package com.example.accesscontrolsystem.model.entity.user;
 
+import com.example.accesscontrolsystem.model.entity.Class;
+
+import com.example.accesscontrolsystem.model.entity.Major;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -33,6 +36,10 @@ public class Student {
     private String status; // in / out
     @Column(name = "auth", nullable = false)
     private String auth; // Y/N
-    @Column(name = "class-id", nullable = false)
-    private Integer classId;
+    @ManyToOne
+    @JoinColumn(name = "class-id", nullable = false)
+    private Class myClass;
+    public Major getMajor() {
+        return myClass.getMajor();
+    }
 }
