@@ -1,12 +1,14 @@
 package com.example.accesscontrolsystem.service.superUser;
 
 import com.example.accesscontrolsystem.manager.*;
+import com.example.accesscontrolsystem.model.ClassAdapter;
 import com.example.accesscontrolsystem.model.entity.*;
 import com.example.accesscontrolsystem.model.entity.Class;
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
 import com.example.accesscontrolsystem.model.entity.user.Student;
-import com.example.accesscontrolsystem.service.TimeService;
+import com.example.accesscontrolsystem.model.vo.RawEnterApplication;
+import com.example.accesscontrolsystem.model.vo.RawLeaveApplication;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,16 +23,18 @@ public class ApplicationService {
     private final StudentManager studentManager;
     private final ClassManager classManager;
     private final MajorManager majorManager;
-    private final TimeService timeService;
+    private final ClassAdapter classAdapter;
 
     @Autowired
-    public ApplicationService(EnterApplicationManager enterApplicationManager, LeaveApplicationManager leaveApplicationManager, StudentManager studentManager, ClassManager classManager, MajorManager majorManager, TimeService timeService) {
+    public ApplicationService(EnterApplicationManager enterApplicationManager, LeaveApplicationManager leaveApplicationManager,
+                              StudentManager studentManager, ClassManager classManager,
+                              MajorManager majorManager, ClassAdapter classAdapter) {
         this.enterApplicationManager = enterApplicationManager;
         this.leaveApplicationManager = leaveApplicationManager;
         this.studentManager = studentManager;
         this.classManager = classManager;
         this.majorManager = majorManager;
-        this.timeService = timeService;
+        this.classAdapter = classAdapter;
     }
     private Response<List<EnterApplication>> getMyStudentEnterApplications(Integer studentId, List<Student> students) {
         if (studentId == -1) { // all
@@ -101,7 +105,7 @@ public class ApplicationService {
         }
     }
 
-    public Response<EnterApplication> addEnterApplicationsByStudentId(EnterApplication enterApplication) {
+    public Response<EnterApplication> addEnterApplicationsByStudentId(RawEnterApplication enterApplication) {
         Student student = studentManager.findStudentById(enterApplication.getStudentId());
         if (student == null) {
             return new Response<>(Response.FAIL, "学生不存在", null);
@@ -109,14 +113,11 @@ public class ApplicationService {
         if (Objects.equals(student.getStatus(), "inside")) {
             return new Response<>(Response.FAIL, "学生已在校", null);
         }
-        enterApplication.setStudentId(student.getId());
-        enterApplication.setStatus("pending");
-        enterApplication.setCreateTime(timeService.getTime());
-        enterApplicationManager.save(enterApplication);
-        return new Response<>(Response.SUCCESS, "添加成功", enterApplication);
+        enterApplicationManager.save(classAdapter.cookEnterApplication(enterApplication));
+        return new Response<>(Response.SUCCESS, "添加成功", null);
     }
 
-    public Response<LeaveApplication> addLeaveApplicationsByStudentId(LeaveApplication leaveApplication) {
+    public Response<LeaveApplication> addLeaveApplicationsByStudentId(RawLeaveApplication leaveApplication) {
         Student student = studentManager.findStudentById(leaveApplication.getStudentId());
         if (student == null) {
             return new Response<>(Response.FAIL, "学生不存在", null);
@@ -124,10 +125,7 @@ public class ApplicationService {
         if (Objects.equals(student.getStatus(), "outside")) {
             return new Response<>(Response.FAIL, "学生已离校", null);
         }
-        leaveApplication.setStudentId(student.getId());
-        leaveApplication.setStatus("pending");
-        leaveApplication.setCreateTime(timeService.getTime());
-        leaveApplicationManager.save(leaveApplication);
-        return new Response<>(Response.SUCCESS, "添加成功", leaveApplication);
+        leaveApplicationManager.save(classAdapter.cookLeaveApplication(leaveApplication));
+        return new Response<>(Response.SUCCESS, "添加成功", null);
     }
 }

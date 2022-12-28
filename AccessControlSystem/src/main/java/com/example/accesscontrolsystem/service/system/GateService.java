@@ -3,9 +3,10 @@ package com.example.accesscontrolsystem.service.system;
 import com.example.accesscontrolsystem.manager.CampusManager;
 import com.example.accesscontrolsystem.manager.GateLogManager;
 import com.example.accesscontrolsystem.manager.StudentManager;
+import com.example.accesscontrolsystem.model.ClassAdapter;
 import com.example.accesscontrolsystem.model.entity.Campus;
-import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import com.example.accesscontrolsystem.model.entity.user.Student;
+import com.example.accesscontrolsystem.model.vo.RawGateLog;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,15 +18,17 @@ public class GateService {
     private final GateLogManager gateLogManager;
     private final StudentManager studentManager;
     private final CampusManager campusManager;
+    private final ClassAdapter classAdapter;
 
     @Autowired
-    public GateService(GateLogManager gateLogManager, StudentManager studentManager, CampusManager campusManager) {
+    public GateService(GateLogManager gateLogManager, StudentManager studentManager, CampusManager campusManager, ClassAdapter classAdapter) {
         this.gateLogManager = gateLogManager;
         this.studentManager = studentManager;
         this.campusManager = campusManager;
+        this.classAdapter = classAdapter;
     }
 
-    public Response<String> gate(GateLog gateLog) {
+    public Response<String> gate(RawGateLog gateLog) {
         Student student = studentManager.findStudentById(gateLog.getStudentId());
         if (student == null) {
             return Response.error("学生不存在");
@@ -42,13 +45,13 @@ public class GateService {
         if (Objects.equals(student.getStatus(), "outside") && direction.equals("in")) {
             student.setStatus(campusManager.findCampusById(gateLog.getCampusId()).getName());
             studentManager.update(student);
-            gateLogManager.create(gateLog);
+            gateLogManager.create(classAdapter.cookGateLog(gateLog));
             return new Response<>(Response.SUCCESS, "进入校园", null);
         } else if (Objects.equals(student.getStatus(), "inside") && direction.equals("out")) {
             if (Objects.equals(student.getStatus(), campusManager.findCampusById(gateLog.getCampusId()).getName())) {
                 student.setStatus("outside");
                 studentManager.update(student);
-                gateLogManager.create(gateLog);
+                gateLogManager.create(classAdapter.cookGateLog(gateLog));
                 return new Response<>(Response.SUCCESS, "离开校区:" + campusManager.findCampusById(gateLog.getCampusId()).getName(), null);
             } else {
                 return Response.error("学生不在该校区");
