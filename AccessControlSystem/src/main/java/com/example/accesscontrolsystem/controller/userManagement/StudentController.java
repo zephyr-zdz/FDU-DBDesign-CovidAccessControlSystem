@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.controller.users;
+package com.example.accesscontrolsystem.controller.userManagement;
 
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.service.superUser.UserService;
@@ -20,12 +20,10 @@ public class StudentController {
     public Response<List<Student>> getStudents() {
         return userservice.getStudents();
     }
+/*
     @GetMapping("/part")
     public Response<List<Student>> getPartOfStudents(@RequestParam Integer schoolId, Integer classId) { // TODO
         return userservice.getStudents();
     }
-    @PostMapping("/")
-    public Response<Student> addStudent(@RequestBody Student student) {
-        return userservice.addStudent(student);
-    }
+*/
 }

@@ -1,6 +1,6 @@
 package com.example.accesscontrolsystem.controller.system;
 
-import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
+import com.example.accesscontrolsystem.model.vo.RawGateLog;
 import com.example.accesscontrolsystem.service.system.GateService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ public class GateController {
         this.gateService = gateService;
     }
     @PostMapping("/gate")
-    public Response<String> gate(@RequestBody GateLog gateLog){
+    public Response<String> gate(@RequestBody RawGateLog gateLog){
         return gateService.gate(gateLog);
     }
 }

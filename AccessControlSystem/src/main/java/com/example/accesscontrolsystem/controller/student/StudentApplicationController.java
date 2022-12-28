@@ -1,14 +1,16 @@
-package com.example.accesscontrolsystem.controller;
+package com.example.accesscontrolsystem.controller.student;
 
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
+import com.example.accesscontrolsystem.model.vo.RawEnterApplication;
+import com.example.accesscontrolsystem.model.vo.RawLeaveApplication;
 import com.example.accesscontrolsystem.service.superUser.ApplicationService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController("StudentApplicationController")
-@RequestMapping("/application")
+@RequestMapping("/student/application")
 public class StudentApplicationController {
     private final ApplicationService applicationService;
     @Autowired
@@ -17,12 +19,12 @@ public class StudentApplicationController {
     }
 
     @PostMapping("/enter-applications")
-    public Response<EnterApplication> addEnterApplicationsByStudentId(@RequestBody EnterApplication enterApplication) {
+    public Response<EnterApplication> addEnterApplicationsByStudentId(@RequestBody RawEnterApplication enterApplication) {
         return applicationService.addEnterApplicationsByStudentId(enterApplication);
     }
 
     @PostMapping("/leave-applications")
-    public Response<LeaveApplication> addLeaveApplicationsByStudentId(@RequestBody LeaveApplication leaveApplication) {
+    public Response<LeaveApplication> addLeaveApplicationsByStudentId(@RequestBody RawLeaveApplication leaveApplication) {
         return applicationService.addLeaveApplicationsByStudentId(leaveApplication);
     }
 }

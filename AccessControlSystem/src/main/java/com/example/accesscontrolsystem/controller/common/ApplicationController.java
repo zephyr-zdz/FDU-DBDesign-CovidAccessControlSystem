@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.controller;
+package com.example.accesscontrolsystem.controller.common;
 
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
@@ -19,10 +19,10 @@ public class ApplicationController {
     }
 
     @GetMapping("/enter-applications/")
-    public Response<List<EnterApplication>> getEnterApplicationsByStudentId(  Integer classId,
-                                                                              Integer schoolId,
-                                                                              Integer studentId,
-                                                                              String status) {
+    public Response<List<EnterApplication>> getEnterApplicationsByStudentId(Integer classId,
+                                                                            Integer schoolId,
+                                                                            Integer studentId,
+                                                                            String status) {
         return applicationService.getEnterApplications(classId, schoolId, studentId, status);
     }
 
