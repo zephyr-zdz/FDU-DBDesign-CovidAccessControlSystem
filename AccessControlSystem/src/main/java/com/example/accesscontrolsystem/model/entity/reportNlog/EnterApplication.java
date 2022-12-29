@@ -1,5 +1,7 @@
 package com.example.accesscontrolsystem.model.entity.reportNlog;
 
+import com.example.accesscontrolsystem.model.entity.user.Counsellor;
+import com.example.accesscontrolsystem.model.entity.user.SchoolManager;
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,8 +27,15 @@ public class EnterApplication {
     @Column(name = "enter-time", nullable = false)
     private Long enterTime; // utf-8编码的时间戳，例如：1607760000
     @Column(name = "status", nullable = false, length = 10)
-    private String status; // pending/counsellor/manager/accepted/rejected
+    private String status; // pending/counsellor/accepted/rejected
     @ManyToOne
     @JoinColumn(name = "student-id", nullable = false)
     private Student student;
+    @ManyToOne
+    @JoinColumn(name = "counsellor-id", nullable = false)
+    private Counsellor counsellor;
+    @ManyToOne
+    @JoinColumn(name = "manager-id", nullable = false)
+    private SchoolManager manager;
+
 }

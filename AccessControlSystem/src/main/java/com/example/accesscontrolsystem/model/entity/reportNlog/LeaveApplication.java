@@ -1,5 +1,7 @@
 package com.example.accesscontrolsystem.model.entity.reportNlog;
 
+import com.example.accesscontrolsystem.model.entity.user.Counsellor;
+import com.example.accesscontrolsystem.model.entity.user.SchoolManager;
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,12 @@ public class LeaveApplication {
     @ManyToOne
     @JoinColumn(name = "student-id", nullable = false)
     private Student student;
+    @ManyToOne
+    @JoinColumn(name = "counsellor-id", nullable = false)
+    private Counsellor counsellor;
+    @ManyToOne
+    @JoinColumn(name = "manager-id", nullable = false)
+    private SchoolManager manager;
     @Column(name = "date", nullable = false)
     private String date;
 }

@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 
 @Component("CounsellorManager")
 public class CounsellorManager {
@@ -15,7 +14,7 @@ public class CounsellorManager {
     public CounsellorManager(CounsellorMapper counsellorMapper) {
         this.counsellorMapper = counsellorMapper;
     }
-    public Optional<Counsellor> findCounsellorById(Integer counsellorId) {
+    public Counsellor findCounsellorById(Integer counsellorId) {
         return counsellorMapper.findCounsellorById(counsellorId);
     }
     public List<Counsellor> getCounsellors() {

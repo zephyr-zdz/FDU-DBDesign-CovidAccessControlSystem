@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface CounsellorMapper extends JpaRepository<Counsellor, Integer> {
     Optional<Counsellor> findCounsellorByName(String name);
-    Optional<Counsellor> findCounsellorById(Integer id);
+    Counsellor findCounsellorById(Integer id);
     List<Counsellor> findAll();
 }

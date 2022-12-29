@@ -33,6 +33,8 @@ public class ClassAdapter {
         application.setEnterTime(enterApplication.getEnterTime()); // TODO: time format
         application.setStatus("pending");
         application.setStudent(studentManager.findStudentById(enterApplication.getStudentId()));
+        application.setCounsellor(studentManager.findStudentById(enterApplication.getStudentId()).getMyClass().getCounsellor());
+        application.setManager(studentManager.findStudentById(enterApplication.getStudentId()).getMyClass().getMajor().getSchoolManager());
         return application;
     }
 
@@ -45,6 +47,8 @@ public class ClassAdapter {
         application.setReturnTime(leaveApplication.getReturnTime()); // TODO: time format
         application.setStatus("pending");
         application.setStudent(studentManager.findStudentById(leaveApplication.getStudentId()));
+        application.setCounsellor(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getCounsellor());
+        application.setManager(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getMajor().getSchoolManager());
         return application;
     }
 
