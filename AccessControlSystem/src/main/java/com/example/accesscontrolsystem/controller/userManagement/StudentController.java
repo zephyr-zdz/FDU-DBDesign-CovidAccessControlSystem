@@ -33,4 +33,10 @@ public class StudentController {
     public Response<Double> getStudentOutsideDuration(@PathVariable Integer studentId) { // hours 一年内
         return studentDataService.getStudentOutsideDuration(studentId);
     }
+    @GetMapping("/otaku/") // n天未离校
+    public Response<List<Student>> getEnterApplicationsByStudentId(Integer classId,
+                                                                   Integer schoolId,
+                                                                   Integer n) {
+        return studentDataService.getNDaysOtakus(classId, schoolId, n);
+    }
 }

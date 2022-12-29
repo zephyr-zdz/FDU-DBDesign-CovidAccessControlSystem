@@ -18,4 +18,34 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
 
     @Query("select s from Student s where s.myClass.id = ?1")
     List<Student> findStudentsByMyClass_Id(Integer classId);
+
+    @Query(value = """
+        select *
+        from student s
+        where `status` = 'in'
+        and not EXISTS
+            (select *\s
+            from gate_log g
+            where g.direction = 'in' and g.time between ?1 and ?2 and g.`student-id` = s.id)""", nativeQuery = true)
+    List<Student> findOtakusByTimeBetween(Long nDaysBefore, Long today);
+
+    @Query(value = """
+        select *
+        from student s
+        where `status` = 'in' and `major-id` = ?1
+        and not EXISTS
+            (select *\s
+            from gate_log g
+            where g.direction = 'in' and g.time between ?2 and ?3 and g.`student-id` = s.id)""", nativeQuery = true)
+    List<Student> findOtakusBySchoolIdAndTimeBetween(Integer schoolId, Long nDaysBefore, Long today);
+
+    @Query(value = """
+        select *
+        from student s
+        where `status` = 'in' and `class-id` = ?1
+        and not EXISTS
+            (select *\s
+            from gate_log g
+            where g.direction = 'in' and g.time between ?2 and ?3 and g.`student-id` = s.id)""", nativeQuery = true)
+    List<Student> findOtakusByClassIdAndTimeBetween(Integer classId, Long nDaysBefore, Long today);
 }
