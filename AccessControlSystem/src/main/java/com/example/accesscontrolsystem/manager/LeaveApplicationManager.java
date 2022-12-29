@@ -1,6 +1,7 @@
 package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.LeaveApplicationMapper;
+import com.example.accesscontrolsystem.mapper.StudentMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
 import com.example.accesscontrolsystem.model.entity.user.Counsellor;
 import com.example.accesscontrolsystem.model.entity.user.SchoolManager;
@@ -16,10 +17,14 @@ import java.util.List;
 public class LeaveApplicationManager {
     private final LeaveApplicationMapper leaveApplicationMapper;
     private final TimeService timeService;
+    private final StudentMapper studentMapper;
+
     @Autowired
-    public LeaveApplicationManager(LeaveApplicationMapper leaveApplicationMapper, TimeService timeService) {
+    public LeaveApplicationManager(LeaveApplicationMapper leaveApplicationMapper, TimeService timeService,
+                                   StudentMapper studentMapper) {
         this.leaveApplicationMapper = leaveApplicationMapper;
         this.timeService = timeService;
+        this.studentMapper = studentMapper;
     }
 
     public List<LeaveApplication> findAllByStudentId(Integer studentId) {
@@ -58,5 +63,17 @@ public class LeaveApplicationManager {
         long today = timeService.getTime();
         long nDaysBefore = today - (long) n * 24 * 60 * 60 * 1000;
         return leaveApplicationMapper.findAllByManagerAndStatusAndCreateTimeBetween(schoolManager, "counsellor", today, nDaysBefore);
+    }
+
+    public List<Student> findAppliedButNotLeaved() {
+        return studentMapper.findAppliedButNotLeaved(timeService.getTime());
+    }
+
+    public List<Student> findAppliedButNotLeavedBySchoolId(Integer schoolId) {
+        return studentMapper.findAppliedButNotLeavedBySchoolId(timeService.getTime(), schoolId);
+    }
+
+    public List<Student> findAppliedButNotLeavedByClassId(Integer classId) {
+        return studentMapper.findAppliedButNotLeavedByClassId(timeService.getTime(), classId);
     }
 }

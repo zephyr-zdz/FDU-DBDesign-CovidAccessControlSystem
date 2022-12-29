@@ -43,4 +43,9 @@ public class StudentController {
     public Response<List<Student>> getNDaysScriptKiddies(Integer n) {
         return studentDataService.catchNDaysScriptKiddies(n);
     }
+    @GetMapping("/applied-but-not-leaved/") // 申请离校但未离校
+    public Response<List<Student>> getAppliedButNotLeaft(Integer classId,
+                                                          Integer schoolId) {
+        return studentDataService.getAppliedButNotLeaved(classId, schoolId);
+    }
 }

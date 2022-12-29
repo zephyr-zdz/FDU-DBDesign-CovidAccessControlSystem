@@ -2,6 +2,7 @@ package com.example.accesscontrolsystem.service;
 
 import com.example.accesscontrolsystem.manager.DailyReportManager;
 import com.example.accesscontrolsystem.manager.GateLogManager;
+import com.example.accesscontrolsystem.manager.LeaveApplicationManager;
 import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.service.system.TimeService;
@@ -18,12 +19,14 @@ import java.util.List;
 public class StudentDataService {
     private final GateLogManager gateLogManager;
     private final DailyReportManager dailyReportManager;
+    private final LeaveApplicationManager leaveApplicationManager;
     private final TimeService timeService;
 
     @Autowired
-    public StudentDataService(GateLogManager gateLogManager, DailyReportManager dailyReportManager, TimeService timeService) {
+    public StudentDataService(GateLogManager gateLogManager, DailyReportManager dailyReportManager, LeaveApplicationManager leaveApplicationManager, TimeService timeService) {
         this.gateLogManager = gateLogManager;
         this.dailyReportManager = dailyReportManager;
+        this.leaveApplicationManager = leaveApplicationManager;
         this.timeService = timeService;
     }
     public Response<Double> getStudentOutsideDuration(Integer studentId) { // hours
@@ -59,5 +62,17 @@ public class StudentDataService {
     }
     public Response<List<Student>> catchNDaysScriptKiddies(Integer n) {
         return new Response<>(Response.SUCCESS, "获取成功", dailyReportManager.catchNDaysScriptKiddies(n));
+    }
+
+    public Response<List<Student>> getAppliedButNotLeaved(Integer classId, Integer schoolId) {
+        if (schoolId == -1) { // super admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findAppliedButNotLeaved());
+        } else if (classId == -1) { // school admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findAppliedButNotLeavedBySchoolId(schoolId));
+        } else if (classId > 0) { // counsellor
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findAppliedButNotLeavedByClassId(classId));
+        } else {
+            return new Response<>(Response.FAIL, "获取失败", null);
+        }
     }
 }
