@@ -20,13 +20,9 @@ public class TimeService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(new Date(time));
     }
-    public long day2Time(String day) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return sdf.parse(day).getTime();
-        } catch (Exception e) {
-            return 0;
-        }
+    public String time2Minute(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
+        return sdf.format(time);
     }
 
     public long getTimeNDaysBefore(Integer n) {

@@ -2,6 +2,7 @@ package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.DailyReportMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
+import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -34,7 +35,13 @@ public class DailyReportManager {
 
     public List<DailyReport> findAllByStudentIdByNDays(Integer studentId, Integer n) {
         long today = timeService.getTime();
-        Long nDaysAgo = today - n * 24 * 60 * 60 * 1000;
+        Long nDaysAgo = timeService.getTimeNDaysBefore(n);
         return dailyReportMapper.findAllByStudentIdAndCreateTimeBetween(studentId, nDaysAgo, today);
+    }
+
+    public List<Student> catchNDaysScriptKiddies(Integer n) {
+        long today = timeService.getTime();
+        Long nDaysAgo = timeService.getTimeNDaysBefore(n);
+        return dailyReportMapper.findScriptKiddies(nDaysAgo, today);
     }
 }

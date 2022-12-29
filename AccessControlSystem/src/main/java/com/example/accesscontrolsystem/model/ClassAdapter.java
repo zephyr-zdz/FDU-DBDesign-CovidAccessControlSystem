@@ -62,7 +62,8 @@ public class ClassAdapter {
         report.setOther(dailyReport.getOther());
         report.setTemperature(dailyReport.getTemperature());
         report.setCreateTime(timeService.getTime());
-        report.setDate(timeService.getDate());
+        report.setMinute(timeService.time2Minute(report.getCreateTime()));
+        report.setDate(timeService.time2Day(report.getCreateTime()));
         report.setStudent(studentManager.findStudentById(dailyReport.getStudentId()));
         return report;
     }

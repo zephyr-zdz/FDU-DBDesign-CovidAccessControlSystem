@@ -20,11 +20,13 @@ public class DailyReport {
     private Integer id;
     @Column(name = "create-time", nullable = false)
     private Long createTime; // utf-8编码的时间戳，例如：1607766400000
+    @Column(name = "minute", nullable = false)
+    private String minute; // hh:mm
     @Column(name = "location", nullable = false, length = 45)
     private String location;
     @Column(name = "temperature", nullable = false)
     public BigDecimal temperature; // 36.5
-    @Column(name = "other", nullable = false, length = 45)
+    @Column(name = "other", length = 45)
     private String other;
     @ManyToOne
     @JoinColumn(name = "student-id", nullable = false)

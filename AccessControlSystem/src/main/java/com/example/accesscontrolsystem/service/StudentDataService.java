@@ -1,5 +1,6 @@
 package com.example.accesscontrolsystem.service;
 
+import com.example.accesscontrolsystem.manager.DailyReportManager;
 import com.example.accesscontrolsystem.manager.GateLogManager;
 import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import com.example.accesscontrolsystem.model.entity.user.Student;
@@ -16,11 +17,13 @@ import java.util.List;
 
 public class StudentDataService {
     private final GateLogManager gateLogManager;
+    private final DailyReportManager dailyReportManager;
     private final TimeService timeService;
 
     @Autowired
-    public StudentDataService(GateLogManager gateLogManager, TimeService timeService) {
+    public StudentDataService(GateLogManager gateLogManager, DailyReportManager dailyReportManager, TimeService timeService) {
         this.gateLogManager = gateLogManager;
+        this.dailyReportManager = dailyReportManager;
         this.timeService = timeService;
     }
     public Response<Double> getStudentOutsideDuration(Integer studentId) { // hours
@@ -53,5 +56,8 @@ public class StudentDataService {
         } else {
             return new Response<>(Response.FAIL, "获取失败", null);
         }
+    }
+    public Response<List<Student>> catchNDaysScriptKiddies(Integer n) {
+        return new Response<>(Response.SUCCESS, "获取成功", dailyReportManager.catchNDaysScriptKiddies(n));
     }
 }
