@@ -20,8 +20,9 @@ public class Major {
     private Integer id;
     @Column(name = "name", nullable = false, length = 45)
     private String name;
-    @Column(name = "campus-id", nullable = false)
-    private Integer campusId;
+    @ManyToOne
+    @JoinColumn(name = "campus-id", nullable = false)
+    private Campus campus;
     @OneToOne(mappedBy = "major")
     private SchoolManager schoolManager;
     @OneToMany(mappedBy = "major")

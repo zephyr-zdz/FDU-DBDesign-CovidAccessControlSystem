@@ -39,6 +39,9 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "class-id", nullable = false)
     private Class myClass;
+    @ManyToOne
+    @JoinColumn(name = "major-id", nullable = false)
+    private Major major;
     public Major getMajor() {
         return myClass.getMajor();
     }

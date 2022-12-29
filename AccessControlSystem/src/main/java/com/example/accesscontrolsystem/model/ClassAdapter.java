@@ -2,6 +2,7 @@ package com.example.accesscontrolsystem.model;
 
 import com.example.accesscontrolsystem.manager.StudentManager;
 import com.example.accesscontrolsystem.mapper.CampusMapper;
+import com.example.accesscontrolsystem.mapper.GateLogMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
@@ -18,12 +19,15 @@ public class ClassAdapter {
     private final TimeService timeService;
     private final StudentManager studentManager;
     private final CampusMapper campusMapper;
+    private final GateLogMapper gateLogMapper;
 
     public ClassAdapter(TimeService timeService, StudentManager studentManager,
-                        CampusMapper campusMapper) {
+                        CampusMapper campusMapper,
+                        GateLogMapper gateLogMapper) {
         this.timeService = timeService;
         this.studentManager = studentManager;
         this.campusMapper = campusMapper;
+        this.gateLogMapper = gateLogMapper;
     }
 
     public EnterApplication cookEnterApplication(RawEnterApplication enterApplication) {
@@ -67,7 +71,14 @@ public class ClassAdapter {
         GateLog log = new GateLog();
         log.setTime(timeService.getTime());
         log.setDirection(gateLog.getDirection());
+        if (gateLog.getDirection().equals("in")) {
+            double duration;
+            GateLog lastOutLog = gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(gateLog.getStudentId(), "out");
+            duration = lastOutLog == null ? 0 : (double) (lastOutLog.getTime() - timeService.getTime()) / 1000 / 60;
+            log.setLeaveDuration(duration);
+        }
         log.setStudent(studentManager.findStudentById(gateLog.getStudentId()));
+        log.setMajor(log.getStudent().getMajor());
         log.setCampus(campusMapper.findCampusById(gateLog.getCampusId()));
         return log;
     }
