@@ -7,8 +7,8 @@
           <el-menu style="border: white">
             <el-submenu index="1">
               <template slot="title"><i class="el-icon-user"></i>申请审批</template>
-              <el-menu-item @click="handleChange('adminExamineEnterApp')">学生进校申请审批</el-menu-item>
-              <el-menu-item @click="handleChange('adminExamineOutApp')">学生出校申请审批</el-menu-item>
+              <el-menu-item @click="handleChange('counsellorExamineEnterApp')">学生进校申请审批</el-menu-item>
+              <el-menu-item @click="handleChange('counsellorExamineOutApp')">学生出校申请审批</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title"><i class="el-icon-setting"></i>基本查询要求</template>
@@ -120,16 +120,16 @@
               label="getMostCampus"
               v-show="showRecord === 'getMostCampus'"
               ref="getMostCampus"></get-most-campus>
-            <admin-examine-enter-app
-              id="adminExamineEnterApp"
-              label="adminExamineEnterApp"
-              v-show="showRecord === 'adminExamineEnterApp'"
-              ref="adminExamineEnterApp"></admin-examine-enter-app>
-            <admin-examine-out-app
-              id="adminExamineOutApp"
-              label="adminExamineOutApp"
-              v-show="showRecord === 'adminExamineOutApp'"
-              ref="adminExamineOutApp"></admin-examine-out-app>
+            <counsellor-examine-enter-app
+              id="counsellorExamineEnterApp"
+              label="counsellorExamineEnterApp"
+              v-show="showRecord === 'counsellorExamineEnterApp'"
+              ref="counsellorExamineEnterApp"></counsellor-examine-enter-app>
+            <counsellor-examine-out-app
+              id="counsellorExamineOutApp"
+              label="counsellorExamineOutApp"
+              v-show="showRecord === 'counsellorExamineOutApp'"
+              ref="counsellorExamineOutApp"></counsellor-examine-out-app>
           </el-main>
         </el-container>
       </el-container>
@@ -155,8 +155,8 @@ import GetNotOut from '../advancedQuery/getNotOut'
 import GetAlwaysIn from '../advancedQuery/getAlwaysIn'
 import GetSameTime from '../advancedQuery/getSameTime'
 import GetMostCampus from '../advancedQuery/getMostCampus'
-import AdminExamineEnterApp from './adminExamineEnterApp'
-import AdminExamineOutApp from './adminExamineOutApp'
+import CounsellorExamineEnterApp from './counsellorExamineEnterApp'
+import CounsellorExamineOutApp from './counsellorExamineOutApp'
 
 export default {
   data () {
@@ -242,10 +242,10 @@ export default {
           this.$refs.getMostCampus.getMostCampusForm.classId = '*'
           this.showRecord = value
           break
-        case 'adminExamineEnterApp' :
+        case 'counsellorExamineEnterApp' :
           this.showRecord = value
           break
-        case 'adminExamineOutApp' :
+        case 'counsellorExamineOutApp' :
           this.showRecord = value
           break
         default :
@@ -271,8 +271,8 @@ export default {
     'get-always-in': GetAlwaysIn,
     'get-same-time': GetSameTime,
     'get-most-campus': GetMostCampus,
-    'admin-examine-enter-app': AdminExamineEnterApp,
-    'admin-examine-out-app': AdminExamineOutApp
+    'counsellor-examine-enter-app': CounsellorExamineEnterApp,
+    'counsellor-examine-out-app': CounsellorExamineOutApp
   }
 }
 

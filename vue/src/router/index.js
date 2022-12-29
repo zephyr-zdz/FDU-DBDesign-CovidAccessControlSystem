@@ -11,6 +11,8 @@ import AdminLogin from '../components/user/admin/adminLogin'
 import SuperAdm from '../components/user/superAdmin/superAdmin'
 import Student from '../components/user/student/student'
 import Admin from '../components/user/admin/admin'
+import Counsellor from "../components/user/counsellor/counsellor";
+import {orderBy} from "element-ui/packages/table/src/util";
 
 Vue.use(Router)
 
@@ -71,6 +73,11 @@ export const constantRouterMap = [
     path: '/admin',
     name: 'admin',
     component: Admin
+  },
+  {
+    path: '/counsellor',
+    name: 'counsellor',
+    component: Counsellor
   },
   // 在这之上添加新路由，保证notFound跳转404在最后
   {

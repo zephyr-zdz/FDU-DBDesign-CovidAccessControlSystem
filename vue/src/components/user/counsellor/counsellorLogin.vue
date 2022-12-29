@@ -24,14 +24,15 @@ export default {
         number: ''
       },
       rules: {
-        number: [
-          { required: true, message: '请输入辅导员工号', trigger: 'change' }
-        ]
+        // number: [
+        //   { required: true, message: '请输入辅导员工号', trigger: 'change' }
+        // ]
       }
     }
   },
   methods: {
     login () {
+      this.$router.replace('/counsellor')
       var param = new FormData()
       param.append('type', this.counsellorLoginForm.type)
       param.append('username', this.counsellorLoginForm.number)

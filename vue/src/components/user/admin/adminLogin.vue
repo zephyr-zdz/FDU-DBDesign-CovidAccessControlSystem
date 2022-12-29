@@ -21,12 +21,12 @@ export default {
     return {
       adminLoginForm: {
         number: ''
+      },
+      rules: {
+        // number: [
+        //   { required: true, message: '请输入管理员工号', trigger: 'change' }
+        // ]
       }
-      // rules: {
-      //   number: [
-      //     { required: true, message: '请输入管理员工号', trigger: 'change' }
-      //   ]
-      // }
     }
   },
   methods: {
