@@ -120,4 +120,9 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
                 where l.`student-id` = s.id and l.status = 'accepted'\s
                     and (select time from gate_log g where `student-id` = s.id and direction = 'out' order by time DESC limit 1) < l.`return-time`)""", nativeQuery = true)
     List<Student> findLeaved24hrsButNotAppliedByClassId(long time, Integer classId);
+    List<Student> findStudentsByStatus(String out);
+
+    List<Student> findStudentsByStatusAndMajorId(String out, Integer schoolId);
+
+    List<Student> findStudentsByStatusAndMyClassId(String out, Integer classId);
 }

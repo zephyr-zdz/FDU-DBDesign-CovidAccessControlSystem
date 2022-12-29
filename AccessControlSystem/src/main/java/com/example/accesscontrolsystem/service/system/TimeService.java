@@ -28,4 +28,9 @@ public class TimeService {
     public long getTimeNDaysBefore(Integer n) {
         return getTime() - (long) n * 24 * 60 * 60 * 1000;
     }
+
+    public String time2Str(long time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        return sdf.format(time);
+    }
 }

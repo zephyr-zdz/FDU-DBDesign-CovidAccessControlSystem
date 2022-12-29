@@ -1,11 +1,14 @@
 package com.example.accesscontrolsystem.manager;
 
+import com.example.accesscontrolsystem.mapper.GateLogMapper;
 import com.example.accesscontrolsystem.mapper.LeaveApplicationMapper;
 import com.example.accesscontrolsystem.mapper.StudentMapper;
+import com.example.accesscontrolsystem.model.ClassAdapter;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
 import com.example.accesscontrolsystem.model.entity.user.Counsellor;
 import com.example.accesscontrolsystem.model.entity.user.SchoolManager;
 import com.example.accesscontrolsystem.model.entity.user.Student;
+import com.example.accesscontrolsystem.model.vo.StudentWithLeaveTime;
 import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,13 +21,18 @@ public class LeaveApplicationManager {
     private final LeaveApplicationMapper leaveApplicationMapper;
     private final TimeService timeService;
     private final StudentMapper studentMapper;
+    private final ClassAdapter classAdapter;
+    private final GateLogMapper gateLogMapper;
 
     @Autowired
     public LeaveApplicationManager(LeaveApplicationMapper leaveApplicationMapper, TimeService timeService,
-                                   StudentMapper studentMapper) {
+                                   StudentMapper studentMapper, ClassAdapter classAdapter,
+                                   GateLogMapper gateLogMapper) {
         this.leaveApplicationMapper = leaveApplicationMapper;
         this.timeService = timeService;
         this.studentMapper = studentMapper;
+        this.classAdapter = classAdapter;
+        this.gateLogMapper = gateLogMapper;
     }
 
     public List<LeaveApplication> findAllByStudentId(Integer studentId) {
@@ -87,5 +95,26 @@ public class LeaveApplicationManager {
 
     public List<Student> findLeaved24hrsButNotAppliedByClassId(Integer classId) {
         return studentMapper.findLeaved24hrsButNotAppliedByClassId(timeService.getTime(), classId);
+    }
+
+    public List<StudentWithLeaveTime> findOutsideStudents() {
+        List<Student> students = studentMapper.findStudentsByStatus("out");
+        List<StudentWithLeaveTime> studentsWithLeaveTime = new ArrayList<>();
+        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student, gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "'out'").getTime())));
+        return studentsWithLeaveTime;
+    }
+
+    public List<StudentWithLeaveTime> findOutsideStudentsBySchoolId(Integer schoolId) {
+        List<Student> students = studentMapper.findStudentsByStatusAndMajorId("out", schoolId);
+        List<StudentWithLeaveTime> studentsWithLeaveTime = new ArrayList<>();
+        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student, gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "'out'").getTime())));
+        return studentsWithLeaveTime;
+    }
+
+    public List<StudentWithLeaveTime> findOutsideStudentsByClassId(Integer classId) {
+        List<Student> students = studentMapper.findStudentsByStatusAndMyClassId("out", classId);
+        List<StudentWithLeaveTime> studentsWithLeaveTime = new ArrayList<>();
+        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student, gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "'out'").getTime())));
+        return studentsWithLeaveTime;
     }
 }

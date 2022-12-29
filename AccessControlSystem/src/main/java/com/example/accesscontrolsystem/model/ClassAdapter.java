@@ -7,10 +7,8 @@ import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
-import com.example.accesscontrolsystem.model.vo.RawDailyReport;
-import com.example.accesscontrolsystem.model.vo.RawEnterApplication;
-import com.example.accesscontrolsystem.model.vo.RawGateLog;
-import com.example.accesscontrolsystem.model.vo.RawLeaveApplication;
+import com.example.accesscontrolsystem.model.entity.user.Student;
+import com.example.accesscontrolsystem.model.vo.*;
 import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.stereotype.Component;
 
@@ -82,5 +80,11 @@ public class ClassAdapter {
         log.setMajor(log.getStudent().getMajor());
         log.setCampus(campusMapper.findCampusById(gateLog.getCampusId()));
         return log;
+    }
+    public StudentWithLeaveTime cookStudentWithLeaveTime(Student student, long leaveTime) {
+        StudentWithLeaveTime studentWithLeaveTime = new StudentWithLeaveTime();
+        studentWithLeaveTime.setStudent(student);
+        studentWithLeaveTime.setLeaveTimeStr(timeService.time2Str(leaveTime));
+        return studentWithLeaveTime;
     }
 }

@@ -5,6 +5,7 @@ import com.example.accesscontrolsystem.manager.GateLogManager;
 import com.example.accesscontrolsystem.manager.LeaveApplicationManager;
 import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import com.example.accesscontrolsystem.model.entity.user.Student;
+import com.example.accesscontrolsystem.model.vo.StudentWithLeaveTime;
 import com.example.accesscontrolsystem.service.system.TimeService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,18 @@ public class StudentDataService {
             return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLeaved24hrsButNotAppliedBySchoolId(schoolId));
         } else if (classId > 0) { // counsellor
             return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLeaved24hrsButNotAppliedByClassId(classId));
+        } else {
+            return new Response<>(Response.FAIL, "获取失败", null);
+        }
+    }
+
+    public Response<List<StudentWithLeaveTime>> getOutsideStudents(Integer classId, Integer schoolId) {
+        if (schoolId == -1) { // super admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findOutsideStudents());
+        } else if (classId == -1) { // school admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findOutsideStudentsBySchoolId(schoolId));
+        } else if (classId > 0) { // counsellor
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findOutsideStudentsByClassId(classId));
         } else {
             return new Response<>(Response.FAIL, "获取失败", null);
         }

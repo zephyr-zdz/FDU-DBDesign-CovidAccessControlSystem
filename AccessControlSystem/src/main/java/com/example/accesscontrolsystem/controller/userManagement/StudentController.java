@@ -1,6 +1,7 @@
 package com.example.accesscontrolsystem.controller.userManagement;
 
 import com.example.accesscontrolsystem.model.entity.user.Student;
+import com.example.accesscontrolsystem.model.vo.StudentWithLeaveTime;
 import com.example.accesscontrolsystem.service.StudentDataService;
 import com.example.accesscontrolsystem.service.UserService;
 import com.example.accesscontrolsystem.util.Response;
@@ -52,5 +53,10 @@ public class StudentController {
     public Response<List<Student>> getLeaved24hrsButNotApplied(Integer classId,
                                                                Integer schoolId) {
         return studentDataService.getLeaved24hrsButNotApplied(classId, schoolId);
+    }
+    @GetMapping("/outside/") //离校学生
+    public Response<List<StudentWithLeaveTime>> getOutsideStudents(Integer classId,
+                                                                   Integer schoolId) {
+        return studentDataService.getOutsideStudents(classId, schoolId);
     }
 }
