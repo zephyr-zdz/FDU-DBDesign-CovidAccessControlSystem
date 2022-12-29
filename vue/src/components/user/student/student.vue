@@ -51,6 +51,11 @@
             label="fillOutApp"
             v-show="showRecord === 'fillOutApp'"
             ref="fillOutApp"></fill-out-app>
+          <check-app
+            id="checkApp"
+            label="checkApp"
+            v-show="showRecord === 'checkApp'"
+            ref="checkApp"></check-app>
         </el-main>
       </el-container>
     </el-container>
@@ -63,6 +68,7 @@ import FillDailyReport from './fillDailyReport'
 import InOut from './inOut'
 import FillEnterApp from './fillEnterApp'
 import FillOutApp from './fillOutApp'
+import CheckApp from './checkApp'
 
 export default {
   data () {
@@ -100,7 +106,8 @@ export default {
     'fill-daily-report': FillDailyReport,
     'in-out': InOut,
     'fill-enter-app': FillEnterApp,
-    'fill-out-app': FillOutApp
+    'fill-out-app': FillOutApp,
+    'check-app': CheckApp
   }
 }
 
