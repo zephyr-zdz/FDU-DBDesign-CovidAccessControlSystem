@@ -13,6 +13,7 @@
             <el-menu-item @click="handleChange('inOut')">进出校门</el-menu-item>
             <el-menu-item @click="handleChange('fillEnterApp')">进校申请</el-menu-item>
             <el-menu-item @click="handleChange('fillOutApp')">出校申请</el-menu-item>
+            <el-menu-item @click="handleChange('checkApp')">查看我的申请</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title"><i class="el-icon-search"></i>查询系统</template>
@@ -40,6 +41,16 @@
             label="inOut"
             v-show="showRecord === 'inOut'"
             ref="inOut"></in-out>
+          <fill-enter-app
+            id="fillEnterApp"
+            label="fillEnterApp"
+            v-show="showRecord === 'fillEnterApp'"
+            ref="fillEnterApp"></fill-enter-app>
+          <fill-out-app
+            id="fillOutApp"
+            label="fillOutApp"
+            v-show="showRecord === 'fillOutApp'"
+            ref="fillOutApp"></fill-out-app>
         </el-main>
       </el-container>
     </el-container>
@@ -50,6 +61,8 @@
 import NavMenu from '../../common/NavMenu'
 import FillDailyReport from './fillDailyReport'
 import InOut from './inOut'
+import FillEnterApp from './fillEnterApp'
+import FillOutApp from './fillOutApp'
 
 export default {
   data () {
@@ -73,6 +86,9 @@ export default {
         case 'fillOutApp' :
           this.showRecord = value
           break
+        case 'checkApp' :
+          this.showRecord = value
+          break
         default :
           this.showRecord = ''
           break
@@ -82,7 +98,9 @@ export default {
   components: {
     'nav-menu': NavMenu,
     'fill-daily-report': FillDailyReport,
-    'in-out': InOut
+    'in-out': InOut,
+    'fill-enter-app': FillEnterApp,
+    'fill-out-app': FillOutApp
   }
 }
 
