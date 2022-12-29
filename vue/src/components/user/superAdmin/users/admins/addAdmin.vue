@@ -1,7 +1,7 @@
 <template>
   <el-card>
     <body id="post">
-    <el-form style="position: center" class="reg-container" label-position="left" :model="regForm" :rules="rules" ref="regForm" label-width="150px">
+    <el-form label-position="left" :model="regForm" :rules="rules" ref="regForm" label-width="150px">
       <h3 class="reg_title">增加院系管理员</h3>
 
       <el-form-item label="学院" prop="school">
@@ -54,21 +54,7 @@ export default {
       }
     }
   },
-  mounted () {
-    console.log('mounted!\n')
-    this.getSchool()
-  },
   methods: {
-    getSchool () {
-      this.$axios.get('/api/admin/institute/all')
-        .then(response => {
-          console.log(response.data)
-          this.schoolOptions = response.data.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
     reg (formname) {
       this.$refs.regForm.validate((valid) => {
         if (valid) {

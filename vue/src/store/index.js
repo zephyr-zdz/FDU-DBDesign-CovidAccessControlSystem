@@ -1,4 +1,3 @@
-import { off } from 'node-notifier'
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -7,45 +6,24 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     user: {
-      role: 'none',
-      username: 'none'
+      counsellorId: '',
+      adminId: '',
+      studentId: '',
+      schoolId: '',
+      classId: ''
     },
-    round: off,
-    isLogin: false,
-    semester: ''
+    day: ''
   },
   getters: {
-    semester: state => state.semester,
-    round: state => state.round,
-    role: state => state.user.role,
-    username: state => state.user.username
+    studentId: state => state.user.studentId,
+    schoolId: state => state.user.schoolId,
+    classId: state => state.user.classId
   },
   mutations: {
-    setRound (state, round) {
-      state.round = round
-    },
-    setSemester (state, semester) {
-      state.semester = semester
-    },
-    login (state, user) {
+    studentLogin (state, user) {
       state.user.role = (user.type === undefined) ? user.role : user.type
       state.user.username = (user.username === undefined) ? user.number : user.username
       state.isLogin = true
-    },
-    logout (state) {
-      state.user = {
-        role: 'none',
-        username: 'none'
-      }
-      state.isLogin = false
-    }
-  },
-  actions: {
-    // login (context) {
-    //   context.commit('login')
-    // },
-    logout (context) {
-      context.commit('logout')
     }
   }
 })

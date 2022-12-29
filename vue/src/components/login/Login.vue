@@ -9,7 +9,7 @@
 import NavMenu from '../common/NavMenu'
 export default {
   name: 'Login',
-  components: {NavMenu}
+  components: {'nave-menu': NavMenu}
 }
 </script>
 

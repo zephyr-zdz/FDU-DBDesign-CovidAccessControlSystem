@@ -3,8 +3,8 @@
     <el-form class="login-container" :model="studentLoginForm" :rules="rules" ref="studentLoginForm">
       <h2 class="login_title">验证</h2>
 
-      <el-form-item label="学号" prop="number">
-        <el-input placeholder="请输入学号" type="text" v-model="studentLoginForm.number"></el-input>
+      <el-form-item label="学号" prop="studentId">
+        <el-input placeholder="请输入学号" type="text" v-model="studentLoginForm.studentId"></el-input>
       </el-form-item>
 
       <el-form-item style="width: 100%">
@@ -20,8 +20,12 @@ export default {
   data () {
     return {
       studentLoginForm: {
-        type: 'student',
-        number: ''
+        studentId: ''
+      },
+      stateForm: {
+        studentId: '',
+        classId: '',
+        schoolId: ''
       },
       rules: {
         number: [
@@ -32,27 +36,7 @@ export default {
   },
   methods: {
     login () {
-      this.$router.replace('/student')
-      var param = new FormData()
-      param.append('type', this.studentLoginForm.type)
-      param.append('username', this.studentLoginForm.number)
-      this.$axios
-        .post('/api/user/login', param)
-        .then(successResponse => {
-          if (successResponse.data.data === 'true') {
-            this.$store.commit('login', this.studentLoginForm)
-            this.$router.replace('/user')
-          } else {
-            this.$alert(successResponse.data.msg, '系统提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.studentLoginForm.number = ''
-              }
-            })
-          }
-        })
-        .catch(failResponse => {
-        })
+      this.$router.replace('/student') // todo
     }
   }
 }

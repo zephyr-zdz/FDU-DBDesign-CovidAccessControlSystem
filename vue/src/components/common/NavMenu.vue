@@ -10,8 +10,6 @@
     <el-menu-item v-for="(item,i) in navList" :key="i" :index="item.name">
       {{ item.navItem }}
     </el-menu-item>
-    <!-- <a href="#nowhere" style="color: #222;float: right;padding: 20px;">更多功能</a> -->
-    <!-- <i class="el-icon-menu" style="float:right;font-size: 45px;color: #222;padding-top: 8px"></i> -->
     <span style="position: absolute;padding-top: 20px;right: 45%;font-size: 20px;font-weight: bold">复旦大学进出校管理系统</span>
   </el-menu>
 </template>
@@ -20,21 +18,8 @@
 export default {
   name: 'NavMenu',
   data () {
-    var theNavList = [
-      {name: '/home', navItem: '首页'}/* ,
-      {name: '/404', navItem: '404'} */
-    ]
-    var theroleList = {
-      admin: {name: '/admin', navItem: '管理员主页'},
-      teacher: {name: '/user/teacher', navItem: '教师主页'},
-      student: {name: '/user/student', navItem: '学生主页'}
-    }
-    if (this.$store.getters.role !== 'none') {
-      theNavList.push(theroleList[this.$store.getters.role])
-    } else {
-      theNavList = [{name: '/home', navItem: '欢迎'}]
-      theNavList.push({name: '/login', navItem: '首页'})
-    }
+    var theNavList = [{name: '/home', navItem: '欢迎'}]
+    theNavList.push({name: '/login', navItem: '首页'})
     return {navList: theNavList}
   }
 }
