@@ -48,4 +48,9 @@ public class StudentController {
                                                           Integer schoolId) {
         return studentDataService.getAppliedButNotLeaved(classId, schoolId);
     }
+    @GetMapping("/leaved-but-not-applied/") // 离校但未申请
+    public Response<List<Student>> getLeaved24hrsButNotApplied(Integer classId,
+                                                               Integer schoolId) {
+        return studentDataService.getLeaved24hrsButNotApplied(classId, schoolId);
+    }
 }

@@ -75,4 +75,16 @@ public class StudentDataService {
             return new Response<>(Response.FAIL, "获取失败", null);
         }
     }
+
+    public Response<List<Student>> getLeaved24hrsButNotApplied(Integer classId, Integer schoolId) {
+        if (schoolId == -1) { // super admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLeaved24hrsButNotApplied());
+        } else if (classId == -1) { // school admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLeaved24hrsButNotAppliedBySchoolId(schoolId));
+        } else if (classId > 0) { // counsellor
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLeaved24hrsButNotAppliedByClassId(classId));
+        } else {
+            return new Response<>(Response.FAIL, "获取失败", null);
+        }
+    }
 }

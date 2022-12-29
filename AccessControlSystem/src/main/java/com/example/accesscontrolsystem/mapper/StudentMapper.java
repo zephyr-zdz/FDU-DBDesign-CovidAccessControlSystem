@@ -57,7 +57,7 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
             (select *\s
             from leave_application l
             where l.`student-id` = s.id and l.status = 'accepted' and l.`leave-time` < ?1 < l.`return-time`
-              and (select time as latestLeaveTime from gate_log g where direction = 'in' order by `create-time` DESC limit 1) < l.`leave-time`
+              and (select time as latestEnterTime from gate_log g where direction = 'in' order by time DESC limit 1) < l.`leave-time`
             order by `create-time` DESC)""", nativeQuery = true)
     List<Student> findAppliedButNotLeaved(Long today);
 
@@ -69,7 +69,7 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
             (select *\s
             from leave_application l
             where l.`student-id` = s.id and l.status = 'accepted' and l.`leave-time` < ?1 < l.`return-time`
-              and (select time as latestLeaveTime from gate_log g where direction = 'in' order by `create-time` DESC limit 1) < l.`leave-time`
+              and (select time as latestEnterTime from gate_log g where direction = 'in' order by time DESC limit 1) < l.`leave-time`
             order by `create-time` DESC)""", nativeQuery = true)
     List<Student> findAppliedButNotLeavedBySchoolId(long time, Integer schoolId);
 
@@ -81,7 +81,43 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
             (select *\s
             from leave_application l
             where l.`student-id` = s.id and l.status = 'accepted' and l.`leave-time` < ?1 < l.`return-time`
-              and (select time as latestLeaveTime from gate_log g where direction = 'in' order by `create-time` DESC limit 1) < l.`leave-time`
+              and (select time as latestEnterTime from gate_log g where direction = 'in' order by time DESC limit 1) < l.`leave-time`
             order by `create-time` DESC)""", nativeQuery = true)
     List<Student> findAppliedButNotLeavedByClassId(long time, Integer classId);
+
+    @Query(value = """
+        select *
+        from student s
+        where `status` = 'out'
+            and (select time from gate_log g where `student-id` = s.id and direction = 'out' order by time DESC limit 1) < ?1 - 86400000
+            and NOT EXISTS
+                (select *\s
+                from leave_application l
+                where l.`student-id` = s.id and l.status = 'accepted'\s
+                    and (select time from gate_log g where `student-id` = s.id and direction = 'out' order by time DESC limit 1) < l.`return-time`)""", nativeQuery = true)
+    List<Student> findLeaved24hrsButNotApplied(long time);
+
+    @Query(value = """
+        select *
+        from student s
+        where `status` = 'out' and `major-id` = ?2
+            and (select time from gate_log g where `student-id` = s.id and direction = 'out' order by time DESC limit 1) < ?1 - 86400000
+            and NOT EXISTS
+                (select *\s
+                from leave_application l
+                where l.`student-id` = s.id and l.status = 'accepted'\s
+                    and (select time from gate_log g where `student-id` = s.id and direction = 'out' order by time DESC limit 1) < l.`return-time`)""", nativeQuery = true)
+    List<Student> findLeaved24hrsButNotAppliedBySchoolId(long time, Integer schoolId);
+
+    @Query(value = """
+        select *
+        from student s
+        where `status` = 'out' and `class-id` = ?2
+            and (select time from gate_log g where `student-id` = s.id and direction = 'out' order by time DESC limit 1) < ?1 - 86400000
+            and NOT EXISTS
+                (select *\s
+                from leave_application l
+                where l.`student-id` = s.id and l.status = 'accepted'\s
+                    and (select time from gate_log g where `student-id` = s.id and direction = 'out' order by time DESC limit 1) < l.`return-time`)""", nativeQuery = true)
+    List<Student> findLeaved24hrsButNotAppliedByClassId(long time, Integer classId);
 }

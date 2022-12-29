@@ -76,4 +76,16 @@ public class LeaveApplicationManager {
     public List<Student> findAppliedButNotLeavedByClassId(Integer classId) {
         return studentMapper.findAppliedButNotLeavedByClassId(timeService.getTime(), classId);
     }
+
+    public List<Student> findLeaved24hrsButNotApplied() {
+        return studentMapper.findLeaved24hrsButNotApplied(timeService.getTime());
+    }
+
+    public List<Student> findLeaved24hrsButNotAppliedBySchoolId(Integer schoolId) {
+        return studentMapper.findLeaved24hrsButNotAppliedBySchoolId(timeService.getTime(), schoolId);
+    }
+
+    public List<Student> findLeaved24hrsButNotAppliedByClassId(Integer classId) {
+        return studentMapper.findLeaved24hrsButNotAppliedByClassId(timeService.getTime(), classId);
+    }
 }
