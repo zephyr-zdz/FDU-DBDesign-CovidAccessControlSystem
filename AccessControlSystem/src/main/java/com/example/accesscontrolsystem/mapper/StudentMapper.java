@@ -157,4 +157,36 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
             order by count(distinct `student-id`) DESC
             limit ?1) as `stu-id-list`)""", nativeQuery = true)
     List<Student> findNStudentsWithMostLeaveTimeByClassId(Integer n, Integer classId);
+
+    @Query(value = """
+        select *
+        from student s
+        where s.id in (select `student-id` from (select distinct `student-id`, avg(`leave-duration`) as avgLeaveDuration
+            from gate_log
+            group by `student-id`
+            order by avg(`leave-duration`) DESC
+            limit ?1) as `stu-id-list`)""", nativeQuery = true)
+    List<Student> findNStudentsWithLongestAvgOutsideTime(Integer n);
+
+    @Query(value = """
+        select *
+        from student s
+        where s.`major-id`= ?2 and
+        s.id in (select `student-id` from (select distinct `student-id`, avg(`leave-duration`) as avgLeaveDuration
+            from gate_log
+            group by `student-id`
+            order by avg(`leave-duration`) DESC
+            limit ?1) as `stu-id-list`)""", nativeQuery = true)
+    List<Student> findNStudentsWithLongestAvgOutsideTimeByMajorId(Integer n, Integer schoolId);
+
+    @Query(value = """
+        select *
+        from student s
+        where s.`class-id`= ?2 and
+        s.id in (select `student-id` from (select distinct `student-id`, avg(`leave-duration`) as avgLeaveDuration
+            from gate_log
+            group by `student-id`
+            order by avg(`leave-duration`) DESC
+            limit ?1) as `stu-id-list`)""", nativeQuery = true)
+    List<Student> findNStudentsWithLongestAvgOutsideTimeByClassId(Integer n, Integer classId);
 }

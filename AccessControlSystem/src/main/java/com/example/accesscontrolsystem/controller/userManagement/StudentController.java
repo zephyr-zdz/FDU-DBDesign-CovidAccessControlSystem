@@ -31,6 +31,12 @@ public class StudentController {
                                                                         Integer n) {
         return studentDataService.getNStudentsWithMostLeaveTime(classId, schoolId, n);
     }
+    @GetMapping("/avg-outside-longest")
+    public Response<List<Student>> getNStudentsWithLongestAvgOutsideTime(Integer classId,
+                                                                         Integer schoolId,
+                                                                         Integer n) {
+        return studentDataService.getNStudentsWithLongestAvgOutsideTime(classId, schoolId, n);
+    }
 
     @GetMapping("/outside-duration/{studentId}")
     public Response<Double> getStudentOutsideDuration(@PathVariable Integer studentId) { // hours 一年内

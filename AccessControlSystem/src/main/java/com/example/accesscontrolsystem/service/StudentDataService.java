@@ -112,4 +112,16 @@ public class StudentDataService {
             return new Response<>(Response.FAIL, "获取失败", null);
         }
     }
+
+    public Response<List<Student>> getNStudentsWithLongestAvgOutsideTime(Integer classId, Integer schoolId, Integer n) {
+        if (schoolId == -1) { // super admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findNStudentsWithLongestAvgOutsideTime(n));
+        } else if (classId == -1) { // school admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findNStudentsWithLongestAvgOutsideTimeBySchoolId(n, schoolId));
+        } else if (classId > 0) { // counsellor
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findNStudentsWithLongestAvgOutsideTimeByClassId(n, classId));
+        } else {
+            return new Response<>(Response.FAIL, "获取失败", null);
+        }
+    }
 }
