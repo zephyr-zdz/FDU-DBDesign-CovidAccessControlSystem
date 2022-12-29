@@ -50,7 +50,7 @@ public class DailyReportService {
         return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentId(studentId));
     }
 
-    public Response<List<DailyReport>> getDailyReportsByNDays(Integer studentId, Integer n) {
+    public Response<List<DailyReport>> getLastNDaysDailyReports(Integer studentId, Integer n) {
         if (n < 0) {
             return new Response<>(Response.FAIL, "n需要为自然数", null);
         }

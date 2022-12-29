@@ -6,7 +6,6 @@ import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
 import java.util.List;
 
 @Component("DailyReportManager")
@@ -31,5 +30,11 @@ public class DailyReportManager {
 
     public DailyReport getDailyReportByStudentIdAndDate(Integer studentId, String date) {
         return dailyReportMapper.findDailyReportByStudentIdAndDate(studentId, date);
+    }
+
+    public List<DailyReport> findAllByStudentIdByNDays(Integer studentId, Integer n) {
+        long today = timeService.getTime();
+        Long nDaysAgo = today - n * 24 * 60 * 60 * 1000;
+        return dailyReportMapper.findAllByStudentIdAndCreateTimeBetween(studentId, nDaysAgo, today);
     }
 }

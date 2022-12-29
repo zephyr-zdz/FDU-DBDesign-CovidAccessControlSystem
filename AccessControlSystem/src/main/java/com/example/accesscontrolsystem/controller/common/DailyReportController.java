@@ -4,10 +4,7 @@ import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.service.DailyReportService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,10 @@ public class DailyReportController {
     @GetMapping("/")
     public Response<List<DailyReport>> getDailyReports(@RequestParam("student-id") Integer studentId) {
         return dailyReportService.getDailyReports(studentId);
+    }
+
+    @GetMapping("/recent/")
+    public Response<List<DailyReport>> getLastNDaysDailyReports(@RequestParam("student-id") Integer studentId, @RequestParam("n") Integer n) {
+        return dailyReportService.getLastNDaysDailyReports(studentId, n);
     }
 }
