@@ -56,10 +56,10 @@ public class StudentManager {
 
     public List<Student> findAllByMajorId(Integer id) {
         List<Student> students = new ArrayList<>();
-        classManager.findClassesByMajorId(id).forEach(aClass -> students.addAll(studentMapper.findStudentsByClassId(aClass.getId())));
+        classManager.findClassesByMajorId(id).forEach(aClass -> students.addAll(studentMapper.findStudentsByMyClass_Id(aClass.getId())));
         return students;
     }
     public List<Student> findAllByClassId(Integer id) {
-        return studentMapper.findStudentsByClassId(id);
+        return studentMapper.findStudentsByMyClass_Id(id);
     }
 }

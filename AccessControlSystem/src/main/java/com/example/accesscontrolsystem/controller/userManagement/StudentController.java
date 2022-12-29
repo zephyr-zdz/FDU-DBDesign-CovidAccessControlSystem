@@ -1,6 +1,7 @@
 package com.example.accesscontrolsystem.controller.userManagement;
 
 import com.example.accesscontrolsystem.model.entity.user.Student;
+import com.example.accesscontrolsystem.service.StudentDataService;
 import com.example.accesscontrolsystem.service.UserService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import java.util.List;
 @RequestMapping("/student")
 public class StudentController {
     private final UserService userservice;
+    private final StudentDataService studentDataService;
     @Autowired
-    public StudentController(UserService userservice) {
+    public StudentController(UserService userservice, StudentDataService studentDataService) {
         this.userservice = userservice;
+        this.studentDataService = studentDataService;
     }
     @GetMapping("/all")
     public Response<List<Student>> getStudents() {
@@ -26,4 +29,8 @@ public class StudentController {
         return userservice.getStudents();
     }
 */
+    @GetMapping("/outside-duration/{studentId}")
+    public Response<Double> getStudentOutsideDuration(@PathVariable Integer studentId) { // hours 一年内
+        return studentDataService.getStudentOutsideDuration(studentId);
+    }
 }

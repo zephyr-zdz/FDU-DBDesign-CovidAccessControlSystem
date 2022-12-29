@@ -28,4 +28,8 @@ public class TimeService {
             return 0;
         }
     }
+
+    public long getTimeNDaysBefore(Integer n) {
+        return getTime() - (long) n * 24 * 60 * 60 * 1000;
+    }
 }
