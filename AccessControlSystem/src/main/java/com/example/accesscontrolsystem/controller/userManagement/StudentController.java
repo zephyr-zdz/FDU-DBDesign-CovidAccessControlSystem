@@ -24,12 +24,14 @@ public class StudentController {
     public Response<List<Student>> getStudents() {
         return userservice.getStudents();
     }
-/*
-    @GetMapping("/part")
-    public Response<List<Student>> getPartOfStudents(@RequestParam Integer schoolId, Integer classId) { // TODO
-        return userservice.getStudents();
+
+    @GetMapping("/enter-most-applying")
+    public Response<List<Student>> getNStudentsWithMostEnterApplication(Integer classId,
+                                                                        Integer schoolId,
+                                                                        Integer n) {
+        return studentDataService.getNStudentsWithMostLeaveTime(classId, schoolId, n);
     }
-*/
+
     @GetMapping("/outside-duration/{studentId}")
     public Response<Double> getStudentOutsideDuration(@PathVariable Integer studentId) { // hours 一年内
         return studentDataService.getStudentOutsideDuration(studentId);

@@ -100,4 +100,16 @@ public class StudentDataService {
             return new Response<>(Response.FAIL, "获取失败", null);
         }
     }
+
+    public Response<List<Student>> getNStudentsWithMostLeaveTime(Integer classId, Integer schoolId, Integer n) {
+        if (schoolId == -1) { // super admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findNStudentsWithMostLeaveTime(n));
+        } else if (classId == -1) { // school admin
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findNStudentsWithMostLeaveTimeBySchoolId(n, schoolId));
+        } else if (classId > 0) { // counsellor
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findNStudentsWithMostLeaveTimeByClassId(n, classId));
+        } else {
+            return new Response<>(Response.FAIL, "获取失败", null);
+        }
+    }
 }

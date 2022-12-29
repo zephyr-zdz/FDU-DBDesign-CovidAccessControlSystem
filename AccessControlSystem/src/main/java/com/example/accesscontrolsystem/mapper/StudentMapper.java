@@ -125,4 +125,36 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
     List<Student> findStudentsByStatusAndMajorId(String out, Integer schoolId);
 
     List<Student> findStudentsByStatusAndMyClassId(String out, Integer classId);
+
+    @Query(value = """
+        select *
+        from student s
+        where s.id in (select `student-id` from (select `student-id`
+            from enter_application
+            group by `student-id`
+            order by count(distinct `student-id`) DESC
+            limit ?1) as `stu-id-list`)""", nativeQuery = true)
+    List<Student> findNStudentsWithMostLeaveTime(Integer n);
+
+    @Query(value = """
+        select *
+        from student s
+        where s.`major-id`= ?2 and
+        s.id in (select `student-id` from (select `student-id`
+            from enter_application
+            group by `student-id`
+            order by count(distinct `student-id`) DESC
+            limit ?1) as `stu-id-list`)""", nativeQuery = true)
+    List<Student> findNStudentsWithMostLeaveTimeByMajorId(Integer n, Integer schoolId);
+
+    @Query(value = """
+        select *
+        from student s
+        where s.`class-id`= ?2 and
+        s.id in (select `student-id` from (select `student-id`
+            from enter_application
+            group by `student-id`
+            order by count(distinct `student-id`) DESC
+            limit ?1) as `stu-id-list`)""", nativeQuery = true)
+    List<Student> findNStudentsWithMostLeaveTimeByClassId(Integer n, Integer classId);
 }

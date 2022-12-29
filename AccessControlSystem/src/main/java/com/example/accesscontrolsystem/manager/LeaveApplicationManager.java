@@ -117,4 +117,16 @@ public class LeaveApplicationManager {
         students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student, gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "'out'").getTime())));
         return studentsWithLeaveTime;
     }
+
+    public List<Student> findNStudentsWithMostLeaveTime(Integer n) {
+        return studentMapper.findNStudentsWithMostLeaveTime(n);
+    }
+
+    public List<Student> findNStudentsWithMostLeaveTimeBySchoolId(Integer n, Integer schoolId) {
+        return studentMapper.findNStudentsWithMostLeaveTimeByMajorId(n, schoolId);
+    }
+
+    public List<Student> findNStudentsWithMostLeaveTimeByClassId(Integer n, Integer classId) {
+        return studentMapper.findNStudentsWithMostLeaveTimeByClassId(n, classId);
+    }
 }
