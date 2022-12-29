@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.service.student;
+package com.example.accesscontrolsystem.service;
 
 import com.example.accesscontrolsystem.manager.StudentManager;
 import com.example.accesscontrolsystem.util.Response;

@@ -2,7 +2,7 @@ package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.DailyReportMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
-import com.example.accesscontrolsystem.service.TimeService;
+import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,9 +24,9 @@ public class DailyReportManager {
     }
 
     public void addDailyReport(DailyReport dailyReport) {
-        Date today = new Date();
-        dailyReport.setTime(today.getTime());
-        dailyReport.setDate(timeService.time2Day(today.getTime()));
+        long today = timeService.getTime();
+        dailyReport.setCreateTime(today);
+        dailyReport.setDate(timeService.time2Day(today));
     }
 
     public DailyReport getDailyReportByStudentIdAndDate(Integer studentId, String date) {

@@ -1,6 +1,6 @@
 package com.example.accesscontrolsystem.controller.common;
 
-import com.example.accesscontrolsystem.service.student.AuthService;
+import com.example.accesscontrolsystem.service.AuthService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

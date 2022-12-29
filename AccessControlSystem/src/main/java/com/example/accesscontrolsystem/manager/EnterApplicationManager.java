@@ -3,7 +3,7 @@ package com.example.accesscontrolsystem.manager;
 import com.example.accesscontrolsystem.mapper.EnterApplicationMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.user.Student;
-import com.example.accesscontrolsystem.service.TimeService;
+import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

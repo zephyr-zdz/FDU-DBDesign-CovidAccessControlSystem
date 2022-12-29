@@ -1,11 +1,11 @@
-package com.example.accesscontrolsystem.service.student;
+package com.example.accesscontrolsystem.service;
 
 import com.example.accesscontrolsystem.manager.DailyReportManager;
 import com.example.accesscontrolsystem.manager.StudentManager;
 import com.example.accesscontrolsystem.model.ClassAdapter;
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.model.vo.RawDailyReport;
-import com.example.accesscontrolsystem.service.TimeService;
+import com.example.accesscontrolsystem.service.system.TimeService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,15 +25,6 @@ public class DailyReportService {
         this.timeService = timeService;
         this.classAdapter = classAdapter;
     }
-    public Response<List<DailyReport>> getDailyReports(Integer studentId) {
-        if (studentId == null) {
-            return new Response<>(Response.FAIL, "studentId为空", null);
-        }
-        if (studentManager.findStudentById(studentId) == null) {
-            return new Response<>(Response.FAIL, "学生不存在", null);
-        }
-        return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentId(studentId));
-    }
 
     public Response<DailyReport> addDailyReport(RawDailyReport dailyReport) {
         if (dailyReport.getStudentId() == null) {
@@ -47,5 +38,25 @@ public class DailyReportService {
         }
         dailyReportManager.addDailyReport(classAdapter.cookDailyReport(dailyReport));
         return new Response<>(Response.SUCCESS, "成功", null);
+    }
+
+    public Response<List<DailyReport>> getDailyReports(Integer studentId) {
+        if (studentId == null) {
+            return new Response<>(Response.FAIL, "studentId为空", null);
+        }
+        if (studentManager.findStudentById(studentId) == null) {
+            return new Response<>(Response.FAIL, "学生不存在", null);
+        }
+        return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentId(studentId));
+    }
+
+    public Response<List<DailyReport>> getDailyReportsByNDays(Integer studentId, Integer n) {
+        if (n < 0) {
+            return new Response<>(Response.FAIL, "n需要为自然数", null);
+        }
+        if (studentManager.findStudentById(studentId) == null) {
+            return new Response<>(Response.FAIL, "学生不存在", null);
+        }
+        return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentIdByNDays(studentId, n));
     }
 }

@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.service.superUser;
+package com.example.accesscontrolsystem.service;
 
 import com.example.accesscontrolsystem.manager.CounsellorManager;
 import com.example.accesscontrolsystem.manager.StudentManager;

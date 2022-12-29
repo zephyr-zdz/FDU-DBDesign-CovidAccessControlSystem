@@ -10,7 +10,7 @@ import com.example.accesscontrolsystem.model.vo.RawDailyReport;
 import com.example.accesscontrolsystem.model.vo.RawEnterApplication;
 import com.example.accesscontrolsystem.model.vo.RawGateLog;
 import com.example.accesscontrolsystem.model.vo.RawLeaveApplication;
-import com.example.accesscontrolsystem.service.TimeService;
+import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.stereotype.Component;
 
 @Component("ClassAdapter")

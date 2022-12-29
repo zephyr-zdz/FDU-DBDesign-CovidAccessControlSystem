@@ -25,7 +25,7 @@ public class EnterApplication {
     @Column(name = "enter-time", nullable = false)
     private Long enterTime; // utf-8编码的时间戳，例如：1607760000
     @Column(name = "status", nullable = false, length = 10)
-    private String status; // pending/accepted/rejected
+    private String status; // pending/counsellor/manager/accepted/rejected
     @ManyToOne
     @JoinColumn(name = "student-id", nullable = false)
     private Student student;

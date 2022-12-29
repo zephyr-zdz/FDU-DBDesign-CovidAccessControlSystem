@@ -1,4 +1,4 @@
-package com.example.accesscontrolsystem.service;
+package com.example.accesscontrolsystem.service.system;
 
 import org.springframework.stereotype.Service;
 
