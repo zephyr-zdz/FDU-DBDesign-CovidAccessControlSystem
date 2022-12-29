@@ -8,7 +8,7 @@
       </el-form-item>
 
       <el-form-item style="width: 100%">
-        <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">进入</el-button>
+        <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login()">进入</el-button>
       </el-form-item>
     </el-form>
   </body>
@@ -21,16 +21,17 @@ export default {
     return {
       adminLoginForm: {
         number: ''
-      },
-      rules: {
-        number: [
-          { required: true, message: '请输入管理员工号', trigger: 'change' }
-        ]
       }
+      // rules: {
+      //   number: [
+      //     { required: true, message: '请输入管理员工号', trigger: 'change' }
+      //   ]
+      // }
     }
   },
   methods: {
     login () {
+      this.$router.replace('/admin')
       var param = new FormData()
       param.append('type', this.adminLoginForm.type)
       param.append('username', this.adminLoginForm.number)

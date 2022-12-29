@@ -5,11 +5,12 @@ import Router from 'vue-router'
 import AppIndex from '@/components/home/AppIndex'
 import Home from '@/components/home/Home'
 
-import StudentLogin from "../components/user/student/studentLogin";
-import CounsellorLogin from "../components/user/counsellor/counsellorLogin";
-import AdminLogin from "../components/user/admin/adminLogin";
+import StudentLogin from '../components/user/student/studentLogin'
+import CounsellorLogin from '../components/user/counsellor/counsellorLogin'
+import AdminLogin from '../components/user/admin/adminLogin'
 import SuperAdm from '../components/user/superAdmin/superAdmin'
 import Student from '../components/user/student/student'
+import Admin from '../components/user/admin/admin'
 
 Vue.use(Router)
 
@@ -65,6 +66,11 @@ export const constantRouterMap = [
     path: '/student',
     name: 'student',
     component: Student
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: Admin
   },
   // 在这之上添加新路由，保证notFound跳转404在最后
   {
