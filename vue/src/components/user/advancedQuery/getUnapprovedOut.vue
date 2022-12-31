@@ -91,7 +91,7 @@ export default {
     }
   },
   methods: {
-    getUnapprovedEnter () {
+    getUnapprovedOut () {
       var param = {}
       if (this.getUnapprovedOutForm.schoolId === -1) {
         param['managerId'] = this.getUnapprovedOutForm.schoolId
