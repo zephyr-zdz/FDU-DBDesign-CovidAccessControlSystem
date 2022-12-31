@@ -37,6 +37,7 @@
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getLongest()">查询</el-button>
       </el-form-item>
     </el-form>
+    <h2>共计<span>{{ totalNum }}</span>条记录</h2>
     <el-table :data="getLongestTable"
               style="width: 100%"
               pager="page">
@@ -104,22 +105,22 @@ export default {
     getLongest () {
       var param = new FormData()
       if (this.range === '1') {
-        param.append('schoolId', '*')
-        param.append('classId', '*')
+        param = {schoolId: -1,
+          classId: -1}
       } else if (this.range === '2') {
-        param.append('schoolId', this.getLongestForm.schoolId)
-        param.append('classId', '*')
+        param = {schoolId: this.getLongestForm.searchSchoolId,
+          classId: -1}
       } else {
-        param.append('schoolId', '*')
-        param.append('classId', this.getLongestForm.classId)
+        param = {schoolId: -1,
+          classId: this.getLongestForm.searchClassId}
       }
-      if (this.getLongestForm.number === '') {
-        param.append('number', '*')
-      } else {
-        param.append('number', this.getLongestForm.number)
-      }
+      param['n'] = this.getLongestForm.number
       this.$axios.get('/api/student/student', {params: param}).then(res => {
         this.getLongestTable = res.data.data
+        this.totalNum = this.getLongestTable.length
+        if (this.getLongestForm.classId !== -1 && this.getLongestForm.classId !== this.getLongestForm.searchClassId) {
+          this.getLongestTable = []
+        }
       })
     }
   }

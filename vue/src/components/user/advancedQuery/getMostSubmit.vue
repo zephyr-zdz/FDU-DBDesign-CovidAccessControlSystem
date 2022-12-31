@@ -7,11 +7,11 @@
       <el-form-item style="width: 20%" v-if="this.getMostSubmitForm.schoolId === -1 && this.getMostSubmitForm.classId === -1">
       <el-radio v-model="range" label="1">按全校搜索</el-radio>
       </el-form-item>
-      <el-form-item style="width: 20%">
-      <el-radio v-model="range" label="2" v-if="this.getMostSubmitForm.classId === -1">按院系搜索</el-radio>
+      <el-form-item style="width: 20%" v-if="this.getMostSubmitForm.classId === -1">
+      <el-radio v-model="range">按院系搜索</el-radio>
       </el-form-item>
       <el-form-item v-if="range === '2'">
-        <el-select style="width: 20%" placeholder="请选择院系" v-model="getMostSubmitForm.schoolId" v-if="range === '2'">
+        <el-select style="width: 20%" placeholder="请选择院系" v-model="getMostSubmitForm.searchSchoolId" v-if="range === '2'">
           <el-option
             v-for="item in schoolList"
             :key="item.name"
@@ -24,7 +24,7 @@
       <el-radio v-model="range" label="3">请选择班级</el-radio>
       </el-form-item>
       <el-form-item v-if="range === '3'">
-        <el-select style="width: 20%" placeholder="按班级搜索" v-model="getMostSubmitForm.classId" v-if="range === '3'">
+        <el-select style="width: 20%" placeholder="按班级搜索" v-model="getMostSubmitForm.searchClassId" v-if="range === '3'">
           <el-option
             v-for="item in classList"
             :key="item.name"
@@ -37,6 +37,7 @@
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getMostSubmit()">查询</el-button>
       </el-form-item>
     </el-form>
+    <h2>共计<span>{{ totalNum }}</span>条记录</h2>
     <el-table :data="getMostSubmitTable"
               style="width: 100%"
               pager="page">
@@ -83,8 +84,11 @@ export default {
       getMostSubmitForm: {
         number: '',
         schoolId: '',
-        classId: ''
+        classId: '',
+        searchSchoolId: '',
+        searchClassId: ''
       },
+      totalNum: 0,
       rules: {
         number: [
           { required: true, message: '请输入人数', trigger: 'change' }
@@ -104,22 +108,22 @@ export default {
     getMostSubmit () {
       var param = new FormData()
       if (this.range === '1') {
-        param.append('schoolId', '*')
-        param.append('classId', '*')
+        param = {schoolId: -1,
+          classId: -1}
       } else if (this.range === '2') {
-        param.append('schoolId', this.getMostSubmitForm.schoolId)
-        param.append('classId', '*')
+        param = {schoolId: this.getMostSubmitForm.searchSchoolId,
+          classId: -1}
       } else {
-        param.append('schoolId', '*')
-        param.append('classId', this.getMostSubmitForm.classId)
+        param = {schoolId: -1,
+          classId: this.getMostSubmitForm.searchClassId}
       }
-      if (this.getMostSubmitForm.number === '') {
-        param.append('number', '*')
-      } else {
-        param.append('number', this.getMostSubmitForm.number)
-      }
+      param['n'] = this.getMostSubmitForm.number
       this.$axios.get('/api/student/student', {params: param}).then(res => {
         this.getMostSubmitTable = res.data.data
+        this.totalNum = this.getMostSubmitTable.length
+        if (this.getMostSubmitForm.classId !== -1 && this.getMostSubmitForm.classId !== this.getMostSubmitForm.searchClassId) {
+          this.getMostSubmitTable = []
+        }
       })
     }
   }

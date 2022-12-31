@@ -4,10 +4,10 @@
       <el-form-item prop="day" label="天数">
         <el-input-number style="width: 20%" :min="1" v-model="getAlwaysInForm.day"></el-input-number>
       </el-form-item>
-      <el-form-item style="width: 20%">
+      <el-form-item style="width: 20%" v-if="this.getAlwaysInForm.schoolId === -1 && this.getAlwaysInForm.classId === -1">
       <el-radio v-model="range" label="1">按全校搜索</el-radio>
       </el-form-item>
-      <el-form-item style="width: 20%">
+      <el-form-item style="width: 20%" v-if="this.getAlwaysInForm.classId === -1">
       <el-radio v-model="range" label="2">按院系搜索</el-radio>
       </el-form-item>
       <el-form-item v-if="range === '2'">
@@ -37,6 +37,7 @@
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getAlwaysIn()">查询</el-button>
       </el-form-item>
     </el-form>
+    <h2>共计<span>{{ totalNum }}</span>条记录</h2>
     <el-table :data="getAlwaysInTable"
               style="width: 100%"
               pager="page">
@@ -77,6 +78,7 @@ export default {
         schoolId: '',
         classId: ''
       },
+      totalNum: 0,
       rules: {
         day: [
           { required: true, message: '请输入天数', trigger: 'change' }
@@ -99,19 +101,19 @@ export default {
         param = {schoolId: -1,
           classId: -1}
       } else if (this.range === '2') {
-        param = {schoolId: this.getAlwaysInForm.schoolId,
+        param = {schoolId: this.getAlwaysInForm.searchSchoolId,
           classId: -1}
       } else {
         param = {schoolId: -1,
-          classId: this.getAlwaysInForm.classId}
+          classId: this.getAlwaysInForm.searchClassId}
       }
-      if (this.getAlwaysInForm.day === '') {
-        param['n'] = -1
-      } else {
-        param['n'] = this.getAlwaysInForm.day
-      }
-      this.$axios.get('/api/student/filter/otaku/', {params: param}).then(res => {
+      param['n'] = this.getAlwaysInForm.number
+      this.$axios.get('/api/student/student', {params: param}).then(res => {
         this.getAlwaysInTable = res.data.data
+        this.totalNum = this.getAlwaysInTable.length
+        if (this.getAlwaysInForm.classId !== -1 && this.getAlwaysInForm.classId !== this.getAlwaysInForm.searchClassId) {
+          this.getAlwaysInTable = []
+        }
       })
     }
   }
