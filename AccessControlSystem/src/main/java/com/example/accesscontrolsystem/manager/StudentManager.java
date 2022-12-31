@@ -53,4 +53,12 @@ public class StudentManager {
     public Student findStudentByIdAndMyClassId(Integer studentId, Integer classId) {
         return studentMapper.findStudentByIdAndMyClass_Id(studentId, classId);
     }
+
+    public Student findStudentByIdAndSchoolId(Integer studentId, Integer schoolId) {
+        return studentMapper.findStudentByIdAndMyClass_Major_Id(studentId, schoolId);
+    }
+
+    public Student findStudentByIdAndClassId(Integer studentId, Integer classId) {
+        return studentMapper.findStudentByIdAndMyClass_Id(studentId, classId);
+    }
 }

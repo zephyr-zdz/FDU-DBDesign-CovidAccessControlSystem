@@ -44,10 +44,12 @@ public class ApplicationController {
                                                                             String status) {
         return leaveApplicationService.getLeaveApplications(classId, schoolId, studentId, status);
     }
+
     @GetMapping("/leave-applications/pending/counsellor")
     public Response<List<LeaveApplication>> getPendingLeaveApplicationsByCounsellorId(@RequestParam("counsellorId") Integer counsellorId, @RequestParam("n") Integer n) {
         return leaveApplicationService.getLastNDaysPendingApplicationByCounsellorId(counsellorId, n);
     }
+
     @GetMapping("/leave-applications/pending/manager")
     public Response<List<LeaveApplication>> getPendingLeaveApplicationsByManager(@RequestParam("managerId") Integer managerId, @RequestParam("n") Integer n) {
         return leaveApplicationService.getLastNDaysPendingApplicationByManagerId(managerId, n);

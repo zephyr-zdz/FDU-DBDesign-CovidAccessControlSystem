@@ -3,6 +3,7 @@ package com.example.accesscontrolsystem.service;
 import com.example.accesscontrolsystem.manager.DailyReportManager;
 import com.example.accesscontrolsystem.manager.GateLogManager;
 import com.example.accesscontrolsystem.manager.LeaveApplicationManager;
+import com.example.accesscontrolsystem.manager.StudentManager;
 import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.model.vo.StudentWithLeaveTime;
@@ -22,17 +23,28 @@ public class StudentDataService {
     private final DailyReportManager dailyReportManager;
     private final LeaveApplicationManager leaveApplicationManager;
     private final TimeService timeService;
+    private final StudentManager studentManager;
 
     @Autowired
-    public StudentDataService(GateLogManager gateLogManager, DailyReportManager dailyReportManager, LeaveApplicationManager leaveApplicationManager, TimeService timeService) {
+    public StudentDataService(GateLogManager gateLogManager, DailyReportManager dailyReportManager, LeaveApplicationManager leaveApplicationManager, TimeService timeService,
+                              StudentManager studentManager) {
         this.gateLogManager = gateLogManager;
         this.dailyReportManager = dailyReportManager;
         this.leaveApplicationManager = leaveApplicationManager;
         this.timeService = timeService;
+        this.studentManager = studentManager;
     }
-    public Response<Double> getStudentOutsideDuration(Integer studentId) { // hours
+    public Response<Double> getStudentOutsideDuration(Integer classId, Integer schoolId, Integer studentId) { // hours
+        Student student;
+        if (schoolId == -1) {
+            student = studentManager.findStudentById(studentId);
+        } else if (classId == -1) {
+            student = studentManager.findStudentByIdAndSchoolId(studentId, schoolId);
+        } else {
+            student = studentManager.findStudentByIdAndClassId(studentId, classId);
+        }
         long duration = 0;
-        List<GateLog> gateLogs = gateLogManager.getOneYearGateLogsByStudentId(studentId);
+        List<GateLog> gateLogs = gateLogManager.getOneYearGateLogsByStudentId(student.getId());
         long start = 0, end;
         for (GateLog gateLog : gateLogs) {
             if (gateLog.getDirection().equals("out")) {

@@ -30,6 +30,13 @@ public class StudentController {
         return userservice.getStudentById(studentId);
     }
 
+    @GetMapping("/outside-duration")
+    public Response<Double> getStudentOutsideDuration(Integer classId,
+                                                      Integer schoolId,
+                                                      Integer studentId) { // hours 一年内离校时长
+        return studentDataService.getStudentOutsideDuration(classId, schoolId, studentId);
+    }
+
     @GetMapping("/filter/enter-most-applying")
     public Response<List<Student>> getNStudentsWithMostEnterApplication(Integer classId,
                                                                         Integer schoolId,
@@ -41,11 +48,6 @@ public class StudentController {
                                                                          Integer schoolId,
                                                                          Integer n) {
         return studentDataService.getNStudentsWithLongestAvgOutsideTime(classId, schoolId, n);
-    }
-
-    @GetMapping("/filter/outside-duration/{studentId}")
-    public Response<Double> getStudentOutsideDuration(@PathVariable Integer studentId) { // hours 一年内
-        return studentDataService.getStudentOutsideDuration(studentId);
     }
     @GetMapping("/filter/otaku/") // n天未离校
     public Response<List<Student>> getEnterApplicationsByStudentId(Integer classId,

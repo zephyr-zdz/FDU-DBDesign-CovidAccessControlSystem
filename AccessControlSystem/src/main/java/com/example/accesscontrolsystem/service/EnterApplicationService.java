@@ -90,7 +90,6 @@ public class EnterApplicationService {
         return new Response<>(Response.SUCCESS, "获取成功", enterApplicationManager.findLastNDaysBySchoolManagerAndStatus(schoolManager, n));
     }
 
-
     public Response<EnterApplication> addEnterApplicationsByStudentId(RawEnterApplication enterApplication) {
         Student student = studentManager.findStudentById(enterApplication.getStudentId());
         if (student == null) {
