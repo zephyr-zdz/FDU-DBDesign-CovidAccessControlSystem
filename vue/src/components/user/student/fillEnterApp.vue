@@ -16,10 +16,6 @@
         <el-date-picker placeholder="请输入预计返校时间" type="date" style="width: 30%" v-model="fillEnterAppForm.date"></el-date-picker>
       </el-form-item>
 
-      <el-form-item prop="other" label="其他">
-        <el-input placeholder="请输入其他必要信息" type="text" style="width: 30%" v-model="fillEnterAppForm.other"></el-input>
-      </el-form-item>
-
       <el-form-item style="width: 35%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="submit()">填报</el-button>
       </el-form-item>
@@ -41,7 +37,6 @@ export default {
         date: '',
         other: ''
       },
-      timeStamp: '',
       rules: {
         studentId: [
           { required: true, message: '请输入学号', trigger: 'change' }
@@ -59,15 +54,12 @@ export default {
     submit () {
       this.$refs.fillEnterAppForm.validate((valid) => {
         if (valid) {
-          const postPath = '/api/admin/'
-          this.timeStamp = Date.parse(this.fillEnterAppForm.date)
-          alert(this.timeStamp)
+          const postPath = '/api//student/application/enter-applications'
+          var enterTimeStamp = Date.parse(this.fillEnterAppForm.date)
           var data = {
             studentId: this.fillEnterAppForm.studentId,
-            schoolId: this.fillEnterAppForm.schoolId,
-            classId: this.fillEnterAppForm.classId,
             passingAreas: this.fillEnterAppForm.location,
-            other: this.fillEnterAppForm.other
+            enterTime: enterTimeStamp
           }
           this.$axios
             .post(postPath, data)
@@ -85,7 +77,7 @@ export default {
                   }
                 })
               } else {
-                this.$alert('注册失败', '提示', {
+                this.$alert('填写失败', '提示', {
                   confirmButtonText: '确定',
                   callback: action => {
                     this.$refs.fillEnterAppForm.resetFields()

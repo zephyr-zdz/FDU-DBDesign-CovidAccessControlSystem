@@ -70,7 +70,7 @@ export default {
     submit () {
       this.$refs.fillOutAppForm.validate((valid) => {
         if (valid) {
-          const postPath = '/api/admin/'
+          const postPath = '/api/student/application/leave-applications'
           var data = {
             studentId: this.fillOutAppForm.studentId,
             reason: this.fillOutAppForm.reason,
@@ -94,7 +94,7 @@ export default {
                   }
                 })
               } else {
-                this.$alert('注册失败', '提示', {
+                this.$alert('提交失败', '提示', {
                   confirmButtonText: '确定',
                   callback: action => {
                     this.$refs.fillOutAppForm.resetFields()
