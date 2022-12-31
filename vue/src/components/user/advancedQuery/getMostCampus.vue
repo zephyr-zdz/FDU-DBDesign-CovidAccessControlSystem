@@ -13,17 +13,17 @@
               pager="page">
       <el-table-column
         prop="school"
-        label="院系"
+        label="院系名称"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getMostCampusTable.school}}</span>
+          <span>{{ scope.row.major}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="campus"
         label="校区">
         <template v-slot="scope">
-          <span>{{ scope.row.getMostCampusTable.campus}}</span>
+          <span>{{ scope.row.campus}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -51,14 +51,8 @@ export default {
   methods: {
     getMostCampus () {
       var param = new FormData()
-      param.append('schoolId', this.getMostCampusForm.schoolId)
-      param.append('classId', this.getMostCampusForm.classId)
-      if (this.getMostCampusForm.day === '') {
-        param.append('day', -1)
-      } else {
-        param.append('day', this.getMostCampusForm.day)
-      }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      param.append('n', this.getMostCampusForm.day)
+      this.$axios.get('/api/campus/most-logged-campus', {params: param}).then(res => {
         this.getMostCampusTable = res.data.data
       })
     }
