@@ -42,23 +42,19 @@ public class GateService {
             return Response.error("campus is null");
         }
         // 判断学生所在区域和门禁记录是否相符合
-        if (Objects.equals(student.getStatus(), "outside") && direction.equals("in")) {
+        if (Objects.equals(student.getStatus(), "out") && direction.equals("in")) {
             if (student.getAuth().equals("N")) {
                 return Response.error("学生未授权");
             }
-            student.setStatus(campusManager.findCampusById(gateLog.getCampusId()).getName());
+            student.setStatus("in");
             studentManager.update(student);
             gateLogManager.create(classAdapter.cookGateLog(gateLog));
             return new Response<>(Response.SUCCESS, "进入校园", null);
-        } else if (Objects.equals(student.getStatus(), "inside") && direction.equals("out")) {
-            if (Objects.equals(student.getStatus(), campusManager.findCampusById(gateLog.getCampusId()).getName())) {
-                student.setStatus("outside");
-                studentManager.update(student);
-                gateLogManager.create(classAdapter.cookGateLog(gateLog));
-                return new Response<>(Response.SUCCESS, "离开校区:" + campusManager.findCampusById(gateLog.getCampusId()).getName(), null);
-            } else {
-                return Response.error("学生不在该校区");
-            }
+        } else if (Objects.equals(student.getStatus(), "in") && direction.equals("out")) {
+            student.setStatus("out");
+            studentManager.update(student);
+            gateLogManager.create(classAdapter.cookGateLog(gateLog));
+            return new Response<>(Response.SUCCESS, "离开校区:" + campusManager.findCampusById(gateLog.getCampusId()).getName(), null);
         } else {
             return Response.error("学生状态不正确");
         }

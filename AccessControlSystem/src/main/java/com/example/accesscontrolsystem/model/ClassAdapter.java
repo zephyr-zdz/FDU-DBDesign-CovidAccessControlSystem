@@ -37,7 +37,7 @@ public class ClassAdapter {
         EnterApplication application = new EnterApplication();
         application.setPassingAreas(enterApplication.getPassingAreas());
         application.setCreateTime(timeService.getTime());
-        application.setEnterTime(enterApplication.getEnterTime()); // TODO: time format
+        application.setEnterTime(enterApplication.getEnterTime());
         application.setStatus("pending");
         application.setStudent(studentManager.findStudentById(enterApplication.getStudentId()));
         application.setCounsellor(counsellorMapper.findCounsellorByMyClassId(studentManager.findStudentById(enterApplication.getStudentId()).getMyClass().getId()));
@@ -78,7 +78,7 @@ public class ClassAdapter {
         if (gateLog.getDirection().equals("in")) {
             double duration;
             GateLog lastOutLog = gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(gateLog.getStudentId(), "out");
-            duration = lastOutLog == null ? 0 : (double) (lastOutLog.getTime() - timeService.getTime()) / 1000 / 60;
+            duration = lastOutLog == null ? 0 : (double) (timeService.getTime() - lastOutLog.getTime()) / 1000 / 60 / 60;
             log.setLeaveDuration(duration);
         }
         log.setStudent(studentManager.findStudentById(gateLog.getStudentId()));

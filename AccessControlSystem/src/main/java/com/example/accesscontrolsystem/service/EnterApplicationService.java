@@ -101,7 +101,7 @@ public class EnterApplicationService {
         if (student == null) {
             return new Response<>(Response.FAIL, "学生不存在", null);
         }
-        if (Objects.equals(student.getStatus(), "inside")) {
+        if (Objects.equals(student.getStatus(), "in")) {
             return new Response<>(Response.FAIL, "学生已在校", null);
         }
         enterApplicationManager.save(classAdapter.cookEnterApplication(enterApplication));

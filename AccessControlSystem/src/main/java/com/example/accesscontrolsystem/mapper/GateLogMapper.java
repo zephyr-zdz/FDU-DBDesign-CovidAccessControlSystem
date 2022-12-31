@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface GateLogMapper extends JpaRepository<GateLog, Integer> {
-    @Query("select g from GateLog g where g.student.id = ?1 and g.time between ?2 and ?3")
+    @Query("select g from GateLog g where g.student.id = ?1 and g.time between ?2 and ?3 order by g.time desc")
     List<GateLog> findGateLogsByStudentIdAndTimeBetween(Integer studentId, Long nDaysBefore, Long today);
 
     @Query(value = "select * from gate_log where `student-id` = ?1 and direction = ?2 order by time DESC limit 1", nativeQuery = true)

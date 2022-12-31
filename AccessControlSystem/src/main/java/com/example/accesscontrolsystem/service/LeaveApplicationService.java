@@ -99,7 +99,7 @@ public class LeaveApplicationService {
         if (student == null) {
             return new Response<>(Response.FAIL, "学生不存在", null);
         }
-        if (Objects.equals(student.getStatus(), "outside")) {
+        if (Objects.equals(student.getStatus(), "out")) {
             return new Response<>(Response.FAIL, "学生已离校", null);
         }
         leaveApplicationManager.save(classAdapter.cookLeaveApplication(leaveApplication));

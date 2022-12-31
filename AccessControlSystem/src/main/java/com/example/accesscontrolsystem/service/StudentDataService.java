@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Objects;
 
 @Service("StudentDataService")
 
@@ -48,19 +49,19 @@ public class StudentDataService {
         }
         long duration = 0;
         List<GateLog> gateLogs = gateLogManager.getOneYearGateLogsByStudentId(student.getId());
-        long start = 0, end;
+        long start = timeService.getTimeNDaysBefore(Objects.equals(student.getStatus(), "in") ? 0 : -1) - 100;
+        long end = timeService.getTime();
         for (GateLog gateLog : gateLogs) {
             if (gateLog.getDirection().equals("out")) {
                 start = gateLog.getTime();
+                duration += end - start;
             }
             if (gateLog.getDirection().equals("in")) {
                 end = gateLog.getTime();
-                duration += end - start;
-                start = 0;
             }
         }
-        if (start != 0) {
-            duration += timeService.getTime() - start;
+        if (end < start) {
+            duration += end - timeService.getTimeNDaysBefore(365);
         }
         return duration == 0 ? new Response<>(Response.SUCCESS,"成功",0.0) : new Response<>(Response.SUCCESS, "成功", new BigDecimal(duration / 3600000.0).setScale(2, RoundingMode.HALF_UP).doubleValue());
     }
