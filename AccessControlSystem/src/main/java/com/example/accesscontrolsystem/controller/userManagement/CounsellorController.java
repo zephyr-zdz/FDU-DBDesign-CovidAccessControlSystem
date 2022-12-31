@@ -5,6 +5,7 @@ import com.example.accesscontrolsystem.service.UserService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,5 +22,9 @@ public class CounsellorController {
     @GetMapping("/counsellors")
     public Response<List<Counsellor>> getCounsellors() {
         return userservice.getCounsellors();
+    }
+    @GetMapping("/{counsellor-id}")
+    public Response<Counsellor> getCounsellorById(@PathVariable("counsellor-id") Integer counsellorId) {
+        return userservice.getCounsellorById(counsellorId);
     }
 }

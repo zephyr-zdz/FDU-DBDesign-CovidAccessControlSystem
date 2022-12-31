@@ -25,6 +25,11 @@ public class StudentController {
         return userservice.getStudents();
     }
 
+    @GetMapping("/{student-id}")
+    public Response<Student> getStudent(@PathVariable("student-id") Integer studentId) {
+        return userservice.getStudentById(studentId);
+    }
+
     @GetMapping("/enter-most-applying")
     public Response<List<Student>> getNStudentsWithMostEnterApplication(Integer classId,
                                                                         Integer schoolId,
