@@ -98,6 +98,7 @@ export default {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
             })
+            window.location.reload()
           } else {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
@@ -123,6 +124,7 @@ export default {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'
               })
+              window.location.reload()
             } else {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'

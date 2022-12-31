@@ -12,6 +12,14 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="name"
+        label="姓名"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.student.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="destination"
         label="目的地"
         width="200">
@@ -87,8 +95,53 @@ export default {
   },
   methods: {
     approve (index) {
+      const postPath = '/leave-application/counsellor/approve'
+      var data = {
+        applicationId: this.counsellorExamineOutAppTable[index].id
+      }
+      this.$axios
+        .post(postPath, data)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+            window.location.reload()
+          } else {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     },
     reject (index) {
+      if (this.rejectForm[index].rejectReason === '') {
+        this.$alert('请填写拒绝理由')
+      } else {
+        const postPath = '/leaver-application/counsellor/reject'
+        var data = {
+          applicationId: this.counsellorExamineOutAppTable[index].id,
+          reason: this.rejectForm[index].rejectReason
+        }
+        this.$axios
+          .post(postPath, data)
+          .then(res => {
+            if (res.data.code === 0) {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+              window.location.reload()
+            } else {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+            }
+          })
+          .catch(failResponse => {
+          })
+      }
     },
     getEnterApp () {
       var param = {}

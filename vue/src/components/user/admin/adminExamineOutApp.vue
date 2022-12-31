@@ -8,7 +8,15 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineOutAppTable.studentId }}</span>
+          <span>{{ scope.row.student.id }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.student.name }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -16,7 +24,7 @@
         label="目的地"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineOutAppTable.area }}</span>
+          <span>{{ scope.row.destination }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -24,7 +32,7 @@
         label="预计离校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineOutAppTable.outTime }}</span>
+          <span>{{ scope.row.leaveTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -32,14 +40,14 @@
         label="预计返校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineOutAppTable.backTime }}</span>
+          <span>{{ scope.row.returnTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="other"
-        label="其他">
+        prop="createTime"
+        label="提交时间">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineOutAppTable.other }}</span>
+          <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
       <el-table-column>
@@ -72,11 +80,17 @@ export default {
   name: 'adminExamineOutApp',
   data () {
     return {
-      adminExamineOutAppTable: [],
+      adminExamineOutAppTable: [{studentId: 1}, {studentId: 2}],
       adminExamineOutAppForm: {
         schoolId: '',
         classId: ''
-      }
+      },
+      rejectForm: [
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''}
+      ]
     }
   },
   mounted () {
@@ -84,10 +98,73 @@ export default {
   },
   methods: {
     approve (index) {
+      const postPath = '/leave-application/manager/approve'
+      var data = {
+        applicationId: this.adminExamineOutAppTable[index].id
+      }
+      this.$axios
+        .post(postPath, data)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+            window.location.reload()
+          } else {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     },
     reject (index) {
+      if (this.rejectForm[index].rejectReason === '') {
+        this.$alert('请填写拒绝理由')
+      } else {
+        const postPath = '/leave-application/manager/reject'
+        var data = {
+          applicationId: this.adminExamineOutAppTable[index].id,
+          reason: this.rejectForm[index].rejectReason
+        }
+        this.$axios
+          .post(postPath, data)
+          .then(res => {
+            if (res.data.code === 0) {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+              window.location.reload()
+            } else {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+            }
+          })
+          .catch(failResponse => {
+          })
+      }
     },
     getEnterApp () {
+      var param = {}
+      param['managerId'] = this.$store.state.user.schoolId
+      param['n'] = -1
+      var getPath = '/application/leave-applications/pending/manager'
+      this.$axios
+        .get(getPath, {params: param})
+        .then(res => {
+          console.log(res)
+          if (res.data.code === 0) {
+            this.adminExamineOutAppTable = res.data.data
+          } else if (res.data.code === 1) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     }
   }
 }

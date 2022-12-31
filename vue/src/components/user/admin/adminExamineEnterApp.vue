@@ -8,7 +8,15 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineEnterAppTable.studentId }}</span>
+          <span>{{ scope.row.student.id }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.student.name }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -16,7 +24,7 @@
         label="七日内所到地区"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineEnterAppTable.area }}</span>
+          <span>{{ scope.row.passingAreas }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -24,14 +32,14 @@
         label="预计返校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineEnterAppTable.backTime }}</span>
+          <span>{{ scope.row.enterTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="other"
-        label="其他">
+        prop="createTime"
+        label="提交时间">
         <template v-slot="scope">
-          <span>{{ scope.row.adminExamineEnterAppTable.other }}</span>
+          <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
       <el-table-column>
@@ -64,11 +72,17 @@ export default {
   name: 'adminExamineEnterApp',
   data () {
     return {
-      adminExamineEnterAppTable: [],
+      adminExamineEnterAppTable: [{studentId: 1}, {studentId: 2}],
       adminExamineEnterAppForm: {
         schoolId: '',
         classId: ''
-      }
+      },
+      rejectForm: [
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''}
+      ]
     }
   },
   mounted () {
@@ -76,10 +90,73 @@ export default {
   },
   methods: {
     approve (index) {
+      const postPath = '/enter-application/manager/approve'
+      var data = {
+        applicationId: this.adminExamineEnterAppTable[index].id
+      }
+      this.$axios
+        .post(postPath, data)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+            window.location.reload()
+          } else {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     },
     reject (index) {
+      if (this.rejectForm[index].rejectReason === '') {
+        this.$alert('请填写拒绝理由')
+      } else {
+        const postPath = '/enter-application/manager/reject'
+        var data = {
+          applicationId: this.adminExamineEnterAppTable[index].id,
+          reason: this.rejectForm[index].rejectReason
+        }
+        this.$axios
+          .post(postPath, data)
+          .then(res => {
+            if (res.data.code === 0) {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+              window.location.reload()
+            } else {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+            }
+          })
+          .catch(failResponse => {
+          })
+      }
     },
     getEnterApp () {
+      var param = {}
+      param['managerId'] = this.$store.state.user.schoolId
+      param['n'] = -1
+      var getPath = '/application/enter-applications/pending/manager'
+      this.$axios
+        .get(getPath, {params: param})
+        .then(res => {
+          console.log(res)
+          if (res.data.code === 0) {
+            this.adminExamineEnterAppTable = res.data.data
+          } else if (res.data.code === 1) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     }
   }
 }
