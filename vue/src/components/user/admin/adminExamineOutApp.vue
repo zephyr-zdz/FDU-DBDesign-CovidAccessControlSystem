@@ -58,7 +58,11 @@ export default {
   name: 'adminExamineOutApp',
   data () {
     return {
-      adminExamineOutAppTable: []
+      adminExamineOutAppTable: [],
+      adminExamineOutAppForm: {
+        schoolId: '',
+        classId: ''
+      }
     }
   },
   mounted () {

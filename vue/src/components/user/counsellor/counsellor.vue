@@ -168,84 +168,88 @@ export default {
     handleChange (value) {
       switch (value) {
         case 'getDailyInfo' :
-          this.$refs.getDailyInfo.getDailyInfoForm.schoolId = '*'
-          this.$refs.getDailyInfo.getDailyInfoForm.classId = '*'
+          this.$refs.getDailyInfo.getDailyInfoForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getDailyInfo.getDailyInfoForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getStudentEnterAuth' :
-          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.schoolId = '*'
-          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.classId = '*'
+          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getStudentEnterAuth.getStudentEnterAuthForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getStudentEnterApp' :
-          this.$refs.getStudentEnterApp.getStudentEnterAppForm.schoolId = '*'
-          this.$refs.getStudentEnterApp.getStudentEnterAppForm.classId = '*'
+          this.$refs.getStudentEnterApp.getStudentEnterAppForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getStudentEnterApp.getStudentEnterAppForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getStudentOutApp' :
-          this.$refs.getStudentOutApp.getStudentOutAppForm.schoolId = '*'
-          this.$refs.getStudentOutApp.getStudentOutAppForm.classId = '*'
+          this.$refs.getStudentOutApp.getStudentOutAppForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getStudentOutApp.getStudentOutAppForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getStudentTotalOutTime' :
-          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.schoolId = '*'
-          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.classId = '*'
+          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getStudentTotalOutTime.getStudentTotalOutTimeForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getUnapprovedEnter' :
-          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.schoolId = '*'
-          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.classId = '*'
+          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getUnapprovedEnter.getUnapprovedEnterForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getUnapprovedOut' :
-          this.$refs.getUnapprovedOut.getUnapprovedOutForm.schoolId = '*'
-          this.$refs.getUnapprovedOut.getUnapprovedOutForm.classId = '*'
+          this.$refs.getUnapprovedOut.getUnapprovedOutForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getUnapprovedOut.getUnapprovedOutForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getMostSubmit' :
-          this.$refs.getMostSubmit.getMostSubmitForm.schoolId = '*'
-          this.$refs.getMostSubmit.getMostSubmitForm.classId = '*'
+          this.$refs.getMostSubmit.getMostSubmitForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getMostSubmit.getMostSubmitForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getLongest' :
-          this.$refs.getLongest.getLongestForm.schoolId = '*'
-          this.$refs.getLongest.getLongestForm.classId = '*'
+          this.$refs.getLongest.getLongestForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getLongest.getLongestForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getNotBack' :
-          this.$refs.getNotBack.getNotBackForm.schoolId = '*'
-          this.$refs.getNotBack.getNotBackForm.classId = '*'
+          this.$refs.getNotBack.getNotBackForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getNotBack.getNotBackForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getMoreThan24' :
-          this.$refs.getMoreThan24.getMoreThan24Form.schoolId = '*'
-          this.$refs.getMoreThan24.getMoreThan24Form.classId = '*'
+          this.$refs.getMoreThan24.getMoreThan24Form.schoolId = this.$store.getters.schoolId
+          this.$refs.getMoreThan24.getMoreThan24Form.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getNotOut' :
-          this.$refs.getNotOut.getNotOutForm.schoolId = '*'
-          this.$refs.getNotOut.getNotOutForm.classId = '*'
+          this.$refs.getNotOut.getNotOutForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getNotOut.getNotOutForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getAlwaysIn' :
-          this.$refs.getAlwaysIn.getAlwaysInForm.schoolId = '*'
-          this.$refs.getAlwaysIn.getAlwaysInForm.classId = '*'
+          this.$refs.getAlwaysIn.getAlwaysInForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getAlwaysIn.getAlwaysInForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getSameTime' :
-          this.$refs.getSameTime.getSameTimeForm.schoolId = '*'
-          this.$refs.getSameTime.getSameTimeForm.classId = '*'
+          this.$refs.getSameTime.getSameTimeForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getSameTime.getSameTimeForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'getMostCampus' :
-          this.$refs.getMostCampus.getMostCampusForm.schoolId = '*'
-          this.$refs.getMostCampus.getMostCampusForm.classId = '*'
+          this.$refs.getMostCampus.getMostCampusForm.schoolId = this.$store.getters.schoolId
+          this.$refs.getMostCampus.getMostCampusForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'counsellorExamineEnterApp' :
+          this.$refs.counsellorExamineEnterApp.counsellorExamineEnterAppForm.schoolId = this.$store.getters.schoolId
+          this.$refs.counsellorExamineEnterApp.counsellorExamineEnterAppForm.classId = this.$store.getters.classId
           this.showRecord = value
           break
         case 'counsellorExamineOutApp' :
+          this.$refs.counsellorExamineOutApp.counsellorExamineOutAppFrom.schoolId = this.$store.getters.schoolId
+          this.$refs.counsellorExamineOutApp.counsellorExamineOutAppFrom.classId = this.$store.getters.classId
           this.showRecord = value
           break
         default :

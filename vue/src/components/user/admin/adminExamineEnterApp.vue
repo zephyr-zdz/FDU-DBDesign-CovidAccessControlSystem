@@ -50,7 +50,11 @@ export default {
   name: 'adminExamineEnterApp',
   data () {
     return {
-      adminExamineEnterAppTable: []
+      adminExamineEnterAppTable: [],
+      adminExamineEnterAppForm: {
+        schoolId: '',
+        classId: ''
+      }
     }
   },
   mounted () {

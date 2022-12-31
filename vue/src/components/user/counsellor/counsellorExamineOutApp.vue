@@ -58,7 +58,11 @@ export default {
   name: 'counsellorExamineOutApp',
   data () {
     return {
-      counsellorExamineOutAppTable: []
+      counsellorExamineOutAppTable: [],
+      counsellorExamineOutAppFrom: {
+        schoolId: '',
+        classId: ''
+      }
     }
   },
   mounted () {

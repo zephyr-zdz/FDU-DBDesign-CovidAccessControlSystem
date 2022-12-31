@@ -50,7 +50,11 @@ export default {
   name: 'counsellorExamineEnterApp',
   data () {
     return {
-      counsellorExamineEnterAppTable: []
+      counsellorExamineEnterAppTable: [],
+      counsellorExamineEnterAppForm: {
+        schoolId: '',
+        classId: ''
+      }
     }
   },
   mounted () {
