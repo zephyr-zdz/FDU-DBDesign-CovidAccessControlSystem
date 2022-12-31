@@ -1,13 +1,9 @@
 package com.example.accesscontrolsystem.model.entity;
 
-import com.example.accesscontrolsystem.model.entity.user.Counsellor;
-import com.example.accesscontrolsystem.model.entity.user.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -24,8 +20,4 @@ public class Class {
     @ManyToOne
     @JoinColumn(name = "major-id", nullable = false)
     private Major major;
-    @OneToOne(mappedBy = "myClass")
-    private Counsellor counsellor;
-    @OneToMany(mappedBy = "myClass")
-    private List<Student> studentList;
 }

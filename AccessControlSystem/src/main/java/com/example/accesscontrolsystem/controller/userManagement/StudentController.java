@@ -30,44 +30,44 @@ public class StudentController {
         return userservice.getStudentById(studentId);
     }
 
-    @GetMapping("/enter-most-applying")
+    @GetMapping("/filter/enter-most-applying")
     public Response<List<Student>> getNStudentsWithMostEnterApplication(Integer classId,
                                                                         Integer schoolId,
                                                                         Integer n) {
         return studentDataService.getNStudentsWithMostLeaveTime(classId, schoolId, n);
     }
-    @GetMapping("/avg-outside-longest")
+    @GetMapping("/filter/avg-outside-longest")
     public Response<List<Student>> getNStudentsWithLongestAvgOutsideTime(Integer classId,
                                                                          Integer schoolId,
                                                                          Integer n) {
         return studentDataService.getNStudentsWithLongestAvgOutsideTime(classId, schoolId, n);
     }
 
-    @GetMapping("/outside-duration/{studentId}")
+    @GetMapping("/filter/outside-duration/{studentId}")
     public Response<Double> getStudentOutsideDuration(@PathVariable Integer studentId) { // hours 一年内
         return studentDataService.getStudentOutsideDuration(studentId);
     }
-    @GetMapping("/otaku/") // n天未离校
+    @GetMapping("/filter/otaku/") // n天未离校
     public Response<List<Student>> getEnterApplicationsByStudentId(Integer classId,
                                                                    Integer schoolId,
                                                                    Integer n) {
         return studentDataService.getNDaysOtakus(classId, schoolId, n);
     }
-    @GetMapping("/script-kiddie/") // n天填写日报分钟时间相同
+    @GetMapping("/filter/script-kiddie/") // n天填写日报分钟时间相同
     public Response<List<Student>> getNDaysScriptKiddies(Integer n) {
         return studentDataService.catchNDaysScriptKiddies(n);
     }
-    @GetMapping("/applied-but-not-leaved/") // 申请离校但未离校
-    public Response<List<Student>> getAppliedButNotLeaft(Integer classId,
+    @GetMapping("/filter/applied-but-not-leaved/") // 申请离校但未离校
+    public Response<List<Student>> getAppliedButNotLeft(Integer classId,
                                                           Integer schoolId) {
         return studentDataService.getAppliedButNotLeaved(classId, schoolId);
     }
-    @GetMapping("/leaved-but-not-applied/") // 离校但未申请
+    @GetMapping("/filter/leaved-but-not-applied/") // 离校但未申请
     public Response<List<Student>> getLeaved24hrsButNotApplied(Integer classId,
                                                                Integer schoolId) {
         return studentDataService.getLeaved24hrsButNotApplied(classId, schoolId);
     }
-    @GetMapping("/outside/") //离校学生
+    @GetMapping("/filter/outside/") //离校学生
     public Response<List<StudentWithLeaveTime>> getOutsideStudents(Integer classId,
                                                                    Integer schoolId) {
         return studentDataService.getOutsideStudents(classId, schoolId);

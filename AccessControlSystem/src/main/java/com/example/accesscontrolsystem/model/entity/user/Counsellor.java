@@ -22,7 +22,7 @@ public class Counsellor {
     @OneToOne
     @JoinColumn(name = "class-id", nullable = false)
     private Class myClass;
-    public Major getMajor() {
-        return myClass.getMajor();
-    }
+    @ManyToOne
+    @JoinColumn(name = "major-id", nullable = false)
+    private Major major;
 }

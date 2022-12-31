@@ -19,12 +19,15 @@ public class DailyReportController {
     }
 
     @GetMapping("/")
-    public Response<List<DailyReport>> getDailyReports(@RequestParam("student-id") Integer studentId) {
+    public Response<List<DailyReport>> getDailyReports(Integer studentId) {
         return dailyReportService.getDailyReports(studentId);
     }
 
     @GetMapping("/recent/")
-    public Response<List<DailyReport>> getLastNDaysDailyReports(@RequestParam("student-id") Integer studentId, @RequestParam("n") Integer n) {
-        return dailyReportService.getLastNDaysDailyReports(studentId, n);
+    public Response<List<DailyReport>> getLastNDaysDailyReports(Integer classId,
+                                                                Integer schoolId,
+                                                                Integer studentId,
+                                                                Integer n) {
+        return dailyReportService.getLastNDaysDailyReports(classId, schoolId, studentId, n);
     }
 }

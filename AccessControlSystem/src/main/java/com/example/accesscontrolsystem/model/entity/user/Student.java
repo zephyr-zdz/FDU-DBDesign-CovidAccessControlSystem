@@ -42,7 +42,4 @@ public class Student {
     @ManyToOne
     @JoinColumn(name = "major-id", nullable = false)
     private Major major;
-    public Major getMajor() {
-        return myClass.getMajor();
-    }
 }

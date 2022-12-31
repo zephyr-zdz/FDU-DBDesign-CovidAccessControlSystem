@@ -1,8 +1,7 @@
 package com.example.accesscontrolsystem.model;
 
 import com.example.accesscontrolsystem.manager.StudentManager;
-import com.example.accesscontrolsystem.mapper.CampusMapper;
-import com.example.accesscontrolsystem.mapper.GateLogMapper;
+import com.example.accesscontrolsystem.mapper.*;
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
 import com.example.accesscontrolsystem.model.entity.reportNlog.GateLog;
@@ -18,14 +17,20 @@ public class ClassAdapter {
     private final StudentManager studentManager;
     private final CampusMapper campusMapper;
     private final GateLogMapper gateLogMapper;
+    private final SchoolManagerMapper schoolManagerMapper;
+    private final CounsellorMapper counsellorMapper;
 
     public ClassAdapter(TimeService timeService, StudentManager studentManager,
                         CampusMapper campusMapper,
-                        GateLogMapper gateLogMapper) {
+                        GateLogMapper gateLogMapper,
+                        SchoolManagerMapper schoolManagerMapper,
+                        CounsellorMapper counsellorMapper) {
         this.timeService = timeService;
         this.studentManager = studentManager;
         this.campusMapper = campusMapper;
         this.gateLogMapper = gateLogMapper;
+        this.schoolManagerMapper = schoolManagerMapper;
+        this.counsellorMapper = counsellorMapper;
     }
 
     public EnterApplication cookEnterApplication(RawEnterApplication enterApplication) {
@@ -35,8 +40,8 @@ public class ClassAdapter {
         application.setEnterTime(enterApplication.getEnterTime()); // TODO: time format
         application.setStatus("pending");
         application.setStudent(studentManager.findStudentById(enterApplication.getStudentId()));
-        application.setCounsellor(studentManager.findStudentById(enterApplication.getStudentId()).getMyClass().getCounsellor());
-        application.setManager(studentManager.findStudentById(enterApplication.getStudentId()).getMyClass().getMajor().getSchoolManager());
+        application.setCounsellor(counsellorMapper.findCounsellorByMyClassId(studentManager.findStudentById(enterApplication.getStudentId()).getMyClass().getId()));
+        application.setManager(schoolManagerMapper.findByMajorId(studentManager.findStudentById(enterApplication.getStudentId()).getMyClass().getMajor().getId()));
         return application;
     }
 
@@ -49,8 +54,8 @@ public class ClassAdapter {
         application.setReturnTime(leaveApplication.getReturnTime()); // TODO: time format
         application.setStatus("pending");
         application.setStudent(studentManager.findStudentById(leaveApplication.getStudentId()));
-        application.setCounsellor(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getCounsellor());
-        application.setManager(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getMajor().getSchoolManager());
+        application.setCounsellor(counsellorMapper.findCounsellorByMyClassId(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getId()));
+        application.setManager(schoolManagerMapper.findByMajorId(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getMajor().getId()));
         return application;
     }
 

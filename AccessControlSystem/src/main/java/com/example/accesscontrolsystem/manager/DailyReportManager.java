@@ -39,6 +39,18 @@ public class DailyReportManager {
         return dailyReportMapper.findAllByStudentIdAndCreateTimeBetween(studentId, nDaysAgo, today);
     }
 
+    public List<DailyReport> findAllBySchoolIdAndStudentIdByNDays(Integer schoolId, Integer studentId, Integer n) {
+        long today = timeService.getTime();
+        Long nDaysAgo = timeService.getTimeNDaysBefore(n);
+        return dailyReportMapper.findAllByStudentIdAndStudentMajorIdAndCreateTimeBetween(studentId, schoolId, nDaysAgo, today);
+    }
+
+    public List<DailyReport> findAllByClassIdAndStudentIdByNDays(Integer classId, Integer studentId, Integer n) {
+        long today = timeService.getTime();
+        Long nDaysAgo = timeService.getTimeNDaysBefore(n);
+        return dailyReportMapper.findAllByStudentIdAndStudentMyClassIdAndCreateTimeBetween(studentId, classId, nDaysAgo, today);
+    }
+
     public List<Student> catchNDaysScriptKiddies(Integer n) {
         long today = timeService.getTime();
         Long nDaysAgo = timeService.getTimeNDaysBefore(n);

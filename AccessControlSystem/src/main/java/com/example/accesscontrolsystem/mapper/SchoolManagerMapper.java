@@ -10,4 +10,7 @@ public interface SchoolManagerMapper extends JpaRepository<SchoolManager, Intege
 
     @Query("select s from SchoolManager s where s.id = ?1")
     SchoolManager findSchoolManagerById(Integer managerId);
+
+    @Query("select s from SchoolManager s where s.major.id = ?1")
+    SchoolManager findByMajorId(Integer id);
 }

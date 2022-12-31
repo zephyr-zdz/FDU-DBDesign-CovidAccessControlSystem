@@ -50,13 +50,13 @@ public class DailyReportService {
         return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentId(studentId));
     }
 
-    public Response<List<DailyReport>> getLastNDaysDailyReports(Integer studentId, Integer n) {
-        if (n < 0) {
-            return new Response<>(Response.FAIL, "n需要为自然数", null);
+    public Response<List<DailyReport>> getLastNDaysDailyReports(Integer classId, Integer schoolId, Integer studentId, Integer n) {
+        if (schoolId == -1) {
+            return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentIdByNDays(studentId, n));
+        } else if (classId == -1) {
+            return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllBySchoolIdAndStudentIdByNDays(schoolId, studentId, n));
+        } else {
+            return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByClassIdAndStudentIdByNDays(classId, studentId, n));
         }
-        if (studentManager.findStudentById(studentId) == null) {
-            return new Response<>(Response.FAIL, "学生不存在", null);
-        }
-        return new Response<>(Response.SUCCESS, "成功", dailyReportManager.findAllByStudentIdByNDays(studentId, n));
     }
 }
