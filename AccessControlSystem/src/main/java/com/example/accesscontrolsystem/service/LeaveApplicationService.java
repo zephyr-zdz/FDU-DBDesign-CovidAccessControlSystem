@@ -82,7 +82,7 @@ public class LeaveApplicationService {
         if (counsellor == null) {
             return new Response<>(Response.FAIL, "辅导员不存在", null);
         }
-        return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysByCounsellorAndStatus(counsellor, n));
+        return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysByCounsellorIdAndStatus(counsellorId, n));
     }
     public Response<List<LeaveApplication>> getLastNDaysPendingApplicationByManagerId(Integer managerId, Integer n) {
         if (managerId == -1) {
@@ -92,7 +92,7 @@ public class LeaveApplicationService {
         if (schoolManager == null) {
             return new Response<>(Response.FAIL, "学校管理员不存在", null);
         }
-        return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysBySchoolManagerAndStatus(schoolManager, n));
+        return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysBySchoolManagerIdAndStatus(managerId, n));
     }
     public Response<LeaveApplication> addLeaveApplicationsByStudentId(RawLeaveApplication leaveApplication) {
         Student student = studentManager.findStudentById(leaveApplication.getStudentId());
@@ -138,6 +138,9 @@ public class LeaveApplicationService {
     }
 
     public Response<String> rejectLeaveApplicationByManager(Integer applicationId, String reason) {
+        System.out.println("reject");
+        System.out.println(applicationId);
+        System.out.println(reason);
         LeaveApplication leaveApplication = leaveApplicationManager.findLeaveApplicationById(applicationId);
         if (leaveApplication == null) {
             return new Response<>(Response.FAIL, "申请不存在", null);

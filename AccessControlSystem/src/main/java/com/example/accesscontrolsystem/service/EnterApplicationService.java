@@ -83,7 +83,7 @@ public class EnterApplicationService {
         if (counsellor == null) {
             return new Response<>(Response.FAIL, "辅导员不存在", null);
         }
-        return new Response<>(Response.SUCCESS, "获取成功", enterApplicationManager.findLastNDaysByCounsellorAndStatus(counsellor, n));
+        return new Response<>(Response.SUCCESS, "获取成功", enterApplicationManager.findLastNDaysByCounsellorAndStatus(counsellorId, n));
     }
     public Response<List<EnterApplication>> getLastNDaysPendingApplicationByManagerId(Integer managerId, Integer n) {
         if (managerId == -1) {
@@ -93,7 +93,7 @@ public class EnterApplicationService {
         if (schoolManager == null) {
             return new Response<>(Response.FAIL, "学校管理员不存在", null);
         }
-        return new Response<>(Response.SUCCESS, "获取成功", enterApplicationManager.findLastNDaysBySchoolManagerAndStatus(schoolManager, n));
+        return new Response<>(Response.SUCCESS, "获取成功", enterApplicationManager.findLastNDaysBySchoolManagerAndStatus(managerId, n));
     }
 
     public Response<EnterApplication> addEnterApplicationsByStudentId(RawEnterApplication enterApplication) {

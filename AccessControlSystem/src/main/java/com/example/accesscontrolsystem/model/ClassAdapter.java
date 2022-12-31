@@ -53,6 +53,7 @@ public class ClassAdapter {
         application.setLeaveTime(leaveApplication.getLeaveTime()); // TODO: time format
         application.setReturnTime(leaveApplication.getReturnTime()); // TODO: time format
         application.setStatus("pending");
+        application.setDate(timeService.time2Day(application.getCreateTime()));
         application.setStudent(studentManager.findStudentById(leaveApplication.getStudentId()));
         application.setCounsellor(counsellorMapper.findCounsellorByMyClassId(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getId()));
         application.setManager(schoolManagerMapper.findByMajorId(studentManager.findStudentById(leaveApplication.getStudentId()).getMyClass().getMajor().getId()));

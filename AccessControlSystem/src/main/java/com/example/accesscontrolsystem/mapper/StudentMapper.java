@@ -53,7 +53,6 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
             (select *\s
             from leave_application l
             where l.`student-id` = s.id and l.status = 'accepted' and l.`leave-time` < ?1 < l.`return-time`
-              and (select time as latestEnterTime from gate_log g where direction = 'in' order by time DESC limit 1) < l.`leave-time`
             order by `create-time` DESC)""", nativeQuery = true)
     List<Student> findAppliedButNotLeaved(Long today);
 
@@ -196,7 +195,9 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
     @Query(value = """
             select * from student s
             where (select count(distinct(minute)) from daily_report
-                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1""",
+                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1
+                   and (select count(minute) from daily_report
+                   where `student-id` = s.id and `create-time` between ?1 and ?2) != 1""",
             nativeQuery = true)
     List<Student> findScriptKiddies(Long nDaysAgo, long today);
     @Query(value = """

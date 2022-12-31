@@ -5,8 +5,6 @@ import com.example.accesscontrolsystem.mapper.LeaveApplicationMapper;
 import com.example.accesscontrolsystem.mapper.StudentMapper;
 import com.example.accesscontrolsystem.model.ClassAdapter;
 import com.example.accesscontrolsystem.model.entity.reportNlog.LeaveApplication;
-import com.example.accesscontrolsystem.model.entity.user.Counsellor;
-import com.example.accesscontrolsystem.model.entity.user.SchoolManager;
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.model.vo.StudentWithLeaveTime;
 import com.example.accesscontrolsystem.service.system.TimeService;
@@ -61,16 +59,19 @@ public class LeaveApplicationManager {
         leaveApplicationMapper.save(leaveApplication);
     }
 
-    public List<LeaveApplication> findLastNDaysByCounsellorAndStatus(Counsellor counsellor, Integer n) {
+    public List<LeaveApplication> findLastNDaysByCounsellorIdAndStatus(Integer counsellorId, Integer n) {
         long today = timeService.getTime();
-        long nDaysBefore = today - (long) n * 24 * 60 * 60 * 1000;
-        return leaveApplicationMapper.findAllByCounsellorAndStatusAndCreateTimeBetween(counsellor, "pending", today, nDaysBefore);
+        long nDaysBefore = timeService.getTimeNDaysBefore(n);
+        System.out.println("today: " + today);
+        System.out.println("nDaysBefore: " + nDaysBefore);
+        System.out.println(counsellorId);
+        return leaveApplicationMapper.findAllByCounsellorIdAndStatusAndCreateTimeBetween(counsellorId, "pending", nDaysBefore, today);
     }
 
-    public List<LeaveApplication> findLastNDaysBySchoolManagerAndStatus(SchoolManager schoolManager, Integer n) {
+    public List<LeaveApplication> findLastNDaysBySchoolManagerIdAndStatus(Integer schoolManagerId, Integer n) {
         long today = timeService.getTime();
         long nDaysBefore = today - (long) n * 24 * 60 * 60 * 1000;
-        return leaveApplicationMapper.findAllByManagerAndStatusAndCreateTimeBetween(schoolManager, "counsellor", today, nDaysBefore);
+        return leaveApplicationMapper.findAllByManager_IdAndStatusAndCreateTimeBetween(schoolManagerId, "counsellor", nDaysBefore, today);
     }
 
     public List<Student> findAppliedButNotLeaved() {
@@ -157,4 +158,5 @@ public class LeaveApplicationManager {
         long nDaysBefore = timeService.getTimeNDaysBefore(n);
         return leaveApplicationMapper.findAllByStatusAndCreateTimeBetween(status, today, nDaysBefore);
     }
+
 }

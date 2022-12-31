@@ -2,8 +2,6 @@ package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.EnterApplicationMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.EnterApplication;
-import com.example.accesscontrolsystem.model.entity.user.Counsellor;
-import com.example.accesscontrolsystem.model.entity.user.SchoolManager;
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.service.system.TimeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,16 +41,16 @@ public class EnterApplicationManager {
         enterApplicationMapper.save(enterApplication);
     }
 
-    public List<EnterApplication> findLastNDaysByCounsellorAndStatus(Counsellor counsellor, Integer n) {
+    public List<EnterApplication> findLastNDaysByCounsellorAndStatus(Integer counsellorId, Integer n) {
         long today = timeService.getTime();
         long nDaysBefore = timeService.getTimeNDaysBefore(n);
-        return enterApplicationMapper.findAllByCounsellorAndStatusAndCreateTimeBetween(counsellor,"pending", today, nDaysBefore);
+        return enterApplicationMapper.findAllByCounsellorIdAndStatusAndCreateTimeBetween(counsellorId,"pending", today, nDaysBefore);
     }
 
-    public List<EnterApplication> findLastNDaysBySchoolManagerAndStatus(SchoolManager schoolManager, Integer n) {
+    public List<EnterApplication> findLastNDaysBySchoolManagerAndStatus(Integer schoolManagerId, Integer n) {
         long today = timeService.getTime();
         long nDaysBefore = timeService.getTimeNDaysBefore(n);
-        return enterApplicationMapper.findAllByManagerAndStatusAndCreateTimeBetween(schoolManager,"counsellor", today, nDaysBefore);
+        return enterApplicationMapper.findAllByManagerIdAndStatusAndCreateTimeBetween(schoolManagerId,"counsellor", today, nDaysBefore);
     }
 
     public EnterApplication findEnterApplicationById(Integer applicationId) {
