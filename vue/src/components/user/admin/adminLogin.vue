@@ -23,36 +23,41 @@ export default {
         number: ''
       },
       rules: {
-        // number: [
-        //   { required: true, message: '请输入管理员工号', trigger: 'change' }
-        // ]
+        number: [
+          { required: true, message: '请输入管理员工号', trigger: 'change' }
+        ]
       }
     }
   },
   methods: {
     login () {
-      this.$store.state.user.classId = ''
       this.$router.replace('/admin')
-      var param = new FormData()
-      param.append('type', this.adminLoginForm.type)
-      param.append('username', this.adminLoginForm.number)
-      this.$axios
-        .post('/api/user/login', param)
-        .then(successResponse => {
-          if (successResponse.data.data === 'true') {
-            this.$store.commit('login', this.adminLoginForm)
-            this.$router.replace('/user')
-          } else {
-            this.$alert(successResponse.data.msg, '系统提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.adminLoginForm.number = ''
+      this.$refs.adminLoginForm.validate((valid) => {
+        if (valid) {
+          const getPath = '/school-manager/' + this.adminLoginForm.number
+          this.$axios
+            .get(getPath)
+            .then(res => {
+              console.log(res)
+              if (res.data.code === 0) {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定'
+                })
+                this.$store.state.user.schoolId = res.data.data.major.id
+                this.$router.replace('/admin')
+              } else {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    this.$refs.adminLoginForm.resetFields()
+                  }
+                })
               }
             })
-          }
-        })
-        .catch(failResponse => {
-        })
+            .catch(failResponse => {
+            })
+        }
+      })
     }
   }
 }
