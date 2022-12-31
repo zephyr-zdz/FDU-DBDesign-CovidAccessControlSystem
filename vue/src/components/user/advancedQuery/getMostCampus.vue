@@ -16,14 +16,14 @@
         label="院系名称"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.major}}</span>
+          <span>{{ scope.row.major.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="campus"
         label="校区">
         <template v-slot="scope">
-          <span>{{ scope.row.campus}}</span>
+          <span>{{ scope.row.campus.name}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -51,7 +51,8 @@ export default {
   methods: {
     getMostCampus () {
       var param = new FormData()
-      param.append('n', this.getMostCampusForm.day)
+      param = {n: this.getMostCampusForm.day}
+      console.log(param)
       this.$axios.get('/api/campus/most-logged-campus', {params: param}).then(res => {
         this.getMostCampusTable = res.data.data
       })
