@@ -20,9 +20,8 @@
         <el-date-picker placeholder="请输入预计返校时间" type="date" style="width: 30%" v-model="fillOutAppForm.inDate"></el-date-picker>
       </el-form-item>
 
-      <el-form-item prop="other">
-        <div slot="label" style="margin-left: 10px">其他</div>
-        <el-input placeholder="请输入其他必要信息" type="text" style="width: 30%" v-model="fillOutAppForm.other"></el-input>
+      <el-form-item prop="reason" label="出校原因">
+        <el-input placeholder="请输入出校原因" type="text" style="width: 30%" v-model="fillOutAppForm.reason"></el-input>
       </el-form-item>
 
       <el-form-item style="width: 35%">
@@ -39,12 +38,13 @@ export default {
   data () {
     return {
       fillOutAppForm: {
-        studentId: this.$store.getters.studentId,
-        classId: this.$store.getters.classId,
-        schoolId: this.$store.getters.schoolId,
+        studentId: this.$store.state.studentId,
+        classId: this.$store.state.classId,
+        schoolId: this.$store.state.schoolId,
         destination: '',
         outDate: '',
         inDate: '',
+        reason: '',
         other: ''
       },
       rules: {
@@ -59,6 +59,9 @@ export default {
         ],
         inDate: [
           { required: true, message: '请输入预计返校时间', trigger: 'change' }
+        ],
+        reason: [
+          { required: true, message: '请输入原因', trigger: 'change' }
         ]
       }
     }
@@ -70,11 +73,10 @@ export default {
           const postPath = '/api/admin/'
           var data = {
             studentId: this.fillOutAppForm.studentId,
-            schoolId: this.fillOutAppForm.schoolId,
-            classId: this.fillOutAppForm.classId,
-            location: this.fillOutAppForm.location,
-            temperature: this.fillOutAppForm.temperature,
-            other: this.fillOutAppForm.other
+            reason: this.fillOutAppForm.reason,
+            destination: this.fillOutAppForm.destination,
+            leaveTime: this.fillOutAppForm.outDate,
+            returnTime: this.fillOutAppForm.inDate
           }
           this.$axios
             .post(postPath, data)

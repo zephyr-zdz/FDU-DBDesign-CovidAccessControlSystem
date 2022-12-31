@@ -42,7 +42,7 @@
         label="七日内所到地区"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentEnterAppTable.area}}</span>
+          <span>{{ scope.row.getStudentEnterAppTable.passingAreas}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -87,14 +87,14 @@ export default {
         value: 'rejected',
         label: '已拒绝'
       }, {
-        value: '*',
+        value: '',
         label: '全部'
       }],
       getStudentEnterAppTable: [],
       getStudentEnterAppForm: {
         schoolId: '',
         classId: '',
-        status: '*',
+        status: '',
         studentId: ''
       }
     }
@@ -106,11 +106,11 @@ export default {
       param.append('classId', this.getStudentEnterAppForm.classId)
       param.append('status', this.getStudentEnterAppForm.status)
       if (this.getStudentEnterAppForm.studentId === '') {
-        param.append('studentId', '*')
+        param.append('studentId', -1)
       } else {
         param.append('studentId', this.getStudentEnterAppForm.studentId)
       }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      this.$axios.get('/application/enter-applications/', {params: param}).then(res => {
         this.getStudentEnterAppTable = res.data.data
       })
     }

@@ -58,11 +58,9 @@ export default {
     submit () {
       this.$refs.fillDailyReportForm.validate((valid) => {
         if (valid) {
-          const postPath = '/api/admin/'
+          const postPath = '/student/daily-report/'
           var data = {
             studentId: this.fillDailyReportForm.studentId,
-            schoolId: this.fillDailyReportForm.schoolId,
-            classId: this.fillDailyReportForm.classId,
             location: this.fillDailyReportForm.location,
             temperature: this.fillDailyReportForm.temperature,
             other: this.fillDailyReportForm.other
@@ -70,24 +68,13 @@ export default {
           this.$axios
             .post(postPath, data)
             .then(res => {
-              console.log(res)
               if (res.data.code === 0) {
-                this.$alert('提交成功', '提示', {
+                this.$alert(res.data.msg, '提示', {
                   confirmButtonText: '确定'
                 })
-              } else if (res.data.code === 1) {
-                this.$alert(res.data.msg, '提示', {
-                  confirmButtonText: '确定',
-                  callback: action => {
-                    this.$refs.fillDailyReportForm.resetFields()
-                  }
-                })
               } else {
-                this.$alert('注册失败', '提示', {
-                  confirmButtonText: '确定',
-                  callback: action => {
-                    this.$refs.fillDailyReportForm.resetFields()
-                  }
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定'
                 })
               }
             })

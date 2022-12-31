@@ -34,13 +34,14 @@ export default {
   data () {
     return {
       fillEnterAppForm: {
-        studentId: this.$store.getters.studentId,
-        classId: this.$store.getters.classId,
-        schoolId: this.$store.getters.schoolId,
+        studentId: this.$store.state.studentId,
+        classId: this.$store.state.classId,
+        schoolId: this.$store.state.schoolId,
         area: '',
         date: '',
         other: ''
       },
+      timeStamp: '',
       rules: {
         studentId: [
           { required: true, message: '请输入学号', trigger: 'change' }
@@ -59,12 +60,13 @@ export default {
       this.$refs.fillEnterAppForm.validate((valid) => {
         if (valid) {
           const postPath = '/api/admin/'
+          this.timeStamp = Date.parse(this.fillEnterAppForm.date)
+          alert(this.timeStamp)
           var data = {
             studentId: this.fillEnterAppForm.studentId,
             schoolId: this.fillEnterAppForm.schoolId,
             classId: this.fillEnterAppForm.classId,
-            location: this.fillEnterAppForm.location,
-            temperature: this.fillEnterAppForm.temperature,
+            passingAreas: this.fillEnterAppForm.location,
             other: this.fillEnterAppForm.other
           }
           this.$axios

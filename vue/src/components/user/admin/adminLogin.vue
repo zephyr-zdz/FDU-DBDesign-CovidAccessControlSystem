@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     login () {
+      this.$store.state.user.classId = ''
       this.$router.replace('/admin')
       var param = new FormData()
       param.append('type', this.adminLoginForm.type)
