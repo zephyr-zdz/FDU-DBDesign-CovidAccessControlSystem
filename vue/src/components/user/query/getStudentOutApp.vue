@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
-    <el-form label-position="left" :model="getStudentOutAppForm" ref="getDailyInfoForm" label-width="0">
-      <el-form-item prop="status">
+    <el-form :model="getStudentOutAppForm" ref="getStudentOutAppForm" :rules="rules" label-width="100px">
+      <el-form-item prop="status" label="状态">
         <el-select style="width: 20%" placeholder="请选择申请状态" v-model="getStudentOutAppForm.status">
           <el-option
             v-for="item in appOption"
@@ -11,10 +11,10 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item prop="studentId">
-        <el-input style="width: 20%" placeholder="请输入学号，为空则查询全部" v-model="getStudentOutAppForm.studentId"></el-input>
+      <el-form-item prop="studentId" label="学号">
+        <el-input style="width: 20%" placeholder="请输入学号" v-model="getStudentOutAppForm.studentId"></el-input>
       </el-form-item>
-      <el-form-item style="width: 20%">
+      <el-form-item style="width: 25%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getStudentOutApp()">查询</el-button>
       </el-form-item>
     </el-form>
@@ -26,7 +26,7 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.studentId}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -34,7 +34,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -42,7 +42,7 @@
         label="目的地"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.destination}}</span>
+          <span>{{ scope.row.destination}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -50,7 +50,7 @@
         label="预计离校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.timeOut}}</span>
+          <span>{{ scope.row.leaveTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -58,7 +58,7 @@
         label="预计入校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.timeIn}}</span>
+          <span>{{ scope.row.returnTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -66,7 +66,7 @@
         label="离校原因"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.reason}}</span>
+          <span>{{ scope.row.reason}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -74,14 +74,14 @@
         label="提交时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.appTime}}</span>
+          <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="status"
         label="申请状态">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.status}}</span>
+          <span>{{ scope.row.status}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -103,31 +103,57 @@ export default {
         value: 'rejected',
         label: '已拒绝'
       }, {
-        value: '*',
+        value: '',
         label: '全部'
       }],
       getStudentOutAppTable: [],
       getStudentOutAppForm: {
         schoolId: '',
         className: '',
-        status: '*',
+        status: '',
         studentId: ''
+      },
+      rules: {
+        studentId: [
+          { required: true, message: '请输入学号', trigger: 'change' }
+        ]
       }
     }
   },
   methods: {
     getStudentOutApp () {
-      var param = new FormData()
-      param.append('schoolId', this.getStudentOutAppForm.schoolId)
-      param.append('className', this.getStudentOutAppForm.className)
-      param.append('status', this.getStudentOutAppForm.status)
-      if (this.getStudentOutAppForm.studentId === '') {
-        param.append('studentId', '*')
-      } else {
-        param.append('studentId', this.getStudentOutAppForm.studentId)
-      }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getStudentOutAppTable = res.data.data
+      this.$refs.getStudentOutAppForm.validate((valid) => {
+        if (valid) {
+          const getPath = '/api/application/leave-applications/'
+          var data = {
+            studentId: this.getStudentOutAppForm.studentId,
+            classId: this.getStudentOutAppForm.classId,
+            schoolId: this.getStudentOutAppForm.schoolId,
+            status: this.getStudentOutAppForm.status
+          }
+          this.$axios
+            .get(getPath, {params: data})
+            .then(res => {
+              console.log(res)
+              if (res.data.code === 0) {
+                this.getStudentOutAppTable = res.data.data
+                for (var i = 0; i < this.getStudentOutAppTable.length; i++) {
+                  this.getStudentOutAppTable.createTime = new Date(this.getStudentOutAppTable.createTime)
+                  this.getStudentOutAppTable.leaveTime = new Date(this.getStudentOutAppTable.leaveTime)
+                  this.getStudentOutAppTable.returnTime = new Date(this.getStudentOutAppTable.returnTime)
+                }
+              } else if (res.data.code === 1) {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    this.$refs.getStudentOutAppForm.resetFields()
+                  }
+                })
+              }
+            })
+            .catch(failResponse => {
+            })
+        }
       })
     }
   }

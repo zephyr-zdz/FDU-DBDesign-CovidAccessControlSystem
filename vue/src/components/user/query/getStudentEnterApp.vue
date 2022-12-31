@@ -108,7 +108,7 @@ export default {
     getStudentEnterApp () {
       this.$refs.getStudentEnterAppForm.validate((valid) => {
         if (valid) {
-          const getPath = '/api/enter-applications/'
+          const getPath = '/api/application/enter-applications/'
           var data = {
             studentId: this.getStudentEnterAppForm.studentId,
             classId: this.getStudentEnterAppForm.classId,
