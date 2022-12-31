@@ -4,7 +4,7 @@
       <el-main>
         <h2>欢迎使用复旦大学进出校管理系统！</h2>
         <br>
-        <el-button type="primary" onclick="window.location.href='/superAdmin'" >
+        <el-button type="primary" @click="superLogin()" >
             我是超级管理员
         </el-button>
         <el-button type="primary" onclick="window.location.href='/login/adminLogin'" >
@@ -24,7 +24,14 @@
 
 <script>
 export default {
-  name: 'login'
+  name: 'login',
+  methods: {
+    superLogin () {
+      this.$store.state.user.classId = -1
+      this.$store.state.user.schoolId = -1
+      window.location.href = '/superAdmin'
+    }
+  }
 }
 </script>
 

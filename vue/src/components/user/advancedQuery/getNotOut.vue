@@ -97,9 +97,9 @@ export default {
   },
   methods: {
     getNotOut () {
-      var param = new FormData()
-      param.append('schoolId', this.getNotOutForm.schoolId)
-      param.append('classId', this.getNotOutForm.classId)
+      var param = {}
+      param['schoolId'] = this.getNotOutForm.schoolId
+      param['classId'] = this.getNotOutForm.classId
       this.$axios.get('/api/student/filter/applied-but-not-leaved/', {params: param}).then(res => {
         this.getNotOutTable = res.data.data
         this.totalNum = this.getNotOutTable.length

@@ -174,6 +174,12 @@ export default {
     showGetNotOut () {
       this.$refs.getNotOut.getNotOut()
     },
+    showGetNotBack () {
+      this.$refs.getNotBack.getNotBack()
+    },
+    showGetMoreThan24 () {
+      this.$refs.getMoreThan24.getMoreThan24()
+    },
     handleChange (value) {
       switch (value) {
         case 'addAdmin' :
@@ -231,11 +237,13 @@ export default {
           this.showRecord = value
           break
         case 'getNotBack' :
+          this.showGetNotBack()
           this.$refs.getNotBack.getNotBackForm.schoolId = -1
           this.$refs.getNotBack.getNotBackForm.classId = -1
           this.showRecord = value
           break
         case 'getMoreThan24' :
+          this.showGetMoreThan24()
           this.$refs.getMoreThan24.getMoreThan24Form.schoolId = -1
           this.$refs.getMoreThan24.getMoreThan24Form.classId = -1
           this.showRecord = value

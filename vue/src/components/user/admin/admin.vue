@@ -164,6 +164,15 @@ export default {
     }
   },
   methods: {
+    showGetNotOut () {
+      this.$refs.getNotOut.getNotOut()
+    },
+    showGetNotBack () {
+      this.$refs.getNotBack.getNotBack()
+    },
+    showGetMoreThan24 () {
+      this.$refs.getMoreThan24.getMoreThan24()
+    },
     handleChange (value) {
       switch (value) {
         case 'getDailyInfo' :
@@ -212,16 +221,19 @@ export default {
           this.showRecord = value
           break
         case 'getNotBack' :
+          this.showGetNotBack()
           this.$refs.getNotBack.getNotBackForm.schoolId = this.$store.state.user.schoolId
           this.$refs.getNotBack.getNotBackForm.classId = -1
           this.showRecord = value
           break
         case 'getMoreThan24' :
+          this.showGetMoreThan24()
           this.$refs.getMoreThan24.getMoreThan24Form.schoolId = this.$store.state.user.schoolId
           this.$refs.getMoreThan24.getMoreThan24Form.classId = -1
           this.showRecord = value
           break
         case 'getNotOut' :
+          this.showGetNotOut()
           this.$refs.getNotOut.getNotOutForm.schoolId = this.$store.state.user.schoolId
           this.$refs.getNotOut.getNotOutForm.classId = -1
           this.showRecord = value

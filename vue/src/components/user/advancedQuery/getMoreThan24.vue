@@ -97,9 +97,9 @@ export default {
   },
   methods: {
     getMoreThan24 () {
-      var param = new FormData()
-      param.append('schoolId', this.getMoreThan24Form.schoolId)
-      param.append('classId', this.getMoreThan24Form.classId)
+      var param = {}
+      param['schoolId'] = this.getMoreThan24Form.schoolId
+      param['classId'] = this.getMoreThan24Form.classId
       this.$axios.get('/api/student/filter/leaved-but-not-applied/', {params: param}).then(res => {
         this.getMoreThan24Table = res.data.data
         this.totalNum = this.getMoreThan24Table.length

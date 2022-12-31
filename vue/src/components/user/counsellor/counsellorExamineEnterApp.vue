@@ -8,7 +8,15 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineEnterAppTable.studentId }}</span>
+          <span>{{ scope.row.studentId }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -16,28 +24,36 @@
         label="七日内所到地区"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineEnterAppTable.area }}</span>
+          <span>{{ scope.row.area }}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="backTime"
-        label="预计返校时间"
+        label="预计进校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineEnterAppTable.backTime }}</span>
+          <span>{{ scope.row.backTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="other"
-        label="其他">
+        label="提交时间">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineEnterAppTable.other }}</span>
+          <span>{{ scope.row.other }}</span>
         </template>
       </el-table-column>
       <el-table-column>
         <template v-slot="scope">
           <el-button size="mini" @click="approve(scope.$index)">同意</el-button>
-          <el-button size="mini" @click="reject(scope.$index)">拒绝</el-button>
+          <el-form v-model="rejectForm" :rules="rules" ref="rejectForm">
+            <el-form-item>
+              <el-form-item label="拒绝理由">
+                <el-input prop="reject" v-model="rejectForm[scope.$index].rejectReason"></el-input>
+              </el-form-item>
+              <el-button size="mini" @click="reject(scope.$index)">拒绝</el-button>
+            </el-form-item>
+          </el-form>
+
         </template>
       </el-table-column>
 
@@ -50,22 +66,56 @@ export default {
   name: 'counsellorExamineEnterApp',
   data () {
     return {
-      counsellorExamineEnterAppTable: [],
+      counsellorExamineEnterAppTable: [{studentId: 1}, {studentId: 2}],
       counsellorExamineEnterAppForm: {
         schoolId: '',
         classId: ''
-      }
+      },
+      rejectForm: [
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''}
+      ]
     }
   },
   mounted () {
     this.getEnterApp()
+    for (var i = 0; i < this.counsellorExamineEnterAppTable; i++) {
+      this.rejectForm.append({rejectReason: ''})
+    }
   },
   methods: {
     approve (index) {
     },
     reject (index) {
+      if (this.rejectForm[index].rejectReason === '') {
+        this.$alert('请填写拒绝理由')
+      } else {
+        var param = new FormData()
+        param.append('id', this.counsellorExamineEnterAppTable[index].id)
+        param.append('rejectReason', this.counsellorExamineEnterAppForm[index].rejectReason)
+      }
     },
     getEnterApp () {
+      var data = {
+        classId: this.$store.state.user.classId,
+        schoolId: this.$store.state.user.schoolId
+      }
+      this.$axios
+        .get('getPath', {params: data})
+        .then(res => {
+          console.log(res)
+          if (res.data.code === 0) {
+            this.counsellorExamineEnterAppTable = res.data.data
+          } else if (res.data.code === 1) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     }
   }
 }
