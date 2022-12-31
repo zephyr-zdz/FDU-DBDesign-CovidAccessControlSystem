@@ -56,4 +56,16 @@ public class DailyReportManager {
         Long nDaysAgo = timeService.getTimeNDaysBefore(n);
         return dailyReportMapper.findScriptKiddies(nDaysAgo, today);
     }
+
+    public List<Student> catchNDaysScriptKiddiesBySchoolId(Integer n, Integer schoolId) {
+        long today = timeService.getTime();
+        Long nDaysAgo = timeService.getTimeNDaysBefore(n);
+        return dailyReportMapper.findScriptKiddiesByMajorId(nDaysAgo, today, schoolId);
+    }
+
+    public List<Student> catchNDaysScriptKiddiesByClassId(Integer n, Integer classId) {
+        long today = timeService.getTime();
+        Long nDaysAgo = timeService.getTimeNDaysBefore(n);
+        return dailyReportMapper.findScriptKiddiesByClassId(nDaysAgo, today, classId);
+    }
 }

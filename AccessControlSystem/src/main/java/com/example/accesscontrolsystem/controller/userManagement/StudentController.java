@@ -56,8 +56,10 @@ public class StudentController {
         return studentDataService.getNDaysOtakus(classId, schoolId, n);
     }
     @GetMapping("/filter/script-kiddie/") // n天填写日报分钟时间相同
-    public Response<List<Student>> getNDaysScriptKiddies(Integer n) {
-        return studentDataService.catchNDaysScriptKiddies(n);
+    public Response<List<Student>> getNDaysScriptKiddies(Integer classId,
+                                                         Integer schoolId,
+                                                         Integer n) {
+        return studentDataService.catchNDaysScriptKiddies(classId, schoolId, n);
     }
     @GetMapping("/filter/applied-but-not-leaved/") // 申请离校但未离校
     public Response<List<Student>> getAppliedButNotLeft(Integer classId,

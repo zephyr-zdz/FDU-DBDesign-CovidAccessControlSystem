@@ -25,6 +25,20 @@ public interface DailyReportMapper extends JpaRepository<DailyReport, Integer> {
                    where `student-id` = s.id and `create-time` between ?1 and ?2)= 1""",
             nativeQuery = true)
     List<Student> findScriptKiddies(Long nDaysAgo, long today);
+    @Query(value = """
+            select * from student s
+            where (select count(distinct(minute)) from daily_report
+                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1
+                   and s.`major-id` = ?3""",
+            nativeQuery = true)
+    List<Student> findScriptKiddiesByMajorId(Long nDaysAgo, long today, Integer schoolId);
+    @Query(value = """
+            select * from student s
+            where (select count(distinct(minute)) from daily_report
+                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1
+                   and s.`class-id` = ?3""",
+            nativeQuery = true)
+    List<Student> findScriptKiddiesByClassId(Long nDaysAgo, long today, Integer classId);
 
     @Query("""
             select d from DailyReport d
