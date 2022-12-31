@@ -41,7 +41,7 @@
         label="宿舍/校外住址"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.student.dormAddress}}</span>
+          <span>{{ scope.row.dormAddress}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -65,7 +65,7 @@
         label="身份证件号码"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.student.idNumber}}</span>
+          <span>{{ scope.row.idNumber}}</span>
         </template>
       </el-table-column>
       <el-table-column

@@ -1,8 +1,8 @@
 <template>
   <el-card class="box-card">
     <el-form label-position="left" :model="getAlwaysInForm" :rules="rules" ref="getAlwaysInForm" label-width="50">
-      <el-form-item prop="day" label="天数">
-        <el-input-number style="width: 20%" :min="1" v-model="getAlwaysInForm.day"></el-input-number>
+      <el-form-item prop="number" label="天数">
+        <el-input-number style="width: 20%" :min="1" v-model="getAlwaysInForm.number"></el-input-number>
       </el-form-item>
       <el-form-item style="width: 20%" v-if="this.getAlwaysInForm.schoolId === -1 && this.getAlwaysInForm.classId === -1">
       <el-radio v-model="range" label="1">按全校搜索</el-radio>
@@ -74,13 +74,13 @@ export default {
       classList: [],
       getAlwaysInTable: [],
       getAlwaysInForm: {
-        day: '',
+        number: '',
         schoolId: '',
         classId: ''
       },
       totalNum: 0,
       rules: {
-        day: [
+        number: [
           { required: true, message: '请输入天数', trigger: 'change' }
         ]
       }
@@ -96,7 +96,7 @@ export default {
       this.getAlwaysInForm.classId = this.classList[0]
     },
     getAlwaysIn () {
-      var param = new FormData()
+      var param = {}
       if (this.range === '1') {
         param = {schoolId: -1,
           classId: -1}
@@ -108,7 +108,7 @@ export default {
           classId: this.getAlwaysInForm.searchClassId}
       }
       param['n'] = this.getAlwaysInForm.number
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      this.$axios.get('/api/student/filter/otaku/', {params: param}).then(res => {
         this.getAlwaysInTable = res.data.data
         this.totalNum = this.getAlwaysInTable.length
         if (this.getAlwaysInForm.classId !== -1 && this.getAlwaysInForm.classId !== this.getAlwaysInForm.searchClassId) {
