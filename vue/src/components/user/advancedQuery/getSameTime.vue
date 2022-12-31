@@ -37,6 +37,14 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="phone"
+        label="手机"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.student.phoneNumber}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="dorm"
         label="宿舍/校外住址"
         width="300">

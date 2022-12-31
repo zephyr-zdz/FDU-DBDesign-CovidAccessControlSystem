@@ -5,8 +5,9 @@
       <el-aside width="200px">
         <el-menu style="border: white">
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-menu"></i>健康日报</template>
-              <el-menu-item @click="handleChange('fillDailyReport')">填写健康日报</el-menu-item>
+            <template slot="title"><i class="el-icon-menu"></i>信息维护</template>
+            <el-menu-item @click="handleChange('personalInfo')">基本信息</el-menu-item>
+            <el-menu-item @click="handleChange('fillDailyReport')">填写健康日报</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-user"></i>学生进出校</template>
@@ -56,6 +57,11 @@
             label="checkApp"
             v-show="showRecord === 'checkApp'"
             ref="checkApp"></check-app>
+          <personal-info
+            id="personalInfo"
+            lable="personalInfo"
+            v-show="showRecord === 'personalInfo'"
+            ref="personalInfo"></personal-info>
         </el-main>
       </el-container>
     </el-container>
@@ -69,6 +75,7 @@ import InOut from './inOut'
 import FillEnterApp from './fillEnterApp'
 import FillOutApp from './fillOutApp'
 import CheckApp from './checkApp'
+import PersonalInfo from './personalInfo'
 
 export default {
   data () {
@@ -95,6 +102,9 @@ export default {
         case 'checkApp' :
           this.showRecord = value
           break
+        case 'personalInfo' :
+          this.showRecord = value
+          break
         default :
           this.showRecord = ''
           break
@@ -107,7 +117,8 @@ export default {
     'in-out': InOut,
     'fill-enter-app': FillEnterApp,
     'fill-out-app': FillOutApp,
-    'check-app': CheckApp
+    'check-app': CheckApp,
+    'personal-info': PersonalInfo
   }
 }
 
