@@ -1,7 +1,6 @@
 package com.example.accesscontrolsystem.mapper;
 
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
-import com.example.accesscontrolsystem.model.entity.user.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,28 +17,6 @@ public interface DailyReportMapper extends JpaRepository<DailyReport, Integer> {
 
     @Query("select d from DailyReport d where d.student.id = ?1 and d.createTime between ?2 and ?3")
     List<DailyReport> findAllByStudentIdAndCreateTimeBetween(Integer studentId, Long nDaysAgo, long today);
-
-    @Query(value = """
-            select * from student s
-            where (select count(distinct(minute)) from daily_report
-                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1""",
-            nativeQuery = true)
-    List<Student> findScriptKiddies(Long nDaysAgo, long today);
-    @Query(value = """
-            select * from student s
-            where (select count(distinct(minute)) from daily_report
-                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1
-                   and s.`major-id` = ?3""",
-            nativeQuery = true)
-    List<Student> findScriptKiddiesByMajorId(Long nDaysAgo, long today, Integer schoolId);
-    @Query(value = """
-            select * from student s
-            where (select count(distinct(minute)) from daily_report
-                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1
-                   and s.`class-id` = ?3""",
-            nativeQuery = true)
-    List<Student> findScriptKiddiesByClassId(Long nDaysAgo, long today, Integer classId);
-
     @Query("""
             select d from DailyReport d
             where d.student.id = ?1 and d.student.major.id = ?2 and d.createTime between ?3 and ?4""")
