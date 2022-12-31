@@ -1,5 +1,6 @@
 package com.example.accesscontrolsystem.controller.common;
 
+import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.service.AuthService;
 import com.example.accesscontrolsystem.util.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +17,9 @@ public class AuthController {
         this.authService = authService;
     }
     @GetMapping("/")
-    public Response<String> getAuth(Integer classId,
-                                    Integer schoolId,
-                                    Integer studentId) {
+    public Response<Student> getAuth(Integer classId,
+                                     Integer schoolId,
+                                     Integer studentId) {
         return authService.getAuth(classId, schoolId, studentId);
     }
 }
