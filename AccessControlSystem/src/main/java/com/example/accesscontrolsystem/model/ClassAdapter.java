@@ -89,7 +89,11 @@ public class ClassAdapter {
     public StudentWithLeaveTime cookStudentWithLeaveTime(Student student, long leaveTime) {
         StudentWithLeaveTime studentWithLeaveTime = new StudentWithLeaveTime();
         studentWithLeaveTime.setStudent(student);
-        studentWithLeaveTime.setLeaveTimeStr(timeService.time2Str(leaveTime));
+        if (leaveTime == -1) {
+            studentWithLeaveTime.setLeaveTimeStr("无");
+        } else {
+            studentWithLeaveTime.setLeaveTimeStr(timeService.time2Str(leaveTime));
+        }
         return studentWithLeaveTime;
     }
 }

@@ -100,21 +100,27 @@ public class LeaveApplicationManager {
     public List<StudentWithLeaveTime> findOutsideStudents() {
         List<Student> students = studentMapper.findStudentsByStatus("out");
         List<StudentWithLeaveTime> studentsWithLeaveTime = new ArrayList<>();
-        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student, gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "'out'").getTime())));
+        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student,
+                gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "out") == null ?
+                        -1 : gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "out").getTime())));
         return studentsWithLeaveTime;
     }
 
     public List<StudentWithLeaveTime> findOutsideStudentsBySchoolId(Integer schoolId) {
         List<Student> students = studentMapper.findStudentsByStatusAndMajorId("out", schoolId);
         List<StudentWithLeaveTime> studentsWithLeaveTime = new ArrayList<>();
-        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student, gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "'out'").getTime())));
+        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student,
+                gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "out") == null ?
+                        -1 : gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "out").getTime())));
         return studentsWithLeaveTime;
     }
 
     public List<StudentWithLeaveTime> findOutsideStudentsByClassId(Integer classId) {
         List<Student> students = studentMapper.findStudentsByStatusAndMyClassId("out", classId);
         List<StudentWithLeaveTime> studentsWithLeaveTime = new ArrayList<>();
-        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student, gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "'out'").getTime())));
+        students.forEach(student -> studentsWithLeaveTime.add(classAdapter.cookStudentWithLeaveTime(student,
+                gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "out") == null ?
+                        -1 : gateLogMapper.findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(student.getId(), "out").getTime())));
         return studentsWithLeaveTime;
     }
 
