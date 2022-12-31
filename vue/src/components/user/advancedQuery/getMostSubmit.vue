@@ -127,7 +127,7 @@ export default {
           classId: this.getMostSubmitForm.searchClassId}
       }
       param['n'] = this.getMostSubmitForm.number
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      this.$axios.get('/api/filter/enter-most-applying', {params: param}).then(res => {
         this.getMostSubmitTable = res.data.data
         this.totalNum = this.getMostSubmitTable.length
         if (this.getMostSubmitForm.classId !== -1 && this.getMostSubmitForm.classId !== this.getMostSubmitForm.searchClassId) {

@@ -129,7 +129,7 @@ export default {
           classId: this.getLongestForm.searchClassId}
       }
       param['n'] = this.getLongestForm.number
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      this.$axios.get('/api/student/filter/avg-outside-longest', {params: param}).then(res => {
         this.getLongestTable = res.data.data
         this.totalNum = this.getLongestTable.length
         if (this.getLongestForm.classId !== -1 && this.getLongestForm.classId !== this.getLongestForm.searchClassId) {
