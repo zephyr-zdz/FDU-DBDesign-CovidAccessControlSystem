@@ -2,7 +2,7 @@
   <el-card class="box-card">
     <el-form label-position="left" :model="getLongestForm" :rules="rules" ref="getLongestForm" label-width="50">
       <el-form-item prop="day" label="天数">
-        <el-input-number style="width: 20%" :min="1" v-model="getLongestForm.day"></el-input-number>
+        <el-input-number style="width: 20%" :min="1" v-model="getLongestForm.number"></el-input-number>
       </el-form-item>
       <el-form-item style="width: 20%" v-if="this.getLongestForm.schoolId === -1 && this.getLongestForm.classId === -1">
         <el-radio v-model="range" label="1">按全校搜索</el-radio>
@@ -46,7 +46,7 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.studentId}}</span>
+          <span>{{ scope.row.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -92,25 +92,26 @@ export default {
       this.schoolList = []
       if (schoolId === -1) {
         this.$axios.get('/api/majors').then(res => {
-          this.getLongestTable = res.data.data
+          this.schoolList = res.data.data
+          this.getMostSubmitForm.searchSchoolId = this.schoolList[0].id
         })
-        this.getLongestForm.searchSchoolId = this.schoolList[1]
       }
+      console.log(this.schoolList)
     },
     getClassList (classId) {
       this.classList = []
       if (classId === -1) {
         this.$axios.get('/api/classes').then(res => {
-          this.getLongestTable = res.data.data
+          this.classList = res.data.data
+          this.getMostSubmitForm.searchClassId = this.classList[0].id
         })
-        this.getLongestForm.searchSchoolId = this.schoolList[1]
       } else {
         var param = {}
         param['majorId'] = classId
         this.$axios.get('/api/classes', {params: param}).then(res => {
-          this.getLongestTable = res.data.data
+          this.classList = res.data.data
+          this.getMostSubmitForm.searchClassId = this.classList[0].id
         })
-        this.getLongestForm.searchSchoolId = this.schoolList[1]
       }
     },
     getLongest () {
@@ -125,7 +126,7 @@ export default {
         param = {schoolId: this.getLongestForm.schoolId,
           classId: -1}
       } else {
-        param = {schoolId: -1,
+        param = {schoolId: this.schoolList.find(item => item.id === this.getLongestForm.classId).majorId,
           classId: this.getLongestForm.searchClassId}
       }
       param['n'] = this.getLongestForm.number
