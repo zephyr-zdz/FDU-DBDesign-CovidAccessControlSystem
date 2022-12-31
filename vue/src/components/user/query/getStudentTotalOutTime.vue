@@ -59,6 +59,7 @@ export default {
             classId: this.getStudentTotalOutTimeForm.classId,
             schoolId: this.getStudentTotalOutTimeForm.schoolId
           }
+          this.table = []
           this.$axios
             .get(getPath, {params: data})
             .then(res => {
