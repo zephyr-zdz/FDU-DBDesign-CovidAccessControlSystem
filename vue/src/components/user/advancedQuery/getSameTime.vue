@@ -17,7 +17,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.number}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,7 +33,7 @@
         label="邮箱"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.email}}</span>
+          <span>{{ scope.row.student.email}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,7 +41,7 @@
         label="宿舍/校外住址"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.dorm}}</span>
+          <span>{{ scope.row.student.dormAddress}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -49,7 +49,7 @@
         label="家庭地址"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.address}}</span>
+          <span>{{ scope.row.student.homeAddress}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -57,7 +57,7 @@
         label="身份证件类型"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.idType}}</span>
+          <span>{{ scope.row.student.idType}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -65,14 +65,14 @@
         label="身份证件号码"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.idNumber}}</span>
+          <span>{{ scope.row.student.idNumber}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="authority"
         label="入校权限">
         <template v-slot="scope">
-          <span>{{ scope.row.getSameTimeTable.authority}}</span>
+          <span>{{ scope.row.student.auth}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -103,13 +103,10 @@ export default {
       var param = new FormData()
       param.append('schoolId', this.getSameTimeForm.schoolId)
       param.append('classId', this.getSameTimeForm.classId)
-      if (this.getSameTimeForm.day === '') {
-        param.append('day', -1)
-      } else {
-        param.append('day', this.getSameTimeForm.day)
-      }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      param.append('n', this.getSameTimeForm.day)
+      this.$axios.get('/api/student/filter/script-kiddie/', {params: param}).then(res => {
         this.getSameTimeTable = res.data.data
+        this.totalNum = this.getSameTimeTable.length
       })
     }
   }

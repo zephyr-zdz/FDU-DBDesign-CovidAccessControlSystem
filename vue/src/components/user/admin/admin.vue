@@ -29,7 +29,6 @@
               <el-menu-item @click="handleChange('getNotOut')">已提交出校申请但未离校的学生</el-menu-item>
               <el-menu-item @click="handleChange('getAlwaysIn')">过去n天一直在校的学生</el-menu-item>
               <el-menu-item @click="handleChange('getSameTime')">连续n天填写时间一致的学生</el-menu-item>
-              <el-menu-item @click="handleChange('getMostCampus')">过去n天产生最多出入校记录的校区</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>

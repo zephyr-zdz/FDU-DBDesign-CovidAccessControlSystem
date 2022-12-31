@@ -4,10 +4,10 @@
       <el-form-item prop="number" label="人数">
         <el-input-number style="width: 20%" :min="1" v-model="getLongestForm.number"></el-input-number>
       </el-form-item>
-      <el-form-item style="width: 20%">
+      <el-form-item style="width: 20%" v-if="this.getLongestForm.schoolId === -1 && this.getLongestForm.classId === -1">
       <el-radio v-model="range" label="1">按全校搜索</el-radio>
       </el-form-item>
-      <el-form-item style="width: 20%">
+      <el-form-item style="width: 20%" v-if="this.getLongestForm.classId === -1">
       <el-radio v-model="range" label="2">按院系搜索</el-radio>
       </el-form-item>
       <el-form-item v-if="range === '2'">
