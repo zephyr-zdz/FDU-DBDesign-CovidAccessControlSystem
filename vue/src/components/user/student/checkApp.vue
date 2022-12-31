@@ -49,9 +49,9 @@ export default {
   methods: {
     checkApp () {
       var data = {
-        studentId: -1,
+        studentId: this.$store.state.user.studentId,
         classId: -1,
-        schoolId: this.checkAppForm.schoolId
+        schoolId: -1
       }
       this.$axios.get('/api/application/enter-applications', {params: data}).then(res => {
         this.checkAppTable = res.data.data
