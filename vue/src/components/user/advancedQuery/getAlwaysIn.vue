@@ -93,25 +93,26 @@ export default {
       this.schoolList = []
       if (schoolId === -1) {
         this.$axios.get('/api/majors').then(res => {
-          this.getAlwaysInTable = res.data.data
+          this.schoolList = res.data.data
+          this.getAlwaysInForm.searchSchoolId = this.schoolList[0].id
         })
-        this.getAlwaysInForm.searchSchoolId = this.schoolList[1]
       }
+      console.log(this.schoolList)
     },
     getClassList (classId) {
       this.classList = []
       if (classId === -1) {
         this.$axios.get('/api/classes').then(res => {
-          this.getAlwaysInTable = res.data.data
+          this.classList = res.data.data
+          this.getAlwaysInForm.searchClassId = this.classList[0].id
         })
-        this.getAlwaysInForm.searchSchoolId = this.schoolList[1]
       } else {
         var param = {}
         param['majorId'] = classId
         this.$axios.get('/api/classes', {params: param}).then(res => {
-          this.getAlwaysInTable = res.data.data
+          this.classList = res.data.data
+          this.getAlwaysInForm.searchClassId = this.classList[0].id
         })
-        this.getAlwaysInForm.searchSchoolId = this.schoolList[1]
       }
     },
     getAlwaysIn () {
@@ -126,7 +127,7 @@ export default {
         param = {schoolId: this.getAlwaysInForm.schoolId,
           classId: -1}
       } else {
-        param = {schoolId: -1,
+        param = {schoolId: this.classList.find(item => item.id === this.getAlwaysInForm.searchClassId).majorId,
           classId: this.getAlwaysInForm.searchClassId}
       }
       param['n'] = this.getAlwaysInForm.number

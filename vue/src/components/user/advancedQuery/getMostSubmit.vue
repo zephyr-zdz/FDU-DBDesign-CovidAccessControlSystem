@@ -124,7 +124,7 @@ export default {
         param = {schoolId: this.getMostSubmitForm.schoolId,
           classId: -1}
       } else {
-        param = {schoolId: this.schoolList.find(item => item.id === this.getMostSubmitForm.classId).majorId,
+        param = {schoolId: this.classList.find(item => item.id === this.getMostSubmitForm.clasearchClassIdssId).majorId,
           classId: this.getMostSubmitForm.searchClassId}
       }
       param['n'] = this.getMostSubmitForm.number

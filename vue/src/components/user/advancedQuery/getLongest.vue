@@ -93,7 +93,7 @@ export default {
       if (schoolId === -1) {
         this.$axios.get('/api/majors').then(res => {
           this.schoolList = res.data.data
-          this.getMostSubmitForm.searchSchoolId = this.schoolList[0].id
+          this.getLongestForm.searchSchoolId = this.schoolList[0].id
         })
       }
       console.log(this.schoolList)
@@ -103,14 +103,14 @@ export default {
       if (classId === -1) {
         this.$axios.get('/api/classes').then(res => {
           this.classList = res.data.data
-          this.getMostSubmitForm.searchClassId = this.classList[0].id
+          this.getLongestForm.searchClassId = this.classList[0].id
         })
       } else {
         var param = {}
         param['majorId'] = classId
         this.$axios.get('/api/classes', {params: param}).then(res => {
           this.classList = res.data.data
-          this.getMostSubmitForm.searchClassId = this.classList[0].id
+          this.getLongestForm.searchClassId = this.classList[0].id
         })
       }
     },
@@ -126,7 +126,7 @@ export default {
         param = {schoolId: this.getLongestForm.schoolId,
           classId: -1}
       } else {
-        param = {schoolId: this.schoolList.find(item => item.id === this.getLongestForm.classId).majorId,
+        param = {schoolId: this.classList.find(item => item.id === this.getLongestForm.searchClassId).majorId,
           classId: this.getLongestForm.searchClassId}
       }
       param['n'] = this.getLongestForm.number
