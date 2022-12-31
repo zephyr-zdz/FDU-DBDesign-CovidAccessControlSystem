@@ -8,7 +8,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.studentId }}</span>
+          <span>{{ scope.row.student.id }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -16,7 +16,7 @@
         label="姓名"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.name }}</span>
+          <span>{{ scope.row.student.name }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -24,7 +24,7 @@
         label="七日内所到地区"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.area }}</span>
+          <span>{{ scope.row.passingAreas }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -32,14 +32,14 @@
         label="预计进校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.backTime }}</span>
+          <span>{{ scope.row.enterTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="other"
+        prop="createTime"
         label="提交时间">
         <template v-slot="scope">
-          <span>{{ scope.row.other }}</span>
+          <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
       <el-table-column>
@@ -87,28 +87,59 @@ export default {
   },
   methods: {
     approve (index) {
-      var param = new FormData()
-      param.append('id', this.counsellorExamineEnterAppTable[index].id)
-      // todo:发送
+      const postPath = '/enter-application/counsellor/approve'
+      var data = {
+        applicationId: this.counsellorExamineEnterAppTable[index].id
+      }
+      this.$axios
+        .post(postPath, data)
+        .then(res => {
+          if (res.data.code === 0) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          } else {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     },
     reject (index) {
       if (this.rejectForm[index].rejectReason === '') {
         this.$alert('请填写拒绝理由')
       } else {
-        var param = new FormData()
-        param.append('id', this.counsellorExamineEnterAppTable[index].id)
-        param.append('rejectReason', this.counsellorExamineEnterAppForm[index].rejectReason)
-        // todo:发送
+        const postPath = '/enter-application/counsellor/reject'
+        var data = {
+          applicationId: this.counsellorExamineEnterAppTable[index].id,
+          reason: this.rejectForm[index].rejectReason
+        }
+        this.$axios
+          .post(postPath, data)
+          .then(res => {
+            if (res.data.code === 0) {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+            } else {
+              this.$alert(res.data.msg, '提示', {
+                confirmButtonText: '确定'
+              })
+            }
+          })
+          .catch(failResponse => {
+          })
       }
     },
     getEnterApp () {
-      var data = {
-        classId: this.$store.state.user.classId,
-        schoolId: this.$store.state.user.schoolId
-      }
-      var getPath = '' // todo: 修改
+      var param = {}
+      param['counsellorId'] = this.$store.state.user.classId
+      param['n'] = -1
+      var getPath = '/application/enter-applications/pending/counsellor'
       this.$axios
-        .get(getPath, {params: data})
+        .get(getPath, {params: param})
         .then(res => {
           console.log(res)
           if (res.data.code === 0) {

@@ -8,7 +8,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineOutAppTable.studentId }}</span>
+          <span>{{ scope.row.student.id }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -16,7 +16,7 @@
         label="目的地"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineOutAppTable.area }}</span>
+          <span>{{ scope.row.destination }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -24,7 +24,7 @@
         label="预计离校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineOutAppTable.outTime }}</span>
+          <span>{{ scope.row.leaveTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -32,14 +32,14 @@
         label="预计返校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineOutAppTable.backTime }}</span>
+          <span>{{ scope.row.returnTime }}</span>
         </template>
       </el-table-column>
       <el-table-column
-        prop="other"
-        label="其他">
+        prop="createTime"
+        label="提交时间">
         <template v-slot="scope">
-          <span>{{ scope.row.counsellorExamineOutAppTable.other }}</span>
+          <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
       <el-table-column>
@@ -91,6 +91,24 @@ export default {
     reject (index) {
     },
     getEnterApp () {
+      var param = {}
+      param['counsellorId'] = this.$store.state.user.classId
+      param['n'] = -1
+      var getPath = '/application/leave-applications/pending/counsellor'
+      this.$axios
+        .get(getPath, {params: param})
+        .then(res => {
+          console.log(res)
+          if (res.data.code === 0) {
+            this.counsellorExamineOutAppTable = res.data.data
+          } else if (res.data.code === 1) {
+            this.$alert(res.data.msg, '提示', {
+              confirmButtonText: '确定'
+            })
+          }
+        })
+        .catch(failResponse => {
+        })
     }
   }
 }
