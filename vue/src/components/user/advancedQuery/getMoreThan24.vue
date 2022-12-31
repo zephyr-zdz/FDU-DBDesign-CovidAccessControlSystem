@@ -72,7 +72,7 @@
         prop="authority"
         label="入校权限">
         <template v-slot="scope">
-          <span>{{ scope.row.student.auth}}</span>
+          <span>{{ scope.row.auth}}</span>
         </template>
       </el-table-column>
     </el-table>
