@@ -43,6 +43,9 @@ public class StudentDataService {
         } else {
             student = studentManager.findStudentByIdAndClassId(studentId, classId);
         }
+        if (student == null) {
+            return new Response<>(Response.FAIL, "学生不存在", null);
+        }
         long duration = 0;
         List<GateLog> gateLogs = gateLogManager.getOneYearGateLogsByStudentId(student.getId());
         long start = 0, end;

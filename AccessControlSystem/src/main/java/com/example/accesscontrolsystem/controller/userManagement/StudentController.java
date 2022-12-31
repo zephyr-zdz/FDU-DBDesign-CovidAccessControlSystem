@@ -30,7 +30,7 @@ public class StudentController {
         return userservice.getStudentById(studentId);
     }
 
-    @GetMapping("/outside-duration")
+    @GetMapping("/outside-duration/")
     public Response<Double> getStudentOutsideDuration(Integer classId,
                                                       Integer schoolId,
                                                       Integer studentId) { // hours 一年内离校时长
