@@ -45,14 +45,14 @@
         label="学号"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.getAlwaysInTable.studentId}}</span>
+          <span>{{ scope.row.studentId}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="name"
         label="姓名">
         <template v-slot="scope">
-          <span>{{ scope.row.getAlwaysInTable.name}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -96,21 +96,21 @@ export default {
     getAlwaysIn () {
       var param = new FormData()
       if (this.range === '1') {
-        param.append('schoolId', -1)
-        param.append('classId', -1)
+        param = {schoolId: -1,
+          classId: -1}
       } else if (this.range === '2') {
-        param.append('schoolId', this.getAlwaysInForm.schoolId)
-        param.append('classId', -1)
+        param = {schoolId: this.getAlwaysInForm.schoolId,
+          classId: -1}
       } else {
-        param.append('schoolId', -1)
-        param.append('classId', this.getAlwaysInForm.classId)
+        param = {schoolId: -1,
+          classId: this.getAlwaysInForm.classId}
       }
       if (this.getAlwaysInForm.day === '') {
-        param.append('day', -1)
+        param['n'] = -1
       } else {
-        param.append('day', this.getAlwaysInForm.day)
+        param['n'] = this.getAlwaysInForm.day
       }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      this.$axios.get('/api/student/filter/otaku/', {params: param}).then(res => {
         this.getAlwaysInTable = res.data.data
       })
     }
