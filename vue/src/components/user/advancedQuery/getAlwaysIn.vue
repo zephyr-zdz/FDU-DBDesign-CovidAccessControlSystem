@@ -46,7 +46,7 @@
         label="学号"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.studentId}}</span>
+          <span>{{ scope.row.id}}</span>
         </template>
       </el-table-column>
       <el-table-column

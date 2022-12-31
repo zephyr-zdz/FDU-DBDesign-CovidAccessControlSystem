@@ -17,7 +17,7 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.studentId}}</span>
+          <span>{{ scope.row.studentId}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.name}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,7 +33,7 @@
         label="目的地"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.destination}}</span>
+          <span>{{ scope.row.destination}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,7 +41,7 @@
         label="预计离校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.timeOut}}</span>
+          <span>{{ scope.row.timeOut}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -49,7 +49,7 @@
         label="预计入校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.timeIn}}</span>
+          <span>{{ scope.row.timeIn}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -57,14 +57,14 @@
         label="离校原因"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.reason}}</span>
+          <span>{{ scope.row.reason}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="appTime"
         label="提交时间">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.appTime}}</span>
+          <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
     </el-table>

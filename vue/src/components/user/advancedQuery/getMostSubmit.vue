@@ -46,7 +46,7 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getMostSubmitTable.studentId}}</span>
+          <span>{{ scope.row.studentId}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -54,14 +54,14 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getMostSubmitTable.name}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="appNum"
         label="提交数量">
         <template v-slot="scope">
-          <span>{{ scope.row.getMostSubmitTable.appNum}}</span>
+          <span>{{ scope.row.appNum}}</span>
         </template>
       </el-table-column>
     </el-table>

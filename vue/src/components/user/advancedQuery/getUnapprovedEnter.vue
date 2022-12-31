@@ -17,7 +17,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.number}}</span>
+          <span>{{ scope.row.number}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.name}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,7 +33,7 @@
         label="七日内所到地区"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.area}}</span>
+          <span>{{ scope.row.area}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,14 +41,14 @@
         label="预计进校时间"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedEnterTable.time}}</span>
+          <span>{{ scope.row.time}}</span>
         </template>
       </el-table-column>
       <el-table-column
       prop="appTime"
       label="提交时间">
       <template v-slot="scope">
-        <span>{{ scope.row.getUnapprovedEnterTable.appTime}}</span>
+        <span>{{ scope.row.createTime}}</span>
       </template>
     </el-table-column>
     </el-table>

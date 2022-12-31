@@ -46,7 +46,7 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getLongestTable.studentId}}</span>
+          <span>{{ scope.row.studentId}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -54,14 +54,14 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getLongestTable.name}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="leaveTime"
         label="离校时长">
         <template v-slot="scope">
-          <span>{{ scope.row.getLongestTable.leaveTime}}</span>
+          <span>{{ scope.row.leaveTime}}</span>
         </template>
       </el-table-column>
     </el-table>
