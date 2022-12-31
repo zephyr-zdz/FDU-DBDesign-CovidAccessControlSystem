@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <el-form label-position="left" :model="getLongestForm" :rules="rules" ref="getLongestForm" label-width="50">
-      <el-form-item prop="day" label="天数">
+      <el-form-item prop="day" label="个数">
         <el-input-number style="width: 20%" :min="1" v-model="getLongestForm.number"></el-input-number>
       </el-form-item>
       <el-form-item style="width: 20%" v-if="this.getLongestForm.schoolId === -1 && this.getLongestForm.classId === -1">

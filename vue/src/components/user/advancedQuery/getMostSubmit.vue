@@ -1,7 +1,7 @@
 <template>
   <el-card class="box-card">
     <el-form label-position="left" :model="getMostSubmitForm" :rules="rules" ref="getMostSubmitForm" label-width="50">
-      <el-form-item prop="day" label="天数">
+      <el-form-item prop="day" label="个数">
         <el-input-number style="width: 20%" :min="1" v-model="getMostSubmitForm.number"></el-input-number>
       </el-form-item>
       <el-form-item style="width: 20%" v-if="this.getMostSubmitForm.schoolId === -1 && this.getMostSubmitForm.classId === -1">

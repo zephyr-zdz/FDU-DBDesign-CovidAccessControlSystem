@@ -17,7 +17,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.number}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,7 +33,7 @@
         label="七日内所到地区"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.area}}</span>
+          <span>{{ scope.row.passingAreas}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,7 +41,7 @@
         label="预计进校时间"
         width="200">
         <template v-slot="scope">
-          <span>{{ scope.row.time}}</span>
+          <span>{{ scope.row.enterTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -76,17 +76,21 @@ export default {
   },
   methods: {
     getUnapprovedEnter () {
-      var param = new FormData()
-      param.append('schoolId', this.getUnapprovedEnterForm.schoolId)
-      param.append('classId', this.getUnapprovedEnterForm.classId)
-      if (this.getUnapprovedEnterForm.day === '') {
-        param.append('day', -1)
+      var param = {}
+      if (this.getUnapprovedEnterForm.schoolId === -1) {
+        param['managerId'] = this.getUnapprovedEnterForm.schoolId
+        param['n'] = this.getUnapprovedEnterForm.day
+        this.$axios.get('/api/application/enter-applications/pending/manage', {params: param}).then(res => {
+          this.getUnapprovedEnterTable = res.data.data
+        })
       } else {
-        param.append('day', this.getUnapprovedEnterForm.day)
+        param['counsellor'] = this.getUnapprovedEnterForm.classId
+        param['n'] = this.getUnapprovedEnterForm.day
+        this.$axios.get('/api/application/enter-applications/pending/counsellor', {params: param}).then(res => {
+          this.getUnapprovedEnterTable = res.data.data
+        })
       }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getUnapprovedEnterTable = res.data.data
-      })
+      this.totalNum = this.getUnapprovedEnterTable.length
     }
   }
 }

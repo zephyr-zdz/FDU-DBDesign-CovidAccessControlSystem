@@ -21,7 +21,6 @@
             </el-submenu>
             <el-submenu index="3">
               <template slot="title"><i class="el-icon-menu"></i>进阶查询要求</template>
-              <el-menu-item @click="handleChange('getUnapprovedEnter')">过去n天尚未审批的入校申请</el-menu-item>
               <el-menu-item @click="handleChange('getUnapprovedOut')">过去n天尚未审批的出校申请</el-menu-item>
               <el-menu-item @click="handleChange('getMostSubmit')">前n个提交入校申请最多的学生</el-menu-item>
               <el-menu-item @click="handleChange('getLongest')">前n个平均离校时间最长的学生</el-menu-item>

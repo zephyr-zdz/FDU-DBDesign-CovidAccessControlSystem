@@ -17,7 +17,7 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.studentId}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,7 +41,7 @@
         label="预计离校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.timeOut}}</span>
+          <span>{{ scope.row.leaveTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -49,7 +49,7 @@
         label="预计入校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.timeIn}}</span>
+          <span>{{ scope.row.returnTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -91,18 +91,22 @@ export default {
     }
   },
   methods: {
-    getUnapprovedOut () {
-      var param = new FormData()
-      param.append('schoolId', this.getUnapprovedOutForm.schoolId)
-      param.append('classId', this.getUnapprovedOutForm.classId)
-      if (this.getUnapprovedOutForm.day === '') {
-        param.append('day', -1)
+    getUnapprovedEnter () {
+      var param = {}
+      if (this.getUnapprovedOutForm.schoolId === -1) {
+        param['managerId'] = this.getUnapprovedOutForm.schoolId
+        param['n'] = this.getUnapprovedOutForm.day
+        this.$axios.get('/api/application/enter-applications/pending/manage', {params: param}).then(res => {
+          this.getUnapprovedOutTable = res.data.data
+        })
       } else {
-        param.append('day', this.getUnapprovedOutForm.day)
+        param['counsellor'] = this.getUnapprovedOutForm.classId
+        param['n'] = this.getUnapprovedOutForm.day
+        this.$axios.get('/api/application/enter-applications/pending/counsellor', {params: param}).then(res => {
+          this.getUnapprovedOutTable = res.data.data
+        })
       }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getUnapprovedOutTable = res.data.data
-      })
+      this.totalNum = this.getUnapprovedOutTable.length
     }
   }
 }
