@@ -55,7 +55,7 @@ public class StudentController {
                                                                    Integer n) {
         return studentDataService.getNDaysOtakus(classId, schoolId, n);
     }
-    @GetMapping("/filter/script-kiddie/") // n天填写日报分钟时间相同
+    @GetMapping("/filter/script-kiddie") // n天填写日报分钟时间相同
     public Response<List<Student>> getNDaysScriptKiddies(Integer classId,
                                                          Integer schoolId,
                                                          Integer n) {

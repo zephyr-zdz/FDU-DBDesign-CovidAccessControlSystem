@@ -191,4 +191,25 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
 
     @Query("select s from Student s where s.id = ?1 and s.myClass.id = ?2")
     Student findStudentByIdAndMyClass_Id(Integer studentId, Integer classId);
+
+    @Query(value = """
+            select * from student s
+            where (select count(distinct(minute)) from daily_report
+                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1""",
+            nativeQuery = true)
+    List<Student> findScriptKiddies(Long nDaysAgo, long today);
+    @Query(value = """
+            select id, auth, `dorm-address`, email, `home-address`, `id-number`, `id-type`, name, `phone-number`, status, `class-id`, `major-id` from student s
+            where (select count(distinct(minute)) from daily_report
+                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1
+                   and s.`major-id` = ?3""",
+            nativeQuery = true)
+    List<Student> findScriptKiddiesByMajorId(Long nDaysAgo, long today, Integer schoolId);
+    @Query(value = """
+            select * from student s
+            where (select count(distinct(minute)) from daily_report
+                   where `student-id` = s.id and `create-time` between ?1 and ?2)= 1
+                   and s.`class-id` = ?3""",
+            nativeQuery = true)
+    List<Student> findScriptKiddiesByClassId(Long nDaysAgo, long today, Integer classId);
 }

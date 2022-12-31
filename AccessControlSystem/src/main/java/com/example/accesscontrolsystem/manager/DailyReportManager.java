@@ -1,6 +1,7 @@
 package com.example.accesscontrolsystem.manager;
 
 import com.example.accesscontrolsystem.mapper.DailyReportMapper;
+import com.example.accesscontrolsystem.mapper.StudentMapper;
 import com.example.accesscontrolsystem.model.entity.reportNlog.DailyReport;
 import com.example.accesscontrolsystem.model.entity.user.Student;
 import com.example.accesscontrolsystem.service.system.TimeService;
@@ -13,10 +14,14 @@ import java.util.List;
 public class DailyReportManager {
     private final DailyReportMapper dailyReportMapper;
     private final TimeService timeService;
+    private final StudentMapper studentMapper;
+
     @Autowired
-    public DailyReportManager(DailyReportMapper dailyReportMapper, TimeService timeService) {
+    public DailyReportManager(DailyReportMapper dailyReportMapper, TimeService timeService,
+                              StudentMapper studentMapper) {
         this.dailyReportMapper = dailyReportMapper;
         this.timeService = timeService;
+        this.studentMapper = studentMapper;
     }
 
     public List<DailyReport> findAllByStudentId(Integer studentId) {
@@ -54,18 +59,22 @@ public class DailyReportManager {
     public List<Student> catchNDaysScriptKiddies(Integer n) {
         long today = timeService.getTime();
         Long nDaysAgo = timeService.getTimeNDaysBefore(n);
-        return dailyReportMapper.findScriptKiddies(nDaysAgo, today);
+        System.out.println(today);
+        System.out.println(nDaysAgo);
+        List<Student> students = studentMapper.findScriptKiddies(nDaysAgo, today);
+        System.out.println(students);
+        return students;
     }
 
     public List<Student> catchNDaysScriptKiddiesBySchoolId(Integer n, Integer schoolId) {
         long today = timeService.getTime();
         Long nDaysAgo = timeService.getTimeNDaysBefore(n);
-        return dailyReportMapper.findScriptKiddiesByMajorId(nDaysAgo, today, schoolId);
+        return studentMapper.findScriptKiddiesByMajorId(nDaysAgo, today, schoolId);
     }
 
     public List<Student> catchNDaysScriptKiddiesByClassId(Integer n, Integer classId) {
         long today = timeService.getTime();
         Long nDaysAgo = timeService.getTimeNDaysBefore(n);
-        return dailyReportMapper.findScriptKiddiesByClassId(nDaysAgo, today, classId);
+        return studentMapper.findScriptKiddiesByClassId(nDaysAgo, today, classId);
     }
 }
