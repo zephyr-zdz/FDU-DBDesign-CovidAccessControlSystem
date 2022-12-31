@@ -54,4 +54,8 @@ public class EnterApplicationManager {
         long nDaysBefore = timeService.getTimeNDaysBefore(n);
         return enterApplicationMapper.findAllByManagerAndStatusAndCreateTimeBetween(schoolManager,"counsellor", today, nDaysBefore);
     }
+
+    public EnterApplication findEnterApplicationById(Integer applicationId) {
+        return enterApplicationMapper.findEnterApplicationById(applicationId);
+    }
 }

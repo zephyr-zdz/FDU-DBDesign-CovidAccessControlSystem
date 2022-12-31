@@ -28,6 +28,8 @@ public class EnterApplication {
     private Long enterTime; // utf-8编码的时间戳，例如：1607760000
     @Column(name = "status", nullable = false, length = 10)
     private String status; // pending/counsellor/accepted/rejected
+    @Column(name = "reason", length = 45)
+    private String reason; // 拒绝理由
     @ManyToOne
     @JoinColumn(name = "student-id", nullable = false)
     private Student student;

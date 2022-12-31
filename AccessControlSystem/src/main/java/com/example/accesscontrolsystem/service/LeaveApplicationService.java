@@ -99,4 +99,46 @@ public class LeaveApplicationService {
         leaveApplicationManager.save(classAdapter.cookLeaveApplication(leaveApplication));
         return new Response<>(Response.SUCCESS, "添加成功", null);
     }
+
+    public Response<String> approveLeaveApplicationByCounsellor(Integer applicationId) {
+        LeaveApplication leaveApplication = leaveApplicationManager.findLeaveApplicationById(applicationId);
+        if (leaveApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        leaveApplication.setStatus("counsellor");
+        leaveApplicationManager.save(leaveApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
+
+    public Response<String> rejectLeaveApplicationByCounsellor(Integer applicationId, String reason) {
+        LeaveApplication leaveApplication = leaveApplicationManager.findLeaveApplicationById(applicationId);
+        if (leaveApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        leaveApplication.setStatus("rejected");
+        leaveApplication.setRejectReason(reason);
+        leaveApplicationManager.save(leaveApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
+
+    public Response<String> approveLeaveApplicationByManager(Integer applicationId) {
+        LeaveApplication leaveApplication = leaveApplicationManager.findLeaveApplicationById(applicationId);
+        if (leaveApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        leaveApplication.setStatus("accepted");
+        leaveApplicationManager.save(leaveApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
+
+    public Response<String> rejectLeaveApplicationByManager(Integer applicationId, String reason) {
+        LeaveApplication leaveApplication = leaveApplicationManager.findLeaveApplicationById(applicationId);
+        if (leaveApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        leaveApplication.setStatus("rejected");
+        leaveApplication.setRejectReason(reason);
+        leaveApplicationManager.save(leaveApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
 }

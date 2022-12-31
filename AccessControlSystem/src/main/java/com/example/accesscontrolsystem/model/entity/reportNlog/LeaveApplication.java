@@ -30,6 +30,8 @@ public class LeaveApplication {
     private Long returnTime; // utf-8编码的时间字符串，例如：2020-12-12 12:12:12
     @Column(name = "status", nullable = false)
     private String status; // pending/counsellor/manager/accepted/rejected
+    @Column(name = "reject_reason", length = 45)
+    private String rejectReason; // 拒绝理由
     @ManyToOne
     @JoinColumn(name = "student-id", nullable = false)
     private Student student;

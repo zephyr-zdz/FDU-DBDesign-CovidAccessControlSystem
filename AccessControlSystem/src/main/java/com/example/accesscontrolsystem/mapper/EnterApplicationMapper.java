@@ -26,4 +26,6 @@ public interface EnterApplicationMapper extends JpaRepository<EnterApplication, 
 
     @Query("select e from EnterApplication e where e.manager = ?1 and e.status = ?2 and e.createTime between ?3 and ?4")
     List<EnterApplication> findAllByManagerAndStatusAndCreateTimeBetween(SchoolManager manager, String counsellor, long today, long nDaysBefore);
+
+    EnterApplication findEnterApplicationById(Integer applicationId);
 }

@@ -147,4 +147,8 @@ public class LeaveApplicationManager {
     public List<Student> findNStudentsWithLongestAvgOutsideTimeByClassId(Integer n, Integer classId) {
         return studentMapper.findNStudentsWithLongestAvgOutsideTimeByClassId(n, classId);
     }
+
+    public LeaveApplication findLeaveApplicationById(Integer applicationId) {
+        return leaveApplicationMapper.findLeaveApplicationById(applicationId);
+    }
 }

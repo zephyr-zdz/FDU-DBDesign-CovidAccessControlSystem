@@ -101,4 +101,47 @@ public class EnterApplicationService {
         enterApplicationManager.save(classAdapter.cookEnterApplication(enterApplication));
         return new Response<>(Response.SUCCESS, "添加成功", null);
     }
+
+    public Response<String> approveEnterApplicationByCounsellor(Integer applicationId) {
+        EnterApplication enterApplication = enterApplicationManager.findEnterApplicationById(applicationId);
+        if (enterApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        enterApplication.setStatus("counsellor");
+        enterApplication.setAcceptTime(System.currentTimeMillis());
+        enterApplicationManager.save(enterApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
+    public Response<String> approveEnterApplicationByManager(Integer applicationId) {
+        EnterApplication enterApplication = enterApplicationManager.findEnterApplicationById(applicationId);
+        if (enterApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        enterApplication.setStatus("accepted");
+        enterApplication.setAcceptTime(System.currentTimeMillis());
+        enterApplicationManager.save(enterApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
+
+    public Response<String> rejectEnterApplicationByCounsellor(Integer applicationId, String reason) {
+        EnterApplication enterApplication = enterApplicationManager.findEnterApplicationById(applicationId);
+        if (enterApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        enterApplication.setStatus("rejected");
+        enterApplication.setReason(reason);
+        enterApplicationManager.save(enterApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
+
+    public Response<String> rejectEnterApplicationByManager(Integer applicationId, String reason) {
+        EnterApplication enterApplication = enterApplicationManager.findEnterApplicationById(applicationId);
+        if (enterApplication == null) {
+            return new Response<>(Response.FAIL, "申请不存在", null);
+        }
+        enterApplication.setStatus("rejected");
+        enterApplication.setReason(reason);
+        enterApplicationManager.save(enterApplication);
+        return new Response<>(Response.SUCCESS, "审批成功", null);
+    }
 }
