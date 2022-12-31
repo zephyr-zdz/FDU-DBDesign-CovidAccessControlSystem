@@ -95,6 +95,7 @@ export default {
             .then(res => {
               console.log(res)
               if (res.data.code === 0) {
+                this.getDailyInfoTable = res.data.data
               } else if (res.data.code === 1) {
                 this.$alert(res.data.msg, '提示', {
                   confirmButtonText: '确定',

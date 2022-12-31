@@ -34,7 +34,7 @@ export default {
       // this.$router.replace('/student')
       this.$refs.studentLoginForm.validate((valid) => {
         if (valid) {
-          const getPath = 'api/student/' + this.studentLoginForm.studentId
+          const getPath = '/api/student/' + this.studentLoginForm.studentId
           this.$axios
             .get(getPath)
             .then(res => {

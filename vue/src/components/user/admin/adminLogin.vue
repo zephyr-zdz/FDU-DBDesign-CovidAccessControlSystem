@@ -34,7 +34,7 @@ export default {
       // this.$router.replace('/admin')
       this.$refs.adminLoginForm.validate((valid) => {
         if (valid) {
-          const getPath = 'api/school-manager/' + this.adminLoginForm.number
+          const getPath = '/api/school-manager/' + this.adminLoginForm.number
           this.$axios
             .get(getPath)
             .then(res => {

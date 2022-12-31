@@ -35,7 +35,7 @@ export default {
       // this.$router.replace('/counsellor')
       this.$refs.counsellorLoginForm.validate((valid) => {
         if (valid) {
-          const getPath = 'api/counsellor/' + this.counsellorLoginForm.number
+          const getPath = '/api/counsellor/' + this.counsellorLoginForm.number
           this.$axios
             .get(getPath)
             .then(res => {
