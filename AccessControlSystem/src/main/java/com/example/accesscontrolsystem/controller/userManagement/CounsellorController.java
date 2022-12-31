@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController("SuperUserCounsellorController")
-@RequestMapping("/super-user/counsellor")
+@RequestMapping("/counsellor")
 public class CounsellorController {
     private final UserService userservice;
     @Autowired
