@@ -171,6 +171,9 @@ export default {
     }
   },
   methods: {
+    showGetNotOut () {
+      this.$refs.getNotOut.getNotOut()
+    },
     handleChange (value) {
       switch (value) {
         case 'addAdmin' :
@@ -238,6 +241,7 @@ export default {
           this.showRecord = value
           break
         case 'getNotOut' :
+          this.showGetNotOut()
           this.$refs.getNotOut.getNotOutForm.schoolId = -1
           this.$refs.getNotOut.getNotOutForm.classId = -1
           this.showRecord = value

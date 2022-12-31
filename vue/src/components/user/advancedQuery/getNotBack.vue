@@ -100,14 +100,12 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getNotBack()
-  },
   methods: {
     getNotBack () {
-      var param = new FormData()
-      param.append('schoolId', this.getNotBackForm.schoolId)
-      param.append('classId', this.getNotBackForm.classId)
+      var param = {}
+      console.log(this.getNotBackForm.schoolId)
+      param['schoolId'] = this.getNotBackForm.schoolId
+      param['classId'] = this.getNotBackForm.classId
       this.$axios.get('/api/student/filter/outside/', {params: param}).then(res => {
         this.getNotBackTable = res.data.data
         this.totalNum = this.getNotBackTable.length
