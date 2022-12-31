@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     login () {
-      this.$router.replace('/student')
+      // this.$router.replace('/student')
       this.$refs.studentLoginForm.validate((valid) => {
         if (valid) {
           const getPath = '/student/' + this.studentLoginForm.studentId
