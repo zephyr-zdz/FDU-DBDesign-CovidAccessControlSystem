@@ -8,22 +8,22 @@
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getStudentTotalOutTime()">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="getStudentTotalOutTimeTable"
+    <el-table :data="table"
               style="width: 100%"
               pager="page">
       <el-table-column
         prop="number"
         label="学号"
         width="120">
-        <template>
-          <span>{{ this.getStudentTotalOutTimeForm.studentId }}</span>
+        <template v-slot="scope">
+          <span>{{ scope.row.studentId }}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="totalTime"
         label="过去一年的离校总时长">
-        <template>
-          <span>{{ this.totalTime }}</span>
+        <template v-slot="scope">
+          <span>{{ scope.row.totalTime }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -35,6 +35,7 @@ export default {
   name: 'getStudentTotalOutTime',
   data () {
     return {
+      table: [],
       totalTime: '',
       getStudentTotalOutTimeForm: {
         schoolId: '',
@@ -63,7 +64,7 @@ export default {
             .then(res => {
               console.log(res)
               if (res.data.code === 0) {
-                this.totalTime = res.data.data
+                this.table = [{studentId: this.getStudentTotalOutTimeForm.studentId, totalTime: res.data.data}]
               } else if (res.data.code === 1) {
                 this.$alert(res.data.msg, '提示', {
                   confirmButtonText: '确定',
