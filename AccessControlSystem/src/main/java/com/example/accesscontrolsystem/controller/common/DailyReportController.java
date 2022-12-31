@@ -23,7 +23,7 @@ public class DailyReportController {
         return dailyReportService.getDailyReports(studentId);
     }
 
-    @GetMapping("/recent/")
+    @GetMapping("/recent")
     public Response<List<DailyReport>> getLastNDaysDailyReports(Integer classId,
                                                                 Integer schoolId,
                                                                 Integer studentId,

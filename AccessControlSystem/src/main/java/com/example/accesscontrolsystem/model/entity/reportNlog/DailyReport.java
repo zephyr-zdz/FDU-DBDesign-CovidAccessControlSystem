@@ -32,5 +32,5 @@ public class DailyReport {
     @JoinColumn(name = "student-id", nullable = false)
     private Student student;
     @Column(name = "date", nullable = false)
-    private String date; // utf-8编码的时间戳，例如：1607766400000
+    private String date; // 2022-01-01
 }
