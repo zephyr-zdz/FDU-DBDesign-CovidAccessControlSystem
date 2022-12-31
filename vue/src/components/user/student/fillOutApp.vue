@@ -13,11 +13,11 @@
       </el-form-item>
 
       <el-form-item label="预计离校时间" prop="outDate">
-        <el-date-picker placeholder="请输入预计离校时间" type="date" style="width: 30%" v-model="fillOutAppForm.outDate"></el-date-picker>
+        <el-date-picker placeholder="请输入预计离校时间" type="date" style="width: 30%" value-format="timestamp" v-model="fillOutAppForm.outDate"></el-date-picker>
       </el-form-item>
 
       <el-form-item label="预计返校时间" prop="inDate">
-        <el-date-picker placeholder="请输入预计返校时间" type="date" style="width: 30%" v-model="fillOutAppForm.inDate"></el-date-picker>
+        <el-date-picker placeholder="请输入预计返校时间" type="date" style="width: 30%" value-format="timestamp" v-model="fillOutAppForm.inDate"></el-date-picker>
       </el-form-item>
 
       <el-form-item prop="reason" label="出校原因">
@@ -38,9 +38,9 @@ export default {
   data () {
     return {
       fillOutAppForm: {
-        studentId: this.$store.state.studentId,
-        classId: this.$store.state.classId,
-        schoolId: this.$store.state.schoolId,
+        studentId: this.$store.state.user.studentId,
+        classId: this.$store.state.user.classId,
+        schoolId: this.$store.state.user.schoolId,
         destination: '',
         outDate: '',
         inDate: '',

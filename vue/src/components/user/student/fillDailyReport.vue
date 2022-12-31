@@ -58,7 +58,7 @@ export default {
     submit () {
       this.$refs.fillDailyReportForm.validate((valid) => {
         if (valid) {
-          const postPath = '/student/daily-report/'
+          const postPath = '/api/student/daily-report/'
           var data = {
             studentId: this.fillDailyReportForm.studentId,
             location: this.fillDailyReportForm.location,

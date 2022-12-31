@@ -103,6 +103,9 @@ export default {
         value: 'rejected',
         label: '已拒绝'
       }, {
+        value: 'counsellor',
+        label: '辅导员已同意'
+      }, {
         value: '',
         label: '全部'
       }],
@@ -137,11 +140,11 @@ export default {
               console.log(res)
               if (res.data.code === 0) {
                 this.getStudentOutAppTable = res.data.data
-                for (var i = 0; i < this.getStudentOutAppTable.length; i++) {
-                  this.getStudentOutAppTable.createTime = new Date(this.getStudentOutAppTable.createTime)
-                  this.getStudentOutAppTable.leaveTime = new Date(this.getStudentOutAppTable.leaveTime)
-                  this.getStudentOutAppTable.returnTime = new Date(this.getStudentOutAppTable.returnTime)
-                }
+                this.getStudentOutAppTable.forEach((item) => {
+                  item.createTime = new Date(item.createTime).toLocaleString()
+                  item.leaveTime = new Date(item.leaveTime).toLocaleString()
+                  item.returnTime = new Date(item.returnTime).toLocaleString()
+                })
               } else if (res.data.code === 1) {
                 this.$alert(res.data.msg, '提示', {
                   confirmButtonText: '确定',

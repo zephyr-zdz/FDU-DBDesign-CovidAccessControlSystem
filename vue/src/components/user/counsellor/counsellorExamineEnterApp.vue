@@ -81,16 +81,12 @@ export default {
   },
   mounted () {
     this.getEnterApp()
-    for (var i = 0; i < this.counsellorExamineEnterAppTable; i++) {
-      this.rejectForm.append({rejectReason: ''})
-    }
   },
   methods: {
     approve (index) {
-      const postPath = '/enter-application/counsellor/approve'
-      var data = {
-        applicationId: this.counsellorExamineEnterAppTable[index].id
-      }
+      const postPath = '/api/enter-application/counsellor/approve'
+      var data = new FormData()
+      data.append('applicationId', this.counsellorExamineEnterAppTable[index].id)
       this.$axios
         .post(postPath, data)
         .then(res => {
@@ -98,7 +94,7 @@ export default {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
             })
-            window.location.reload()
+            this.getEnterApp()
           } else {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
@@ -112,11 +108,10 @@ export default {
       if (this.rejectForm[index].rejectReason === '') {
         this.$alert('请填写拒绝理由')
       } else {
-        const postPath = '/enter-application/counsellor/reject'
-        var data = {
-          applicationId: this.counsellorExamineEnterAppTable[index].id,
-          reason: this.rejectForm[index].rejectReason
-        }
+        const postPath = '/api/enter-application/counsellor/reject'
+        var data = new FormData()
+        data.append('applicationId', this.counsellorExamineEnterAppTable[index].id)
+        data.append('reason', this.rejectForm[index].rejectReason)
         this.$axios
           .post(postPath, data)
           .then(res => {
@@ -124,7 +119,7 @@ export default {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'
               })
-              window.location.reload()
+              this.getEnterApp()
             } else {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'
@@ -138,14 +133,23 @@ export default {
     getEnterApp () {
       var param = {}
       param['counsellorId'] = this.$store.state.user.classId
-      param['n'] = -1
-      var getPath = '/application/enter-applications/pending/counsellor'
+      param['n'] = 9999
+      var getPath = '/api/application/enter-applications/pending/counsellor'
       this.$axios
         .get(getPath, {params: param})
         .then(res => {
           console.log(res)
           if (res.data.code === 0) {
             this.counsellorExamineEnterAppTable = res.data.data
+            this.counsellorExamineEnterAppTable.forEach(function (item) {
+              item.createTime = new Date(item.createTime).toLocaleString()
+              item.enterTime = new Date(item.enterTime).toLocaleString()
+            })
+            for (var i = 0; i < this.counsellorExamineEnterAppTable.length; i++) {
+              this.rejectForm.push({
+                rejectReason: ''
+              })
+            }
           } else if (res.data.code === 1) {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'

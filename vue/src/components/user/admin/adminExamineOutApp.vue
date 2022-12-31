@@ -94,14 +94,13 @@ export default {
     }
   },
   mounted () {
-    this.getEnterApp()
+    this.getOutApp()
   },
   methods: {
     approve (index) {
-      const postPath = '/leave-application/manager/approve'
-      var data = {
-        applicationId: this.adminExamineOutAppTable[index].id
-      }
+      const postPath = '/api/leave-application/manager/approve'
+      var data = new FormData()
+      data.append('applicationId', this.adminExamineOutAppTable[index].id)
       this.$axios
         .post(postPath, data)
         .then(res => {
@@ -109,7 +108,7 @@ export default {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
             })
-            window.location.reload()
+            this.getOutApp()
           } else {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
@@ -123,11 +122,10 @@ export default {
       if (this.rejectForm[index].rejectReason === '') {
         this.$alert('请填写拒绝理由')
       } else {
-        const postPath = '/leave-application/manager/reject'
-        var data = {
-          applicationId: this.adminExamineOutAppTable[index].id,
-          reason: this.rejectForm[index].rejectReason
-        }
+        const postPath = '/api/leave-application/manager/reject'
+        var data = new FormData()
+        data.append('applicationId', this.adminExamineOutAppTable[index].id)
+        data.append('reason', this.rejectForm[index].rejectReason)
         this.$axios
           .post(postPath, data)
           .then(res => {
@@ -135,7 +133,7 @@ export default {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'
               })
-              window.location.reload()
+              this.getOutApp()
             } else {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'
@@ -146,17 +144,23 @@ export default {
           })
       }
     },
-    getEnterApp () {
+    getOutApp () {
       var param = {}
       param['managerId'] = this.$store.state.user.schoolId
-      param['n'] = -1
-      var getPath = '/application/leave-applications/pending/manager'
+      param['n'] = 9999
+      var getPath = '/api/application/leave-applications/pending/manager'
       this.$axios
         .get(getPath, {params: param})
         .then(res => {
           console.log(res)
           if (res.data.code === 0) {
             this.adminExamineOutAppTable = res.data.data
+            this.adminExamineOutAppTable.forEach((item, index) => {
+              this.rejectForm.push({rejectReason: ''})
+              item.createTime = new Date(item.createTime).toLocaleString()
+              item.leaveTime = new Date(item.leaveTime).toLocaleString()
+              item.returnTime = new Date(item.returnTime).toLocaleString()
+            })
           } else if (res.data.code === 1) {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'

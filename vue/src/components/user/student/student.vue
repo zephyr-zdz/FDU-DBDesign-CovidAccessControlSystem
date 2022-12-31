@@ -100,6 +100,7 @@ export default {
           this.showRecord = value
           break
         case 'checkApp' :
+          this.$refs.checkApp.checkApp()
           this.showRecord = value
           break
         case 'personalInfo' :

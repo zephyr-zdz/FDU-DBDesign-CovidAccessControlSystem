@@ -30,9 +30,9 @@ export default {
   data () {
     return {
       fillEnterAppForm: {
-        studentId: this.$store.state.studentId,
-        classId: this.$store.state.classId,
-        schoolId: this.$store.state.schoolId,
+        studentId: this.$store.state.user.studentId,
+        classId: this.$store.state.user.classId,
+        schoolId: this.$store.state.user.schoolId,
         area: '',
         date: '',
         other: ''
@@ -58,7 +58,7 @@ export default {
           var enterTimeStamp = Date.parse(this.fillEnterAppForm.date)
           var data = {
             studentId: this.fillEnterAppForm.studentId,
-            passingAreas: this.fillEnterAppForm.location,
+            passingAreas: this.fillEnterAppForm.area,
             enterTime: enterTimeStamp
           }
           this.$axios

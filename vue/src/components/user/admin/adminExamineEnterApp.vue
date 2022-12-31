@@ -90,10 +90,9 @@ export default {
   },
   methods: {
     approve (index) {
-      const postPath = '/enter-application/manager/approve'
-      var data = {
-        applicationId: this.adminExamineEnterAppTable[index].id
-      }
+      const postPath = '/api/enter-application/manager/approve'
+      var data = new FormData()
+      data.append('applicationId', this.adminExamineEnterAppTable[index].id)
       this.$axios
         .post(postPath, data)
         .then(res => {
@@ -115,11 +114,10 @@ export default {
       if (this.rejectForm[index].rejectReason === '') {
         this.$alert('请填写拒绝理由')
       } else {
-        const postPath = '/enter-application/manager/reject'
-        var data = {
-          applicationId: this.adminExamineEnterAppTable[index].id,
-          reason: this.rejectForm[index].rejectReason
-        }
+        const postPath = '/api/enter-application/manager/reject'
+        var data = new FormData()
+        data.append('applicationId', this.adminExamineEnterAppTable[index].id)
+        data.append('reason', this.rejectForm[index].rejectReason)
         this.$axios
           .post(postPath, data)
           .then(res => {
@@ -141,14 +139,19 @@ export default {
     getEnterApp () {
       var param = {}
       param['managerId'] = this.$store.state.user.schoolId
-      param['n'] = -1
-      var getPath = '/application/enter-applications/pending/manager'
+      param['n'] = 9999
+      var getPath = '/api/application/enter-applications/pending/manager'
       this.$axios
         .get(getPath, {params: param})
         .then(res => {
           console.log(res)
           if (res.data.code === 0) {
             this.adminExamineEnterAppTable = res.data.data
+            this.adminExamineEnterAppTable.forEach((item, index) => {
+              item.createTime = new Date(item.createTime).toLocaleString()
+              item.enterTime = new Date(item.enterTime).toLocaleString()
+              this.rejectForm.push({rejectReason: ''})
+            })
           } else if (res.data.code === 1) {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'

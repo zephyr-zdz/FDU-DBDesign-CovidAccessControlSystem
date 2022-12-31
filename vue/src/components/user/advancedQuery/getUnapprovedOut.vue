@@ -96,14 +96,24 @@ export default {
       if (this.getUnapprovedOutForm.schoolId === -1) {
         param['managerId'] = this.getUnapprovedOutForm.schoolId
         param['n'] = this.getUnapprovedOutForm.day
-        this.$axios.get('/api/application/enter-applications/pending/manage', {params: param}).then(res => {
+        this.$axios.get('/api/application/leave-applications/pending/manager', {params: param}).then(res => {
           this.getUnapprovedOutTable = res.data.data
+          this.getUnapprovedOutTable.forEach(item => {
+            item.createTime = new Date(item.createTime).toLocaleString()
+            item.leaveTime = new Date(item.leaveTime).toLocaleString()
+            item.returnTime = new Date(item.returnTime).toLocaleString()
+          })
         })
       } else {
-        param['counsellor'] = this.getUnapprovedOutForm.classId
+        param['counsellorId'] = this.getUnapprovedOutForm.classId
         param['n'] = this.getUnapprovedOutForm.day
-        this.$axios.get('/api/application/enter-applications/pending/counsellor', {params: param}).then(res => {
+        this.$axios.get('/api/application/leave-applications/pending/counsellor', {params: param}).then(res => {
           this.getUnapprovedOutTable = res.data.data
+          this.getUnapprovedOutTable.forEach(item => {
+            item.createTime = new Date(item.createTime).toLocaleString()
+            item.leaveTime = new Date(item.leaveTime).toLocaleString()
+            item.returnTime = new Date(item.returnTime).toLocaleString()
+          })
         })
       }
       this.totalNum = this.getUnapprovedOutTable.length

@@ -74,31 +74,22 @@ export default {
   name: 'counsellorExamineOutApp',
   data () {
     return {
-      counsellorExamineOutAppTable: [{studentId: 1}, {studentId: 2}],
-      counsellorExamineOutAppFrom: {
+      counsellorExamineOutAppTable: [],
+      counsellorExamineOutAppForm: {
         schoolId: '',
         classId: ''
       },
-      rejectForm: [
-        {rejectReason: ''},
-        {rejectReason: ''},
-        {rejectReason: ''},
-        {rejectReason: ''}
-      ]
+      rejectForm: []
     }
   },
   mounted () {
-    this.getEnterApp()
-    for (var i = 0; i < this.counsellorExamineOutAppTable; i++) {
-      this.rejectForm.append({rejectReason: ''})
-    }
+    this.getLeaveApp()
   },
   methods: {
     approve (index) {
-      const postPath = '/leave-application/counsellor/approve'
-      var data = {
-        applicationId: this.counsellorExamineOutAppTable[index].id
-      }
+      const postPath = '/api/leave-application/counsellor/approve'
+      var data = new FormData()
+      data.append('applicationId', this.counsellorExamineOutAppTable[index].id)
       this.$axios
         .post(postPath, data)
         .then(res => {
@@ -106,7 +97,7 @@ export default {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
             })
-            window.location.reload()
+            this.getLeaveApp()
           } else {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'
@@ -120,11 +111,10 @@ export default {
       if (this.rejectForm[index].rejectReason === '') {
         this.$alert('请填写拒绝理由')
       } else {
-        const postPath = '/leaver-application/counsellor/reject'
-        var data = {
-          applicationId: this.counsellorExamineOutAppTable[index].id,
-          reason: this.rejectForm[index].rejectReason
-        }
+        const postPath = '/api/leave-application/counsellor/reject'
+        var data = new FormData()
+        data.append('applicationId', this.counsellorExamineOutAppTable[index].id)
+        data.append('reason', this.rejectForm[index].rejectReason)
         this.$axios
           .post(postPath, data)
           .then(res => {
@@ -132,7 +122,7 @@ export default {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'
               })
-              window.location.reload()
+              this.getLeaveApp()
             } else {
               this.$alert(res.data.msg, '提示', {
                 confirmButtonText: '确定'
@@ -143,17 +133,27 @@ export default {
           })
       }
     },
-    getEnterApp () {
+    getLeaveApp () {
       var param = {}
       param['counsellorId'] = this.$store.state.user.classId
-      param['n'] = -1
-      var getPath = '/application/leave-applications/pending/counsellor'
+      param['n'] = 9999
+      var getPath = '/api/application/leave-applications/pending/counsellor'
       this.$axios
         .get(getPath, {params: param})
         .then(res => {
           console.log(res)
           if (res.data.code === 0) {
             this.counsellorExamineOutAppTable = res.data.data
+            this.counsellorExamineOutAppTable.forEach(function (item) {
+              item.createTime = new Date(item.createTime).toLocaleString()
+              item.leaveTime = new Date(item.leaveTime).toLocaleString()
+              item.returnTime = new Date(item.returnTime).toLocaleString()
+            })
+            for (var i = 0; i < this.counsellorExamineOutAppTable.length; i++) {
+              this.rejectForm.push({
+                rejectReason: ''
+              })
+            }
           } else if (res.data.code === 1) {
             this.$alert(res.data.msg, '提示', {
               confirmButtonText: '确定'

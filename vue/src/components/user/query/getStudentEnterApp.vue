@@ -87,6 +87,10 @@ export default {
         value: 'rejected',
         label: '已拒绝'
       }, {
+        value: 'counsellor',
+        label: '辅导员已同意'
+      },
+      {
         value: '',
         label: '全部'
       }],
@@ -121,10 +125,10 @@ export default {
               console.log(res)
               if (res.data.code === 0) {
                 this.getStudentEnterAppTable = res.data.data
-                for (var i = 0; i < this.getDailyInfoTable.length; i++) {
-                  this.getDailyInfoTable.enterTime = new Date(this.getDailyInfoTable.enterTime)
-                  this.getDailyInfoTable.createTime = new Date(this.getDailyInfoTable.createTime)
-                }
+                this.getStudentEnterAppTable.forEach((item) => {
+                  item.createTime = new Date(item.createTime).toLocaleString()
+                  item.enterTime = new Date(item.enterTime).toLocaleString()
+                })
               } else if (res.data.code === 1) {
                 this.$alert(res.data.msg, '提示', {
                   confirmButtonText: '确定',

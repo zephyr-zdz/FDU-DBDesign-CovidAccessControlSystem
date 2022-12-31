@@ -80,14 +80,24 @@ export default {
       if (this.getUnapprovedEnterForm.schoolId === -1) {
         param['managerId'] = this.getUnapprovedEnterForm.schoolId
         param['n'] = this.getUnapprovedEnterForm.day
-        this.$axios.get('/api/application/enter-applications/pending/manage', {params: param}).then(res => {
+        this.$axios.get('/api/application/enter-applications/pending/manager', {params: param}).then(res => {
           this.getUnapprovedEnterTable = res.data.data
+          this.getUnapprovedEnterTable.forEach(item => {
+            item.createTime = new Date(item.createTime).toLocaleString()
+            item.leaveTime = new Date(item.leaveTime).toLocaleString()
+            item.returnTime = new Date(item.returnTime).toLocaleString()
+          })
         })
       } else {
         param['counsellor'] = this.getUnapprovedEnterForm.classId
         param['n'] = this.getUnapprovedEnterForm.day
         this.$axios.get('/api/application/enter-applications/pending/counsellor', {params: param}).then(res => {
           this.getUnapprovedEnterTable = res.data.data
+          this.getUnapprovedEnterTable.forEach(item => {
+            item.createTime = new Date(item.createTime).toLocaleString()
+            item.leaveTime = new Date(item.leaveTime).toLocaleString()
+            item.returnTime = new Date(item.returnTime).toLocaleString()
+          })
         })
       }
       this.totalNum = this.getUnapprovedEnterTable.length

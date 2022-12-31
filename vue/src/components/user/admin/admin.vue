@@ -173,6 +173,12 @@ export default {
     showGetMoreThan24 () {
       this.$refs.getMoreThan24.getMoreThan24()
     },
+    showEnterApp () {
+      this.$refs.adminExamineEnterApp.getEnterApp()
+    },
+    showOutApp () {
+      this.$refs.adminExamineOutApp.getOutApp()
+    },
     handleChange (value) {
       switch (value) {
         case 'getDailyInfo' :
@@ -260,11 +266,13 @@ export default {
           this.showRecord = value
           break
         case 'adminExamineEnterApp' :
+          this.showEnterApp()
           this.$refs.adminExamineEnterApp.adminExamineEnterAppForm.schoolId = this.$store.state.user.schoolId
           this.$refs.adminExamineEnterApp.adminExamineEnterAppForm.classId = -1
           this.showRecord = value
           break
         case 'adminExamineOutApp' :
+          this.showOutApp()
           this.$refs.adminExamineOutApp.adminExamineOutAppForm.schoolId = this.$store.state.user.schoolId
           this.$refs.adminExamineOutApp.adminExamineOutAppForm.classId = -1
           this.showRecord = value

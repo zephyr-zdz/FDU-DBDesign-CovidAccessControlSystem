@@ -40,7 +40,9 @@ export default {
         schoolId: '',
         classId: '',
         studentId: ''
-      }
+      },
+      tableEnter: [],
+      tableLeave: []
     }
   },
   mounted () {
@@ -51,21 +53,30 @@ export default {
       var data = {
         studentId: this.$store.state.user.studentId,
         classId: -1,
-        schoolId: -1
+        schoolId: -1,
+        status: ''
       }
-      this.$axios.get('/api/application/enter-applications', {params: data}).then(res => {
-        this.checkAppTable = res.data.data
+      this.checkAppTable = []
+      this.$axios.get('/api/application/enter-applications/', {params: data}).then(res => {
+        console.log(res)
+        res.data.data.map(item => {
+          this.checkAppTable.push({
+            type: '入校申请',
+            createTime: new Date(item.createTime).toLocaleString(),
+            status: item.status
+          })
+        })
       })
-      var i = 0
-      for (;i < this.checkAppTable.length; i++) {
-        this.checkAppTable[i].type = '进校申请'
-      }
-      this.$axios.get('/api/application/leave-applications', {params: data}).then(res => {
-        this.checkAppTable.append(res.data.data)
+      this.$axios.get('/api/application/leave-applications/', {params: data}).then(res => {
+        console.log(res)
+        res.data.data.map(item => {
+          this.checkAppTable.push({
+            type: '离校申请',
+            createTime: new Date(item.createTime).toLocaleString(),
+            status: item.status
+          })
+        })
       })
-      for (;i < this.checkAppTable.length; i++) {
-        this.checkAppTable[i].t = '出校申请'
-      }
     }
   }
 }
