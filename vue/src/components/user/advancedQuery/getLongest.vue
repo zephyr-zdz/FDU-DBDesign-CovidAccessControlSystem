@@ -126,7 +126,7 @@ export default {
         param = {schoolId: this.getLongestForm.schoolId,
           classId: -1}
       } else {
-        param = {schoolId: this.classList.find(item => item.id === this.getLongestForm.searchClassId).majorId,
+        param = {schoolId: this.classList.find(item => item.id === this.getLongestForm.searchClassId).major.id,
           classId: this.getLongestForm.searchClassId}
       }
       param['n'] = this.getLongestForm.number

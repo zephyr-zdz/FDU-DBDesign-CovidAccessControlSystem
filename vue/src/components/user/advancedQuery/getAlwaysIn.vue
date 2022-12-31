@@ -127,7 +127,8 @@ export default {
         param = {schoolId: this.getAlwaysInForm.schoolId,
           classId: -1}
       } else {
-        param = {schoolId: this.classList.find(item => item.id === this.getAlwaysInForm.searchClassId).majorId,
+        console.log(this.classList)
+        param = {schoolId: this.classList.find(item => item.id === this.getAlwaysInForm.searchClassId).major.id,
           classId: this.getAlwaysInForm.searchClassId}
       }
       param['n'] = this.getAlwaysInForm.number
