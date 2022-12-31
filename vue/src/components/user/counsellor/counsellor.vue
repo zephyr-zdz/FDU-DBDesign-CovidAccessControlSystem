@@ -38,7 +38,7 @@
           <el-header style="background: white" height="0px">
             <div class="welcome" style="margin-top: 10px">
             <span>
-              欢迎你！超级管理员
+              欢迎你！辅导员
             </span>
             </div>
           </el-header>
