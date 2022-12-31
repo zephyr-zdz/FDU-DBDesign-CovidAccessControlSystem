@@ -18,9 +18,10 @@ public interface GateLogMapper extends JpaRepository<GateLog, Integer> {
     GateLog findGateLogByStudentIdAndDirectionIsOutOrderByTimeDesc(Integer studentId, String direction);
 
     @Query(value = """
-            select `campus-id`, count(*) as count\s
+            select `campus-id` from
+            (select `campus-id`, count(*) as count\s
             from gate_log g where `student-major-id` = ?1 and g.time between ?2 and ?3\s
             GROUP BY `campus-id` ORDER BY count DESC\s
-            LIMIT 1""", nativeQuery = true)
+            LIMIT 1) as `c-ic`""", nativeQuery = true)
     Integer findMostLoggedCampusIdByStudent_Major_IdAndTimeBetween(Integer majorId, Long time1, Long time2);
 }

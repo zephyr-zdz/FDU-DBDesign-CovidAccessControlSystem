@@ -36,9 +36,15 @@ public class CampusManager
         List<Major> majors = majorMapper.findAll();
         return majors.stream().map(major -> {
             MajorWithCampus majorWithCampus = new MajorWithCampus();
+            Integer campusId = gateLogMapper.findMostLoggedCampusIdByStudent_Major_IdAndTimeBetween(major.getId(), time1, time2);
+            if (campusId != null) {
+                Campus campus = campusMapper.findCampusById(campusId);
+                majorWithCampus.setCampus(campus);
+            } else {
+                majorWithCampus.setCampus(major.getCampus());
+            }
             majorWithCampus.setMajor(major);
-            Campus campus = campusMapper.findCampusById(gateLogMapper.findMostLoggedCampusIdByStudent_Major_IdAndTimeBetween(major.getId(), time1, time2));
-            majorWithCampus.setCampus(campus);
+            System.out.println(campusId);
             return majorWithCampus;
         }).toList();
     }
