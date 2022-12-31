@@ -8,7 +8,7 @@
       </el-form-item>
 
       <el-form-item style="width: 100%">
-        <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login">进入</el-button>
+        <el-button type="primary" style="width: 100%;background: #505458;border: none" v-on:click="login()">进入</el-button>
       </el-form-item>
     </el-form>
   </body>
@@ -22,13 +22,8 @@ export default {
       studentLoginForm: {
         studentId: ''
       },
-      stateForm: {
-        studentId: '',
-        classId: '',
-        schoolId: ''
-      },
       rules: {
-        number: [
+        studentId: [
           { required: true, message: '请输入学号', trigger: 'change' }
         ]
       }
@@ -36,7 +31,35 @@ export default {
   },
   methods: {
     login () {
-      this.$router.replace('/student') // todo
+      // this.$router.replace('/student')
+      this.$refs.studentLoginForm.validate((valid) => {
+        if (valid) {
+          const getPath = '/api/student/' + this.studentLoginForm.studentId
+          this.$axios
+            .get(getPath)
+            .then(res => {
+              console.log(res)
+              if (res.data.code === 0) {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定'
+                })
+                this.$store.state.user.studentId = res.data.data.id
+                this.$store.state.user.classId = res.data.data.myClass.id
+                this.$store.state.user.schoolId = res.data.data.major.id
+                this.$router.replace('/student')
+              } else {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    this.$refs.studentLoginForm.resetFields()
+                  }
+                })
+              }
+            })
+            .catch(failResponse => {
+            })
+        }
+      })
     }
   }
 }

@@ -24,35 +24,42 @@ export default {
         number: ''
       },
       rules: {
-        // number: [
-        //   { required: true, message: '请输入辅导员工号', trigger: 'change' }
-        // ]
+        number: [
+          { required: true, message: '请输入辅导员工号', trigger: 'change' }
+        ]
       }
     }
   },
   methods: {
     login () {
-      this.$router.replace('/counsellor')
-      var param = new FormData()
-      param.append('type', this.counsellorLoginForm.type)
-      param.append('username', this.counsellorLoginForm.number)
-      this.$axios
-        .post('/api/user/login', param)
-        .then(successResponse => {
-          if (successResponse.data.data === 'true') {
-            this.$store.commit('login', this.counsellorLoginForm)
-            this.$router.replace('/user')
-          } else {
-            this.$alert(successResponse.data.msg, '系统提示', {
-              confirmButtonText: '确定',
-              callback: action => {
-                this.counsellorLoginForm.number = ''
+      // this.$router.replace('/counsellor')
+      this.$refs.counsellorLoginForm.validate((valid) => {
+        if (valid) {
+          const getPath = '/api/counsellor/' + this.counsellorLoginForm.number
+          this.$axios
+            .get(getPath)
+            .then(res => {
+              console.log(res)
+              if (res.data.code === 0) {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定'
+                })
+                this.$store.state.user.classId = res.data.data.myClass.id
+                this.$store.state.user.schoolId = res.data.data.major.id
+                this.$router.replace('/counsellor')
+              } else {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    this.$refs.counsellorLoginForm.resetFields()
+                  }
+                })
               }
             })
-          }
-        })
-        .catch(failResponse => {
-        })
+            .catch(failResponse => {
+            })
+        }
+      })
     }
   }
 }

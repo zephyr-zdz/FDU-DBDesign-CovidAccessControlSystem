@@ -1,12 +1,11 @@
 <template>
   <el-card class="box-card">
-    <el-form label-position="left" :model="getDailyInfoForm" :rules="rules" ref="getDailyInfoForm" label-width="50">
+    <el-form label-position="left" :model="getDailyInfoForm" :rules="rules" ref="getDailyInfoForm" label-width="100">
       <el-form-item prop="day" label="天数">
         <el-input-number style="width: 20%" :min="1" v-model="getDailyInfoForm.day"></el-input-number>
       </el-form-item>
-      <el-form-item prop="studentId">
-        <div slot="label" style="margin-left: 10px">学号</div>
-        <el-input style="width: 20%" placeholder="请输入学号，为空则查询全部" v-model="getDailyInfoForm.studentId"></el-input>
+      <el-form-item prop="studentId" label="学号">
+        <el-input style="width: 20%" placeholder="请输入学号" v-model="getDailyInfoForm.studentId"></el-input>
       </el-form-item>
       <el-form-item style="width: 25%">
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getDailyInfo()">查询</el-button>
@@ -17,10 +16,10 @@
               pager="page">
       <el-table-column
         prop="date"
-        label="日期"
+        label="时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.date}}</span>
+          <span>{{ scope.row.date}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -28,7 +27,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.number}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -36,7 +35,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -44,14 +43,21 @@
         label="体温"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.temperature}}</span>
+          <span>{{ scope.row.temperature}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="position"
-        label="位置">
+        label="位置" width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.position }}</span>
+          <span>{{ scope.row.location }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="position"
+        label="其他">
+        <template v-slot="scope">
+          <span>{{ scope.row.other }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -73,23 +79,42 @@ export default {
       rules: {
         day: [
           { required: true, message: '请输入天数', trigger: 'change' }
+        ],
+        studentId: [
+          { required: true, message: '请输入学号', trigger: 'change' }
         ]
       }
     }
   },
   methods: {
     getDailyInfo () {
-      var param = new FormData()
-      param.append('schoolId', this.getDailyInfoForm.schoolId)
-      param.append('classId', this.getDailyInfoForm.classId)
-      param.append('status', this.getDailyInfoForm.day)
-      if (this.getDailyInfoForm.studentId === '') {
-        param.append('studentId', '*')
-      } else {
-        param.append('studentId', this.getDailyInfoForm.studentId)
-      }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getDailyInfoTable = res.data.data
+      this.$refs.getDailyInfoForm.validate((valid) => {
+        if (valid) {
+          const getPath = '/api/daily-report/recent'
+          var data = {
+            studentId: this.getDailyInfoForm.studentId,
+            classId: this.getDailyInfoForm.classId,
+            schoolId: this.getDailyInfoForm.schoolId,
+            n: this.getDailyInfoForm.day
+          }
+          this.$axios
+            .get(getPath, {params: data})
+            .then(res => {
+              console.log(res)
+              if (res.data.code === 0) {
+                this.getDailyInfoTable = res.data.data
+              } else if (res.data.code === 1) {
+                this.$alert(res.data.msg, '提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    this.$refs.getDailyInfoForm.resetFields()
+                  }
+                })
+              }
+            })
+            .catch(failResponse => {
+            })
+        }
       })
     }
   }

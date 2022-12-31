@@ -1,35 +1,35 @@
 <template>
   <el-card class="box-card">
-    <el-form label-position="left" :model="getLongestForm" ref="getLongestForm" :rules="rules" label-width="50">
-      <el-form-item prop="number" label="人数">
+    <el-form label-position="left" :model="getLongestForm" :rules="rules" ref="getLongestForm" label-width="50">
+      <el-form-item prop="day" label="个数">
         <el-input-number style="width: 20%" :min="1" v-model="getLongestForm.number"></el-input-number>
       </el-form-item>
-      <el-form-item style="width: 20%">
-      <el-radio v-model="range" label="1">按全校搜索</el-radio>
+      <el-form-item style="width: 20%" v-if="this.getLongestForm.schoolId === -1 && this.getLongestForm.classId === -1">
+        <el-radio v-model="range" label="1">按全校搜索</el-radio>
       </el-form-item>
-      <el-form-item style="width: 20%">
-      <el-radio v-model="range" label="2">按院系搜索</el-radio>
+      <el-form-item style="width: 20%" v-if="this.getLongestForm.classId === -1">
+        <el-radio v-model="range" label="2">按院系搜索</el-radio>
       </el-form-item>
       <el-form-item v-if="range === '2'">
-        <el-select style="width: 20%" placeholder="请选择院系" v-model="getLongestForm.schoolId" v-if="range === '2'">
+        <el-select style="width: 20%" placeholder="请选择院系" v-model="getLongestForm.searchSchoolId" v-if="range === '2' && this.getLongestForm.schoolId === -1">
           <el-option
             v-for="item in schoolList"
             :key="item.name"
-            :label="item.label"
-            :value="item.value">
+            :label="item.name"
+            :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
       <el-form-item>
-      <el-radio v-model="range" label="3">请选择班级</el-radio>
+        <el-radio v-model="range" label="3">请选择班级</el-radio>
       </el-form-item>
       <el-form-item v-if="range === '3'">
-        <el-select style="width: 20%" placeholder="按班级搜索" v-model="getLongestForm.classId" v-if="range === '3'">
+        <el-select style="width: 20%" placeholder="按班级搜索" v-model="getLongestForm.searchClassId" v-if="range === '3'">
           <el-option
             v-for="item in classList"
             :key="item.name"
-            :label="item.label"
-            :value="item.value">
+            :label="item.name"
+            :value="item.id">
           </el-option>
         </el-select>
       </el-form-item>
@@ -37,6 +37,7 @@
         <el-button type="primary" style="width: 100%;background: #505458;border: none" @click="getLongest()">查询</el-button>
       </el-form-item>
     </el-form>
+    <h2>共计<span>{{ totalNum }}</span>条记录</h2>
     <el-table :data="getLongestTable"
               style="width: 100%"
               pager="page">
@@ -45,22 +46,14 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getLongestTable.studentId}}</span>
+          <span>{{ scope.row.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="name"
-        label="姓名"
-        width="120">
+        label="姓名">
         <template v-slot="scope">
-          <span>{{ scope.row.getLongestTable.name}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="leaveTime"
-        label="离校时长">
-        <template v-slot="scope">
-          <span>{{ scope.row.getLongestTable.leaveTime}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -83,7 +76,9 @@ export default {
       getLongestForm: {
         number: '',
         schoolId: '',
-        classId: ''
+        classId: '',
+        searchSchoolId: '',
+        searchClassId: ''
       },
       rules: {
         number: [
@@ -95,31 +90,52 @@ export default {
   methods: {
     getSchoolList (schoolId) {
       this.schoolList = []
-      this.getLongestForm.schoolId = this.schoolList[0]
+      if (schoolId === -1) {
+        this.$axios.get('/api/majors').then(res => {
+          this.schoolList = res.data.data
+          this.getLongestForm.searchSchoolId = this.schoolList[0].id
+        })
+      }
+      console.log(this.schoolList)
     },
     getClassList (classId) {
       this.classList = []
-      this.getLongestForm.classId = this.classList[0]
+      if (classId === -1) {
+        this.$axios.get('/api/classes').then(res => {
+          this.classList = res.data.data
+          this.getLongestForm.searchClassId = this.classList[0].id
+        })
+      } else {
+        var param = {}
+        param['majorId'] = classId
+        this.$axios.get('/api/classes', {params: param}).then(res => {
+          this.classList = res.data.data
+          this.getLongestForm.searchClassId = this.classList[0].id
+        })
+      }
     },
     getLongest () {
       var param = new FormData()
       if (this.range === '1') {
-        param.append('schoolId', '*')
-        param.append('classId', '*')
-      } else if (this.range === '2') {
-        param.append('schoolId', this.getLongestForm.schoolId)
-        param.append('classId', '*')
+        param = {schoolId: -1,
+          classId: -1}
+      } else if (this.range === '2' && this.getLongestForm.schoolId === -1) {
+        param = {schoolId: this.getLongestForm.searchSchoolId,
+          classId: -1}
+      } else if (this.range === '2' && this.getLongestForm.schoolId !== -1) {
+        param = {schoolId: this.getLongestForm.schoolId,
+          classId: -1}
       } else {
-        param.append('schoolId', '*')
-        param.append('classId', this.getLongestForm.classId)
+        param = {schoolId: this.classList.find(item => item.id === this.getLongestForm.searchClassId).major.id,
+          classId: this.getLongestForm.searchClassId}
       }
-      if (this.getLongestForm.number === '') {
-        param.append('number', '*')
-      } else {
-        param.append('number', this.getLongestForm.number)
-      }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      param['n'] = this.getLongestForm.number
+      this.$axios.get('/api/student/filter/avg-outside-longest', {params: param}).then(res => {
         this.getLongestTable = res.data.data
+        this.totalNum = this.getLongestTable.length
+        if (this.getLongestForm.classId !== -1 && this.getLongestForm.classId !== this.getLongestForm.searchClassId) {
+          this.getLongestTable = []
+        }
       })
     }
   }

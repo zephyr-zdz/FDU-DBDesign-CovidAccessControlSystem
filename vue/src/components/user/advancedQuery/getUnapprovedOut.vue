@@ -17,7 +17,7 @@
         label="学号"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.studentId}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,7 +33,7 @@
         label="目的地"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.destination}}</span>
+          <span>{{ scope.row.destination}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,7 +41,7 @@
         label="预计离校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.timeOut}}</span>
+          <span>{{ scope.row.leaveTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -49,7 +49,7 @@
         label="预计入校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.timeIn}}</span>
+          <span>{{ scope.row.returnTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -57,14 +57,14 @@
         label="离校原因"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.reason}}</span>
+          <span>{{ scope.row.reason}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="appTime"
         label="提交时间">
         <template v-slot="scope">
-          <span>{{ scope.row.getUnapprovedOutTable.appTime}}</span>
+          <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -92,17 +92,31 @@ export default {
   },
   methods: {
     getUnapprovedOut () {
-      var param = new FormData()
-      param.append('schoolId', this.getUnapprovedOutForm.schoolId)
-      param.append('classId', this.getUnapprovedOutForm.classId)
-      if (this.getUnapprovedOutForm.day === '') {
-        param.append('day', -1)
+      var param = {}
+      if (this.getUnapprovedOutForm.schoolId === -1) {
+        param['managerId'] = this.getUnapprovedOutForm.schoolId
+        param['n'] = this.getUnapprovedOutForm.day
+        this.$axios.get('/api/application/leave-applications/pending/manager', {params: param}).then(res => {
+          this.getUnapprovedOutTable = res.data.data
+          this.getUnapprovedOutTable.forEach(item => {
+            item.createTime = new Date(item.createTime).toLocaleString()
+            item.leaveTime = new Date(item.leaveTime).toLocaleString()
+            item.returnTime = new Date(item.returnTime).toLocaleString()
+          })
+        })
       } else {
-        param.append('day', this.getUnapprovedOutForm.day)
+        param['counsellorId'] = this.getUnapprovedOutForm.classId
+        param['n'] = this.getUnapprovedOutForm.day
+        this.$axios.get('/api/application/leave-applications/pending/counsellor', {params: param}).then(res => {
+          this.getUnapprovedOutTable = res.data.data
+          this.getUnapprovedOutTable.forEach(item => {
+            item.createTime = new Date(item.createTime).toLocaleString()
+            item.leaveTime = new Date(item.leaveTime).toLocaleString()
+            item.returnTime = new Date(item.returnTime).toLocaleString()
+          })
+        })
       }
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
-        this.getUnapprovedOutTable = res.data.data
-      })
+      this.totalNum = this.getUnapprovedOutTable.length
     }
   }
 }

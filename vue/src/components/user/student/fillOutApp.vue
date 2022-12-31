@@ -13,16 +13,15 @@
       </el-form-item>
 
       <el-form-item label="预计离校时间" prop="outDate">
-        <el-date-picker placeholder="请输入预计离校时间" type="date" style="width: 30%" v-model="fillOutAppForm.outDate"></el-date-picker>
+        <el-date-picker placeholder="请输入预计离校时间" type="date" style="width: 30%" value-format="timestamp" v-model="fillOutAppForm.outDate"></el-date-picker>
       </el-form-item>
 
       <el-form-item label="预计返校时间" prop="inDate">
-        <el-date-picker placeholder="请输入预计返校时间" type="date" style="width: 30%" v-model="fillOutAppForm.inDate"></el-date-picker>
+        <el-date-picker placeholder="请输入预计返校时间" type="date" style="width: 30%" value-format="timestamp" v-model="fillOutAppForm.inDate"></el-date-picker>
       </el-form-item>
 
-      <el-form-item prop="other">
-        <div slot="label" style="margin-left: 10px">其他</div>
-        <el-input placeholder="请输入其他必要信息" type="text" style="width: 30%" v-model="fillOutAppForm.other"></el-input>
+      <el-form-item prop="reason" label="出校原因">
+        <el-input placeholder="请输入出校原因" type="text" style="width: 30%" v-model="fillOutAppForm.reason"></el-input>
       </el-form-item>
 
       <el-form-item style="width: 35%">
@@ -39,12 +38,13 @@ export default {
   data () {
     return {
       fillOutAppForm: {
-        studentId: this.$store.getters.studentId,
-        classId: this.$store.getters.classId,
-        schoolId: this.$store.getters.schoolId,
+        studentId: this.$store.state.user.studentId,
+        classId: this.$store.state.user.classId,
+        schoolId: this.$store.state.user.schoolId,
         destination: '',
         outDate: '',
         inDate: '',
+        reason: '',
         other: ''
       },
       rules: {
@@ -59,6 +59,9 @@ export default {
         ],
         inDate: [
           { required: true, message: '请输入预计返校时间', trigger: 'change' }
+        ],
+        reason: [
+          { required: true, message: '请输入原因', trigger: 'change' }
         ]
       }
     }
@@ -67,14 +70,13 @@ export default {
     submit () {
       this.$refs.fillOutAppForm.validate((valid) => {
         if (valid) {
-          const postPath = '/api/admin/'
+          const postPath = '/api/student/application/leave-applications'
           var data = {
             studentId: this.fillOutAppForm.studentId,
-            schoolId: this.fillOutAppForm.schoolId,
-            classId: this.fillOutAppForm.classId,
-            location: this.fillOutAppForm.location,
-            temperature: this.fillOutAppForm.temperature,
-            other: this.fillOutAppForm.other
+            reason: this.fillOutAppForm.reason,
+            destination: this.fillOutAppForm.destination,
+            leaveTime: this.fillOutAppForm.outDate,
+            returnTime: this.fillOutAppForm.inDate
           }
           this.$axios
             .post(postPath, data)
@@ -92,7 +94,7 @@ export default {
                   }
                 })
               } else {
-                this.$alert('注册失败', '提示', {
+                this.$alert('提交失败', '提示', {
                   confirmButtonText: '确定',
                   callback: action => {
                     this.$refs.fillOutAppForm.resetFields()

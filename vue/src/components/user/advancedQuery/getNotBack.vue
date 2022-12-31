@@ -9,7 +9,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.number}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -17,7 +17,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,15 @@
         label="邮箱"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.email}}</span>
+          <span>{{ scope.row.student.email}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="phone"
+        label="手机"
+        width="150">
+        <template v-slot="scope">
+          <span>{{ scope.row.student.phoneNumber}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,7 +41,7 @@
         label="宿舍/校外住址"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.dorm}}</span>
+          <span>{{ scope.row.student.dormAddress}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,7 +49,7 @@
       label="家庭地址"
       width="300">
       <template v-slot="scope">
-        <span>{{ scope.row.getNotBackTable.address}}</span>
+        <span>{{ scope.row.student.homeAddress}}</span>
       </template>
       </el-table-column>
       <el-table-column
@@ -49,7 +57,7 @@
         label="身份证件类型"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.idType}}</span>
+          <span>{{ scope.row.student.idType}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -57,7 +65,7 @@
         label="身份证件号码"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.idNumber}}</span>
+          <span>{{ scope.row.student.idNumber}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -65,14 +73,14 @@
         label="入校权限"
         width="100">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.authority}}</span>
+          <span>{{ scope.row.student.auth}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="leaveTime"
         label="离校时间">
         <template v-slot="scope">
-          <span>{{ scope.row.getNotBackTable.leaveTime}}</span>
+          <span>{{ scope.row.leaveTimeStr}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -92,16 +100,15 @@ export default {
       }
     }
   },
-  mounted () {
-    this.getNotBack()
-  },
   methods: {
     getNotBack () {
-      var param = new FormData()
-      param.append('schoolId', this.getNotBackForm.schoolId)
-      param.append('classId', this.getNotBackForm.classId)
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      var param = {}
+      console.log(this.getNotBackForm.schoolId)
+      param['schoolId'] = this.getNotBackForm.schoolId
+      param['classId'] = this.getNotBackForm.classId
+      this.$axios.get('/api/student/filter/outside/', {params: param}).then(res => {
         this.getNotBackTable = res.data.data
+        this.totalNum = this.getNotBackTable.length
       })
     }
   }
