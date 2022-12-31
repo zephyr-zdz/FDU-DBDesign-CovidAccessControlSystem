@@ -16,7 +16,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.student.id}}</span>
+          <span>{{ scope.row.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -24,14 +24,14 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.student.name}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="auth"
         label="入校权限">
         <template v-slot="scope">
-          <span>{{ scope.row.student.auth}}</span>
+          <span>{{ scope.row.auth}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -69,13 +69,12 @@ export default {
           this.$axios
             .get(getPath, {params: data})
             .then(res => {
-              console.log(res)
+              console.log(res.data.code)
               if (res.data.code === 0) {
-                this.getStudentEnterAuthTable = res.data.data
-                for (var i = 0; i < this.getStudentEnterAuthTable.length; i++) {
-                  this.getStudentEnterAuthTable.auth = this.getStudentEnterAuthTable.auth === 'Y' ? '有' : '无'
-                }
-              } else if (res.data.code === 1) {
+                this.getStudentEnterAuthTable = [res.data.data]
+                this.getStudentEnterAuthTable[0].auth = this.getStudentEnterAuthTable[0].auth === 'Y' ? '有' : '无'
+                console.log(this.getStudentEnterAuthTable)
+              } else {
                 this.$alert(res.data.msg, '提示', {
                   confirmButtonText: '确定',
                   callback: action => {
