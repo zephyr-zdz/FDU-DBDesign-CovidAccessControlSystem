@@ -28,6 +28,6 @@ public interface LeaveApplicationMapper extends JpaRepository<LeaveApplication, 
     List<LeaveApplication> findAllByManagerAndStatusAndCreateTimeBetween(SchoolManager schoolManager, String pending, long today, long nDaysBefore);
 
     LeaveApplication findLeaveApplicationById(Integer applicationId);
-
-    List<LeaveApplication> findLastNDaysPendingApplication(long today, long nDaysBefore);
+    @Query("select l from LeaveApplication l where l.status = ?1 and l.createTime between ?2 and ?3")
+    List<LeaveApplication> findAllByStatusAndCreateTimeBetween(String status, long today, long nDaysBefore);
 }

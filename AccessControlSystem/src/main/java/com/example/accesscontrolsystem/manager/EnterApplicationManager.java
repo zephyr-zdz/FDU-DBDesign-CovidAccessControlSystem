@@ -59,9 +59,9 @@ public class EnterApplicationManager {
         return enterApplicationMapper.findEnterApplicationById(applicationId);
     }
 
-    public List<EnterApplication> findLastNDaysByStatus(Integer n) {
+    public List<EnterApplication> findLastNDaysByStatus(Integer n, String status) {
         long today = timeService.getTime();
         long nDaysBefore = timeService.getTimeNDaysBefore(n);
-        return enterApplicationMapper.findAllByStatusAndCreateTimeBetween("pending", today, nDaysBefore);
+        return enterApplicationMapper.findAllByStatusAndCreateTimeBetween(status, today, nDaysBefore);
     }
 }

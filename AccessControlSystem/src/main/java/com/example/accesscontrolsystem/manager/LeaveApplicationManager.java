@@ -152,9 +152,9 @@ public class LeaveApplicationManager {
         return leaveApplicationMapper.findLeaveApplicationById(applicationId);
     }
 
-    public List<LeaveApplication> findLastNDaysPendingApplication(Integer n) {
+    public List<LeaveApplication> findLastNDaysPendingApplication(Integer n, String status) {
         long today = timeService.getTime();
-        long nDaysBefore = today - (long) n * 24 * 60 * 60 * 1000;
-        return leaveApplicationMapper.findLastNDaysPendingApplication(today, nDaysBefore);
+        long nDaysBefore = timeService.getTimeNDaysBefore(n);
+        return leaveApplicationMapper.findAllByStatusAndCreateTimeBetween(status, today, nDaysBefore);
     }
 }

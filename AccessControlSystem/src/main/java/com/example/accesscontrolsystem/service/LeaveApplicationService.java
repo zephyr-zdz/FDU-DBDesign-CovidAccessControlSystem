@@ -76,7 +76,7 @@ public class LeaveApplicationService {
     }
     public Response<List<LeaveApplication>> getLastNDaysPendingApplicationByCounsellorId(Integer counsellorId, Integer n) {
         if (counsellorId == -1) {
-            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysPendingApplication(n));
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysPendingApplication(n, "pending"));
         }
         Counsellor counsellor = counsellorMapper.findCounsellorById(counsellorId);
         if (counsellor == null) {
@@ -86,7 +86,7 @@ public class LeaveApplicationService {
     }
     public Response<List<LeaveApplication>> getLastNDaysPendingApplicationByManagerId(Integer managerId, Integer n) {
         if (managerId == -1) {
-            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysPendingApplication(n));
+            return new Response<>(Response.SUCCESS, "获取成功", leaveApplicationManager.findLastNDaysPendingApplication(n, "counsellor"));
         }
         SchoolManager schoolManager = schoolManagerManager.findSchoolManagerById(managerId);
         if (schoolManager == null) {
