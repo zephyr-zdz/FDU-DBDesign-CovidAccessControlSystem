@@ -9,7 +9,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.student.id}}</span>
+          <span>{{ scope.row.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -17,7 +17,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.student.name}}</span>
+          <span>{{ scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -25,7 +25,7 @@
         label="邮箱"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.student.email}}</span>
+          <span>{{ scope.row.email}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -33,7 +33,7 @@
         label="手机"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.student.phoneNumber}}</span>
+          <span>{{ scope.row.phoneNumber}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -41,7 +41,7 @@
         label="宿舍/校外住址"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.student.dormAddress}}</span>
+          <span>{{ scope.row.dormAddress}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -49,7 +49,7 @@
         label="家庭地址"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.student.homeAddress}}</span>
+          <span>{{ scope.row.homeAddress}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -57,7 +57,7 @@
         label="身份证件类型"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.student.idType}}</span>
+          <span>{{ scope.row.idType}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -65,14 +65,14 @@
         label="身份证件号码"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.student.idNumber}}</span>
+          <span>{{ scope.row.idNumber}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="authority"
         label="入校权限">
         <template v-slot="scope">
-          <span>{{ scope.row.student.auth}}</span>
+          <span>{{ scope.row.auth}}</span>
         </template>
       </el-table-column>
     </el-table>
