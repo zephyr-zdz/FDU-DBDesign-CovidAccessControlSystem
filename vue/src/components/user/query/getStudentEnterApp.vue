@@ -1,6 +1,6 @@
 <template>
   <el-card class="box-card">
-    <el-form label-position="center" :model="getStudentEnterAppForm" ref="getStudentEnterAppForm" :rules="rules" label-width="200">
+    <el-form :model="getStudentEnterAppForm" ref="getStudentEnterAppForm" :rules="rules" label-width="100px">
       <el-form-item prop="status" label="状态">
         <el-select style="width: 20%" placeholder="请选择申请状态" v-model="getStudentEnterAppForm.status">
           <el-option
@@ -26,7 +26,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentEnterAppTable.student.id}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -34,7 +34,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentEnterAppTable.student.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -42,7 +42,7 @@
         label="七日内所到地区"
         width="300">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentEnterAppTable.passingAreas}}</span>
+          <span>{{ scope.row.passingAreas}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -50,7 +50,7 @@
         label="预计进校时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentEnterAppTable.enterTime}}</span>
+          <span>{{ scope.row.enterTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -58,14 +58,14 @@
         label="提交时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentEnterAppTable.createTime}}</span>
+          <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="status"
         label="申请状态">
         <template v-slot="scope">
-          <span>{{ scope.row.getStudentOutAppTable.status}}</span>
+          <span>{{ scope.row.status}}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -98,9 +98,6 @@ export default {
         studentId: ''
       },
       rules: {
-        status: [
-          { required: true, message: '请输入学号', trigger: 'change' }
-        ],
         studentId: [
           { required: true, message: '请输入学号', trigger: 'change' }
         ]
