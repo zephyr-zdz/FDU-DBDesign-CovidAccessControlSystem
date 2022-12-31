@@ -151,4 +151,10 @@ public class LeaveApplicationManager {
     public LeaveApplication findLeaveApplicationById(Integer applicationId) {
         return leaveApplicationMapper.findLeaveApplicationById(applicationId);
     }
+
+    public List<LeaveApplication> findLastNDaysPendingApplication(Integer n) {
+        long today = timeService.getTime();
+        long nDaysBefore = today - (long) n * 24 * 60 * 60 * 1000;
+        return leaveApplicationMapper.findLastNDaysPendingApplication(today, nDaysBefore);
+    }
 }

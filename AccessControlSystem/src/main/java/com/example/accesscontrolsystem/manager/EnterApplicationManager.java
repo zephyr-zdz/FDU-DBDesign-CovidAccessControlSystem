@@ -58,4 +58,10 @@ public class EnterApplicationManager {
     public EnterApplication findEnterApplicationById(Integer applicationId) {
         return enterApplicationMapper.findEnterApplicationById(applicationId);
     }
+
+    public List<EnterApplication> findLastNDaysByStatus(Integer n) {
+        long today = timeService.getTime();
+        long nDaysBefore = timeService.getTimeNDaysBefore(n);
+        return enterApplicationMapper.findAllByStatusAndCreateTimeBetween("pending", today, nDaysBefore);
+    }
 }

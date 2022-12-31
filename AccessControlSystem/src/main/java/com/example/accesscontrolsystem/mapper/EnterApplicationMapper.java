@@ -28,4 +28,6 @@ public interface EnterApplicationMapper extends JpaRepository<EnterApplication, 
     List<EnterApplication> findAllByManagerAndStatusAndCreateTimeBetween(SchoolManager manager, String counsellor, long today, long nDaysBefore);
 
     EnterApplication findEnterApplicationById(Integer applicationId);
+
+    List<EnterApplication> findAllByStatusAndCreateTimeBetween(String pending, long today, long nDaysBefore);
 }
