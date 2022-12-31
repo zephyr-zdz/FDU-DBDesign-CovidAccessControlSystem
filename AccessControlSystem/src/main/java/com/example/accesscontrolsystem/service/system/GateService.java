@@ -43,6 +43,9 @@ public class GateService {
         }
         // 判断学生所在区域和门禁记录是否相符合
         if (Objects.equals(student.getStatus(), "outside") && direction.equals("in")) {
+            if (student.getAuth().equals("N")) {
+                return Response.error("学生未授权");
+            }
             student.setStatus(campusManager.findCampusById(gateLog.getCampusId()).getName());
             studentManager.update(student);
             gateLogManager.create(classAdapter.cookGateLog(gateLog));
