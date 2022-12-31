@@ -45,7 +45,15 @@
       <el-table-column>
         <template v-slot="scope">
           <el-button size="mini" @click="approve(scope.$index)">同意</el-button>
-          <el-button size="mini" @click="reject(scope.$index)">拒绝</el-button>
+          <el-form v-model="rejectForm" ref="rejectForm">
+            <el-form-item>
+              <el-form-item label="拒绝理由">
+                <el-input prop="reject" v-model="rejectForm[scope.$index].rejectReason"></el-input>
+              </el-form-item>
+              <el-button size="mini" @click="reject(scope.$index)">拒绝</el-button>
+            </el-form-item>
+          </el-form>
+
         </template>
       </el-table-column>
 
@@ -58,15 +66,24 @@ export default {
   name: 'counsellorExamineOutApp',
   data () {
     return {
-      counsellorExamineOutAppTable: [],
+      counsellorExamineOutAppTable: [{studentId: 1}, {studentId: 2}],
       counsellorExamineOutAppFrom: {
         schoolId: '',
         classId: ''
-      }
+      },
+      rejectForm: [
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''},
+        {rejectReason: ''}
+      ]
     }
   },
   mounted () {
     this.getEnterApp()
+    for (var i = 0; i < this.counsellorExamineOutAppTable; i++) {
+      this.rejectForm.append({rejectReason: ''})
+    }
   },
   methods: {
     approve (index) {

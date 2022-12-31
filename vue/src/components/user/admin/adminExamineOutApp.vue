@@ -48,6 +48,20 @@
           <el-button size="mini" @click="reject(scope.$index)">拒绝</el-button>
         </template>
       </el-table-column>
+      <el-table-column>
+        <template v-slot="scope">
+          <el-button size="mini" @click="approve(scope.$index)">同意</el-button>
+          <el-form v-model="rejectForm" ref="rejectForm">
+            <el-form-item>
+              <el-form-item label="拒绝理由">
+                <el-input prop="reject" v-model="rejectForm[scope.$index].rejectReason"></el-input>
+              </el-form-item>
+              <el-button size="mini" @click="reject(scope.$index)">拒绝</el-button>
+            </el-form-item>
+          </el-form>
+
+        </template>
+      </el-table-column>
 
     </el-table>
   </el-card>

@@ -213,11 +213,15 @@ export default {
         case 'getMostSubmit' :
           this.$refs.getMostSubmit.getMostSubmitForm.schoolId = this.$store.state.user.schoolId
           this.$refs.getMostSubmit.getMostSubmitForm.classId = -1
+          this.$refs.getMostSubmit.getClassList(this.$store.state.user.schoolId)
+          this.$refs.getMostSubmit.getSchoolList(this.$store.state.user.schoolId)
           this.showRecord = value
           break
         case 'getLongest' :
           this.$refs.getLongest.getLongestForm.schoolId = this.$store.state.user.schoolId
           this.$refs.getLongest.getLongestForm.classId = -1
+          this.$refs.getLongest.getClassList(this.$store.state.user.schoolId)
+          this.$refs.getLongest.getSchoolList(this.$store.state.user.schoolId)
           this.showRecord = value
           break
         case 'getNotBack' :
@@ -241,6 +245,8 @@ export default {
         case 'getAlwaysIn' :
           this.$refs.getAlwaysIn.getAlwaysInForm.schoolId = this.$store.state.user.schoolId
           this.$refs.getAlwaysIn.getAlwaysInForm.classId = -1
+          this.$refs.getAlwaysIn.getClassList(this.$store.state.user.schoolId)
+          this.$refs.getAlwaysIn.getSchoolList(this.$store.state.user.schoolId)
           this.showRecord = value
           break
         case 'getSameTime' :

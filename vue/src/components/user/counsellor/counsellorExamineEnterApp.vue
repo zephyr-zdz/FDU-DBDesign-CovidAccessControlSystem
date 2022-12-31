@@ -45,7 +45,7 @@
       <el-table-column>
         <template v-slot="scope">
           <el-button size="mini" @click="approve(scope.$index)">同意</el-button>
-          <el-form v-model="rejectForm" :rules="rules" ref="rejectForm">
+          <el-form v-model="rejectForm" ref="rejectForm">
             <el-form-item>
               <el-form-item label="拒绝理由">
                 <el-input prop="reject" v-model="rejectForm[scope.$index].rejectReason"></el-input>
@@ -87,6 +87,9 @@ export default {
   },
   methods: {
     approve (index) {
+      var param = new FormData()
+      param.append('id', this.counsellorExamineEnterAppTable[index].id)
+      // todo:发送
     },
     reject (index) {
       if (this.rejectForm[index].rejectReason === '') {
@@ -95,6 +98,7 @@ export default {
         var param = new FormData()
         param.append('id', this.counsellorExamineEnterAppTable[index].id)
         param.append('rejectReason', this.counsellorExamineEnterAppForm[index].rejectReason)
+        // todo:发送
       }
     },
     getEnterApp () {
@@ -102,8 +106,9 @@ export default {
         classId: this.$store.state.user.classId,
         schoolId: this.$store.state.user.schoolId
       }
+      var getPath = '' // todo: 修改
       this.$axios
-        .get('getPath', {params: data})
+        .get(getPath, {params: data})
         .then(res => {
           console.log(res)
           if (res.data.code === 0) {
