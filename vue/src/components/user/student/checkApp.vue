@@ -8,7 +8,7 @@
         label="申请类型"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.checkAppTable.type}}</span>
+          <span>{{ scope.row.type}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -16,14 +16,14 @@
         label="申请时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.checkAppTable.time}}</span>
+          <span>{{ scope.row.createTime}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="status"
         label="状态">
         <template v-slot="scope">
-          <span>{{ scope.row.checkAppTable.status }}</span>
+          <span>{{ scope.row.status }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -48,13 +48,24 @@ export default {
   },
   methods: {
     checkApp () {
-      var param = new FormData()
-      param.append('schoolId', this.checkAppForm.schoolId)
-      param.append('classId', this.checkAppForm.classId)
-      param.append('studentId', this.checkAppForm.studentId)
-      this.$axios.get('/api/student/student', {params: param}).then(res => {
+      var data = {
+        studentId: -1,
+        classId: -1,
+        schoolId: this.checkAppForm.schoolId
+      }
+      this.$axios.get('/api/application/enter-applications', {params: data}).then(res => {
         this.checkAppTable = res.data.data
       })
+      var i = 0
+      for (;i < this.checkAppTable.length; i++) {
+        this.checkAppTable[i].type = '进校申请'
+      }
+      this.$axios.get('/api/application/leave-applications', {params: data}).then(res => {
+        this.checkAppTable.append(res.data.data)
+      })
+      for (;i < this.checkAppTable.length; i++) {
+        this.checkAppTable[i].t = '出校申请'
+      }
     }
   }
 }
