@@ -19,7 +19,7 @@
         label="时间"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.date}}</span>
+          <span>{{ scope.row.date}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -27,7 +27,7 @@
         label="学号"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.student.id}}</span>
+          <span>{{ scope.row.student.id}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -35,7 +35,7 @@
         label="姓名"
         width="120">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.student.name}}</span>
+          <span>{{ scope.row.student.name}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -43,21 +43,21 @@
         label="体温"
         width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.temperature}}</span>
+          <span>{{ scope.row.temperature}}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="position"
         label="位置" width="150">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.location }}</span>
+          <span>{{ scope.row.location }}</span>
         </template>
       </el-table-column>
       <el-table-column
         prop="position"
         label="其他">
         <template v-slot="scope">
-          <span>{{ scope.row.getDailyInfoTable.other }}</span>
+          <span>{{ scope.row.other }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -103,9 +103,6 @@ export default {
               console.log(res)
               if (res.data.code === 0) {
                 this.getDailyInfoTable = res.data.data
-                for (var i = 0; i < this.getDailyInfoTable.length; i++) {
-                  this.getDailyInfoTable.date = new Date(this.getDailyInfoTable.date)
-                }
               } else if (res.data.code === 1) {
                 this.$alert(res.data.msg, '提示', {
                   confirmButtonText: '确定',
