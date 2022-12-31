@@ -45,7 +45,7 @@ export default {
                 })
                 console.log('manager')
                 this.$store.state.user.schoolId = res.data.data.major.id
-                this.$store.state.use.classId = -1
+                this.$store.state.user.classId = -1
                 this.$router.replace('/admin')
               } else {
                 this.$alert(res.data.msg, '提示', {
