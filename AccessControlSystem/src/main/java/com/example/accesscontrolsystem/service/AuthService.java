@@ -14,12 +14,14 @@ public class AuthService {
         this.studentManager = studentManager;
     }
 
-    public Response<String> getAuth(Integer studentId) {
-        String auth = studentManager.getAuthById(studentId);
-        if (auth == null) {
-            return new Response<>(Response.FAIL, "student不存在", null);
+    public Response<String> getAuth(Integer classId, Integer schoolId, Integer studentId) {
+        if (schoolId == -1) {
+            return new Response<>(Response.SUCCESS, "成功", studentManager.findStudentById(studentId).getAuth());
+        } else if (classId == -1) {
+            return new Response<>(Response.SUCCESS, "成功", studentManager.findStudentByIdAndMajorId(studentId, schoolId).getAuth());
+        } else {
+            return new Response<>(Response.SUCCESS, "成功", studentManager.findStudentByIdAndMyClassId(studentId, classId).getAuth());
         }
-        return new Response<>(Response.SUCCESS, "成功", auth);
     }
     public Response<String> getName(Integer studentId) {
         String name = studentManager.getNameById(studentId);

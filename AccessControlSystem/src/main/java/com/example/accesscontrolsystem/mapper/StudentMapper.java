@@ -11,10 +11,6 @@ import java.util.List;
 public interface StudentMapper extends JpaRepository<Student, Integer> {
     @Query("select s from Student s where s.id = ?1")
     Student findStudentById(Integer id);
-    @Query("select s from Student s where s.email = ?1")
-    Student findStudentByEmail(String email);
-    @Query("select s from Student s where s.idNumber = ?1 and s.idType = ?2")
-    Student findStudentByIdNumberAndIdType(String idNumber, String idType);
 
     @Query("select s from Student s where s.myClass.id = ?1")
     List<Student> findStudentsByMyClass_Id(Integer classId);
@@ -189,4 +185,10 @@ public interface StudentMapper extends JpaRepository<Student, Integer> {
             order by avg(`leave-duration`) DESC
             limit ?1) as `stu-id-list`)""", nativeQuery = true)
     List<Student> findNStudentsWithLongestAvgOutsideTimeByClassId(Integer n, Integer classId);
+
+    @Query("select s from Student s where s.id = ?1 and s.myClass.major.id = ?2")
+    Student findStudentByIdAndMyClass_Major_Id(Integer id, Integer myClass_major_id);
+
+    @Query("select s from Student s where s.id = ?1 and s.myClass.id = ?2")
+    Student findStudentByIdAndMyClass_Id(Integer studentId, Integer classId);
 }

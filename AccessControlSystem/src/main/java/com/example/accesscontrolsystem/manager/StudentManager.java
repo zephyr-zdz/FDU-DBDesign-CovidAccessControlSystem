@@ -24,11 +24,6 @@ public class StudentManager {
         return studentMapper.findStudentById(studentId);
     }
 
-    public String getAuthById(Integer studentId) {
-        Student student = studentMapper.findStudentById(studentId);
-        return student.getAuth();
-    }
-
     public String getNameById(Integer studentId) {
         Student student = studentMapper.findStudentById(studentId);
         return student.getName();
@@ -36,18 +31,6 @@ public class StudentManager {
 
     public List<Student> getStudents() {
         return studentMapper.findAll();
-    }
-
-    public Student addStudent(Student student) {
-        return studentMapper.save(student);
-    }
-
-    public Student findStudentByEmail(String email) {
-        return studentMapper.findStudentByEmail(email);
-    }
-
-    public Student findStudentByIdNumberAndIdType(String idNumber, String idType) {
-        return studentMapper.findStudentByIdNumberAndIdType(idNumber, idType);
     }
 
     public void update(Student student) {
@@ -61,5 +44,13 @@ public class StudentManager {
     }
     public List<Student> findAllByClassId(Integer id) {
         return studentMapper.findStudentsByMyClass_Id(id);
+    }
+
+    public Student findStudentByIdAndMajorId(Integer studentId, Integer majorId) {
+        return studentMapper.findStudentByIdAndMyClass_Major_Id(studentId, majorId);
+    }
+
+    public Student findStudentByIdAndMyClassId(Integer studentId, Integer classId) {
+        return studentMapper.findStudentByIdAndMyClass_Id(studentId, classId);
     }
 }

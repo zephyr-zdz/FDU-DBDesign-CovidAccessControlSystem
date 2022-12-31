@@ -16,7 +16,9 @@ public class AuthController {
         this.authService = authService;
     }
     @GetMapping("/")
-    public Response<String> getAuth(Integer studentId) {
-        return authService.getAuth(studentId);
+    public Response<String> getAuth(Integer classId,
+                                    Integer schoolId,
+                                    Integer studentId) {
+        return authService.getAuth(classId, schoolId, studentId);
     }
 }
